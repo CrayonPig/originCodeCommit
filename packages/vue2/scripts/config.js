@@ -24,12 +24,16 @@ const weexFactoryPlugin = {
   }
 }
 
+// 引入设置的别名
 const aliases = require('./alias')
+
 const resolve = p => {
   const base = p.split('/')[0]
   if (aliases[base]) {
+    // 如果别名存在，则获取别名的值拼接成完整的文件路径
     return path.resolve(aliases[base], p.slice(base.length + 1))
   } else {
+    // 别名不存在，则使用根目录 + 传入的路径
     return path.resolve(__dirname, '../', p)
   }
 }
@@ -174,13 +178,17 @@ function genConfig (name) {
     input: opts.entry,
     external: opts.external,
     plugins: [
+      // 替换变量
       replace({
         __WEEX__: !!opts.weex,
         __WEEX_VERSION__: weexVersion,
         __VERSION__: version
       }),
+      // 清除flow类型检查部分的代码
       flow(),
+      // 编译ES6+语法为ES2015，无需配置，比babel更轻量；
       buble(),
+      // 替换模块路径中的别名
       alias(Object.assign({}, aliases, opts.alias))
     ].concat(opts.plugins || []),
     output: {
@@ -192,11 +200,13 @@ function genConfig (name) {
   }
 
   if (opts.env) {
+    // 添加环境变量
     config.plugins.push(replace({
       'process.env.NODE_ENV': JSON.stringify(opts.env)
     }))
   }
 
+  // 设置私有属性_name，并且禁止枚举
   Object.defineProperty(config, '_name', {
     enumerable: false,
     value: name
