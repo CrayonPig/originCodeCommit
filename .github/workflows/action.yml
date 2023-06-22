@@ -1,0 +1,31 @@
+name: action
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Build
+      run: |
+        npm install
+        npm run build
+
+    - name: deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.1
+      with:
+        # 发布到指定分支
+        BRANCH: gh-pages
+        # 构建成果所在目录,默认位置都是在根目录
+        FOLDER:  ./dist
