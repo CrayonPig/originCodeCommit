@@ -28,7 +28,7 @@ export function initMixin (Vue: Class<Component>) {
 
     // a flag to avoid this being observed
     vm._isVue = true
-
+    debugger
     // 合并options
     // _isComponent 用于区分组件实例和根实例
     if (options && options._isComponent) {

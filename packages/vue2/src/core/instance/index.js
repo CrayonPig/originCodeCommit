@@ -17,6 +17,7 @@ function Vue (options) {
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword')
   }
+  // 调用原型上的_init方法
   this._init(options)
 }
 // 初始化

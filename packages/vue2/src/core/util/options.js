@@ -361,46 +361,73 @@ function assertObjectType (name: string, value: any, vm: ?Component) {
 /**
  * Merge two option objects into a new one.
  * Core utility used in both instantiation and inheritance.
+ * @param {Object} parent - 父选项对象
+ * @param {Object} child - 子选项对象
+ * @param {Component} [vm] - 组件实例对象（可选）
+ * @returns {Object} - 合并后的选项对象
  */
+
 export function mergeOptions (
   parent: Object,
   child: Object,
   vm?: Component
 ): Object {
+  // 在非生产环境下检查组件
   if (process.env.NODE_ENV !== 'production') {
     checkComponents(child)
   }
 
+  // 如果子选项是函数，则获取其选项对象
   if (typeof child === 'function') {
     child = child.options
   }
 
+  // 规范化 props
   normalizeProps(child, vm)
+
+  // 规范化 inject
   normalizeInject(child, vm)
+
+  // 规范化 directives
   normalizeDirectives(child)
+
+  // 处理继承
   const extendsFrom = child.extends
   if (extendsFrom) {
     parent = mergeOptions(parent, extendsFrom, vm)
   }
+
+  // 处理混入
   if (child.mixins) {
     for (let i = 0, l = child.mixins.length; i < l; i++) {
       parent = mergeOptions(parent, child.mixins[i], vm)
     }
   }
+
+  // 创建一个空对象，用于保存合并后的选项
   const options = {}
+
+  // 遍历父选项的属性
   let key
   for (key in parent) {
     mergeField(key)
   }
+
+  // 遍历子选项的属性
   for (key in child) {
+    // 父属性中不存在再添加
     if (!hasOwn(parent, key)) {
       mergeField(key)
     }
   }
+
+  // 合并字段的函数
   function mergeField (key) {
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)
   }
+
+  // 返回合并后的选项对象
   return options
 }
 
