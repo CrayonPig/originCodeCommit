@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "doc": "pnpm -F docs dev",
+    "install": "pnpm -F docs install",
+    "dev": "pnpm -F docs dev",
     "build": "pnpm -F docs build"
   },
   "keywords": [],

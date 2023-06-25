@@ -14,9 +14,11 @@ module.exports = {
     {
       title: '生命周期',
       collapsable: false, // 可选的, 默认值是 true,
+      sidebarDepth: 3,
       children: [
         '/vue2/lifecycle/',
         '/vue2/lifecycle/newVue',
+        '/vue2/lifecycle/mergeOptions',
       ]
     },
   ]

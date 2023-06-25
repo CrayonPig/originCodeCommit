@@ -40,6 +40,7 @@ export function initMixin (Vue: Class<Component>) {
     } else {
       // 根组件
       vm.$options = mergeOptions(
+        // 实际上是Vue.options，在initGlobalAPI中定义
         resolveConstructorOptions(vm.constructor),
         options || {},
         vm

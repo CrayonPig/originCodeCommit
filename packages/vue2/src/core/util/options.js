@@ -63,7 +63,11 @@ function mergeData (to: Object, from: ?Object): Object {
 }
 
 /**
- * Data
+ * 合并数据或函数
+ * @param {*} parentVal 父值
+ * @param {*} childVal 子值
+ * @param {Component} vm 组件实例
+ * @returns {?Function} 合并后的函数
  */
 export function mergeDataOrFn (
   parentVal: any,
@@ -71,18 +75,17 @@ export function mergeDataOrFn (
   vm?: Component
 ): ?Function {
   if (!vm) {
-    // in a Vue.extend merge, both should be functions
+    // 当 vm 不存在时，表示在 Vue.extend 合并中进行合并，此时两个都应该是函数
     if (!childVal) {
       return parentVal
     }
     if (!parentVal) {
       return childVal
     }
-    // when parentVal & childVal are both present,
-    // we need to return a function that returns the
-    // merged result of both functions... no need to
-    // check if parentVal is a function here because
-    // it has to be a function to pass previous merges.
+    // 当父值和子值都存在时，
+    // 我们需要返回一个函数，该函数返回
+    // 两个函数的合并结果...这里不需要检查 parentVal 是否为函数
+    // 因为它必须是一个函数才能通过之前的合并
     return function mergedDataFn () {
       return mergeData(
         typeof childVal === 'function' ? childVal.call(this, this) : childVal,
@@ -90,14 +93,18 @@ export function mergeDataOrFn (
       )
     }
   } else {
+    // 当 vm 存在时，表示在组件实例化阶段进行合并。
     return function mergedInstanceDataFn () {
       // instance merge
+      // 获取 childVal 的实例数据，如果 childVal 是一个函数，则调用它，并传入组件实例 vm。
       const instanceData = typeof childVal === 'function'
         ? childVal.call(vm, vm)
         : childVal
+      // 获取 parentVal 的默认数据，如果 parentVal 是一个函数，则调用它，并传入组件实例 vm
       const defaultData = typeof parentVal === 'function'
         ? parentVal.call(vm, vm)
         : parentVal
+      // 如果实例数据存在，则返回实例数据和默认数据的合并结果；否则，返回默认数据
       if (instanceData) {
         return mergeData(instanceData, defaultData)
       } else {
@@ -113,6 +120,7 @@ strats.data = function (
   vm?: Component
 ): ?Function {
   if (!vm) {
+    // 如果不存在 vm，则表示在组件定义阶段进行合并
     if (childVal && typeof childVal !== 'function') {
       process.env.NODE_ENV !== 'production' && warn(
         'The "data" option should be a function ' +
@@ -123,14 +131,19 @@ strats.data = function (
 
       return parentVal
     }
+    // 合并parentVal和childVal
     return mergeDataOrFn(parentVal, childVal)
   }
 
+  // 合并parentVal和childVal
   return mergeDataOrFn(parentVal, childVal, vm)
 }
 
 /**
- * Hooks and props are merged as arrays.
+ * 合并钩子函数
+ * @param {?Array<Function>} parentVal 父组件的钩子函数数组
+ * @param {?Function|?Array<Function>} childVal 子组件的钩子函数或钩子函数数组
+ * @returns {?Array<Function>} 合并后的钩子函数数组
  */
 function mergeHook (
   parentVal: ?Array<Function>,
@@ -155,6 +168,12 @@ LIFECYCLE_HOOKS.forEach(hook => {
  * When a vm is present (instance creation), we need to do
  * a three-way merge between constructor options, instance
  * options and parent options.
+ * 合并资源对象
+ * @param {?Object} parentVal 父组件的资源对象
+ * @param {?Object} childVal 子组件的资源对象
+ * @param {Component} vm 组件实例
+ * @param {string} key 资源类型键名
+ * @returns {Object} 合并后的资源对象
  */
 function mergeAssets (
   parentVal: ?Object,
@@ -180,6 +199,12 @@ ASSET_TYPES.forEach(function (type) {
  *
  * Watchers hashes should not overwrite one
  * another, so we merge them as arrays.
+ * Watchers 不能被覆盖，所以合并为数组
+ * @param {?Object} parentVal 父组件的 watch 对象
+ * @param {?Object} childVal 子组件的 watch 对象
+ * @param {Component} vm 组件实例
+ * @param {string} key watch 对象的键名
+ * @returns {?Object} 合并后的 watch 对象
  */
 strats.watch = function (
   parentVal: ?Object,
@@ -212,7 +237,12 @@ strats.watch = function (
 }
 
 /**
- * Other object hashes.
+ * 合并 props、methods、inject 和 computed 对象
+ * @param {?Object} parentVal 父组件的对象
+ * @param {?Object} childVal 子组件的对象
+ * @param {Component} vm 组件实例
+ * @param {string} key 对象的键名
+ * @returns {?Object} 合并后的对象
  */
 strats.props =
 strats.methods =
@@ -273,15 +303,21 @@ export function validateComponentName (name: string) {
  * Object-based format.
  */
 function normalizeProps (options: Object, vm: ?Component) {
+  // 输出props格式为propB: {
+  //    type: String,
+  //    ...
+  //  }
   const props = options.props
   if (!props) return
   const res = {}
   let i, val, name
+  // 对应props: ['propA', 'propB']
   if (Array.isArray(props)) {
     i = props.length
     while (i--) {
       val = props[i]
       if (typeof val === 'string') {
+        // 将名字变为驼峰
         name = camelize(val)
         res[name] = { type: null }
       } else if (process.env.NODE_ENV !== 'production') {
@@ -289,6 +325,17 @@ function normalizeProps (options: Object, vm: ?Component) {
       }
     }
   } else if (isPlainObject(props)) {
+    // 对应写法：props: {
+    //   propA: Number,
+    //   propB: {
+    //    type: String,
+    //    required: true
+    //  },
+    //  propC: {
+    //    type: [String, Number],
+    //    default: 'default value'
+    //  }
+    // }
     for (const key in props) {
       val = props[key]
       name = camelize(key)
@@ -310,14 +357,26 @@ function normalizeProps (options: Object, vm: ?Component) {
  * Normalize all injections into Object-based format
  */
 function normalizeInject (options: Object, vm: ?Component) {
+  // 输出格式 dependencyB: {
+  //   from: 'propB',
+  //   ...
+  // }
   const inject = options.inject
   if (!inject) return
   const normalized = options.inject = {}
   if (Array.isArray(inject)) {
+  // 对应写法 inject: ['sharedData'],
     for (let i = 0; i < inject.length; i++) {
       normalized[inject[i]] = { from: inject[i] }
     }
   } else if (isPlainObject(inject)) {
+    // 对应对象写法 inject: {
+    //   dependencyA: 'propA',
+    //   dependencyB: {
+    //    from: 'propA',
+    //    default: 'default value'
+    //  }
+    // }
     for (const key in inject) {
       const val = inject[key]
       normalized[key] = isPlainObject(val)
@@ -335,6 +394,17 @@ function normalizeInject (options: Object, vm: ?Component) {
 
 /**
  * Normalize raw function directives into object format.
+ * 将指令格式  Vue.directive('directiveName', function(el, binding, vnode, oldVnode) {
+ *      // 指令的操作
+ *    });
+ * 转为 Vue.directive('directiveName', {
+ *      bind(el, binding, vnode) {
+ *       // 指令绑定时的操作
+ *      },
+ *      update(el, binding, vnode) {
+ *       // 指令绑定时的操作
+ *      },
+ *    });
  */
 function normalizeDirectives (options: Object) {
   const dirs = options.directives
@@ -377,7 +447,6 @@ export function mergeOptions (
     checkComponents(child)
   }
 
-  // 如果子选项是函数，则获取其选项对象
   if (typeof child === 'function') {
     child = child.options
   }
@@ -421,7 +490,7 @@ export function mergeOptions (
     }
   }
 
-  // 合并字段的函数
+  // 使用策略模式合并字段
   function mergeField (key) {
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)
