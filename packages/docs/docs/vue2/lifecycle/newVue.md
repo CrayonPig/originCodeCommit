@@ -1,6 +1,6 @@
 # 初始化阶段(new Vue)
 
-上一篇文章我们找到了 Vue 的入口文件为 `src/core/instance/index.js`, 本节我们一起探究我们在执行 `new Vue` 的时候究竟发生了么，为了便于理解，分析代码时会省略一些无关的代码，比如 `process.env.NODE_ENV !== 'production'` 的条件判断
+通过前期准备我们找到了 Vue 的入口文件为 `src/core/instance/index.js`, 本节我们一起探究我们在执行 `new Vue` 的时候究竟发生了么，为了便于理解，分析代码时会省略一些无关的代码，比如 `process.env.NODE_ENV !== 'production'` 的条件判断
 
 ## new Vue 干了什么
 

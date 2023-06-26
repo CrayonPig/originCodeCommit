@@ -19,6 +19,8 @@ module.exports = {
         '/vue2/lifecycle/',
         '/vue2/lifecycle/newVue',
         '/vue2/lifecycle/mergeOptions',
+        '/vue2/lifecycle/initLifecycle',
+        '/vue2/lifecycle/initEvents',
       ]
     },
   ]

@@ -254,16 +254,11 @@ export default Vue
 
 在这里我们可以发现，Vue实际上就是用 Function 实现的类，我们只能通过 new Vue 去实例化它。
 
-::: tip
-问题：Vue为什么使用构造函数?
-
-答案：因为只有通过实例化this才指向实例，否则this将指向window
+::: tip Vue为什么使用构造函数?
+因为只有通过实例化this才指向实例，否则this将指向window
 :::
 
-::: tip
-问题：为什么构造函数不使用Class？
-
-答案：
+::: tip 为什么构造函数不使用Class？
 
  1. Vue2最早开始时浏览器对Class支持不完善，需兼容
  2. class关键字创建的函数不能通过call，bind，apply改变this指向，function可以

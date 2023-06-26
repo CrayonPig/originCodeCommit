@@ -3,6 +3,7 @@
 import { warn } from 'core/util/index'
 import { cached, isUndef, isPlainObject } from 'shared/util'
 
+// 标准化事件名，将事件名转换为统一格式。
 const normalizeEvent = cached((name: string): {
   name: string,
   once: boolean,
@@ -25,6 +26,7 @@ const normalizeEvent = cached((name: string): {
   }
 })
 
+// 创建一个函数调用器
 export function createFnInvoker (fns: Function | Array<Function>): Function {
   function invoker () {
     const fns = invoker.fns
@@ -42,6 +44,7 @@ export function createFnInvoker (fns: Function | Array<Function>): Function {
   return invoker
 }
 
+// 更新组件的事件监听器
 export function updateListeners (
   on: Object,
   oldOn: Object,
@@ -65,17 +68,20 @@ export function updateListeners (
         vm
       )
     } else if (isUndef(old)) {
+      // 如果 old 未定义，表示之前没有对应的事件监听器，那么需要将 cur 转换为一个函数调用器，并将其添加到事件监听中。
       if (isUndef(cur.fns)) {
         cur = on[name] = createFnInvoker(cur)
       }
       add(event.name, cur, event.once, event.capture, event.passive, event.params)
     } else if (cur !== old) {
+      // 旧的事件处理函数 与当前事件处理函数 不相等，即更新事件监听器的处理函数。
       old.fns = cur
       on[name] = old
     }
   }
   for (name in oldOn) {
     if (isUndef(on[name])) {
+      // 如果不存在，表示之前的事件监听器已被移除，那么需要将旧的事件监听器从事件中移除。
       event = normalizeEvent(name)
       remove(event.name, oldOn[name], event.capture)
     }

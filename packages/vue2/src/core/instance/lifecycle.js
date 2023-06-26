@@ -36,18 +36,22 @@ export function initLifecycle (vm: Component) {
     parent.$children.push(vm)
   }
 
+  // 父组件实例
   vm.$parent = parent
+  // 根组件实例
   vm.$root = parent ? parent.$root : vm
 
+  // 子组件实例数组
   vm.$children = []
+  // ref 引用对象
   vm.$refs = {}
 
-  vm._watcher = null
-  vm._inactive = null
-  vm._directInactive = false
-  vm._isMounted = false
-  vm._isDestroyed = false
-  vm._isBeingDestroyed = false
+  vm._watcher = null; // 渲染 watcher 实例
+  vm._inactive = null; // 是否处于非激活状态
+  vm._directInactive = false; // 是否直接处于非激活状态
+  vm._isMounted = false; // 是否已挂载
+  vm._isDestroyed = false; // 是否已销毁
+  vm._isBeingDestroyed = false; // 是否正在销毁
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
