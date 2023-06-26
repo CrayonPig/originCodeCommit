@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>初始化阶段(initLifecycle) | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.e8e4f3a3.css" as="style"><link rel="preload" href="/assets/js/app.1677bde2.js" as="script"><link rel="preload" href="/assets/js/2.d41e95ac.js" as="script"><link rel="preload" href="/assets/js/11.e608b334.js" as="script"><link rel="prefetch" href="/assets/js/10.26b69c84.js"><link rel="prefetch" href="/assets/js/12.80c77b9a.js"><link rel="prefetch" href="/assets/js/13.0a1c87a6.js"><link rel="prefetch" href="/assets/js/14.8efac27b.js"><link rel="prefetch" href="/assets/js/15.2235f36c.js"><link rel="prefetch" href="/assets/js/16.2d4789af.js"><link rel="prefetch" href="/assets/js/17.a24157cc.js"><link rel="prefetch" href="/assets/js/3.0623eb61.js"><link rel="prefetch" href="/assets/js/4.f0b785c5.js"><link rel="prefetch" href="/assets/js/5.e637d5c4.js"><link rel="prefetch" href="/assets/js/6.03ce336d.js"><link rel="prefetch" href="/assets/js/7.920cbf17.js"><link rel="prefetch" href="/assets/js/8.7dc2c3f1.js"><link rel="prefetch" href="/assets/js/9.3a4aed85.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e8e4f3a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vue2/" aria-current="page" class="sidebar-link">Vue2源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前期准备</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vue2/prepare/version.html" class="sidebar-link">构建版本</a></li><li><a href="/vue2/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vue2/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>生命周期</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/lifecycle/" aria-current="page" class="sidebar-link">简介</a></li><li><a href="/vue2/lifecycle/newVue.html" class="sidebar-link">初始化阶段(new Vue)</a></li><li><a href="/vue2/lifecycle/mergeOptions.html" class="sidebar-link">初始化阶段(合并属性)</a></li><li><a href="/vue2/lifecycle/initLifecycle.html" aria-current="page" class="active sidebar-link">初始化阶段(initLifecycle)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue2/lifecycle/initLifecycle.html#parent" class="sidebar-link">$parent</a></li><li class="sidebar-sub-header"><a href="/vue2/lifecycle/initLifecycle.html#root" class="sidebar-link">$root</a></li><li class="sidebar-sub-header"><a href="/vue2/lifecycle/initLifecycle.html#总结" class="sidebar-link">总结</a></li></ul></li><li><a href="/vue2/lifecycle/initEvents.html" class="sidebar-link">初始化阶段(initEvents)</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="初始化阶段-initlifecycle"><a href="#初始化阶段-initlifecycle" class="header-anchor">#</a> 初始化阶段(initLifecycle)</h1> <p>本小结介绍生命周期初始化阶段的第二个步骤，也是第一个初始化函数 <code>initLifecycle</code>。顾名思义，初始化生命周期函数。代码位于 <code>src/core/instance/lifecycle.js</code>。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">initLifecycle</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">vm</span><span class="token operator">:</span> Component</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> options <span class="token operator">=</span> vm<span class="token punctuation">.</span>$options
+
+  <span class="token comment">// locate first non-abstract parent</span>
+  <span class="token keyword">let</span> parent <span class="token operator">=</span> options<span class="token punctuation">.</span>parent
+  <span class="token comment">// 如果存在父组件实例并且当前组件实例不是抽象组件（abstract为false）</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>parent <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>options<span class="token punctuation">.</span>abstract<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 当父组件实例是抽象组件且父组件实例的父组件存在时，执行循环体。保证最后找到的父组件不是抽象组件</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>parent<span class="token punctuation">.</span>$options<span class="token punctuation">.</span>abstract <span class="token operator">&amp;&amp;</span> parent<span class="token punctuation">.</span>$parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      parent <span class="token operator">=</span> parent<span class="token punctuation">.</span>$parent
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 将当前组件加入到父组件中的列表中</span>
+    parent<span class="token punctuation">.</span>$children<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 父组件实例</span>
+  vm<span class="token punctuation">.</span>$parent <span class="token operator">=</span> parent
+  <span class="token comment">// 根组件实例</span>
+  vm<span class="token punctuation">.</span>$root <span class="token operator">=</span> parent <span class="token operator">?</span> parent<span class="token punctuation">.</span>$root <span class="token operator">:</span> vm
+
+  <span class="token comment">// 子组件实例数组</span>
+  vm<span class="token punctuation">.</span>$children <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token comment">// ref 引用对象</span>
+  vm<span class="token punctuation">.</span>$refs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  vm<span class="token punctuation">.</span>_watcher <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 渲染 watcher 实例</span>
+  vm<span class="token punctuation">.</span>_inactive <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment">// 是否处于非激活状态</span>
+  vm<span class="token punctuation">.</span>_directInactive <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 是否直接处于非激活状态</span>
+  vm<span class="token punctuation">.</span>_isMounted <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 是否已挂载</span>
+  vm<span class="token punctuation">.</span>_isDestroyed <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 是否已销毁</span>
+  vm<span class="token punctuation">.</span>_isBeingDestroyed <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 是否正在销毁</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>以 <code>$</code> 开头的属性是提供给用户使用的外部属性，以 <code>_</code> 开头的是提供给内部使用的内部属性。</p></div> <p>我们可以看到 <code>initLifecycle</code> 的代码并不复杂，只是在 Vue 实例上设置一些属性并提供默认值。</p> <p>有意思的是挂载<code>$parent</code> 属性和 <code>$root</code> 属性，我们下面逐个分析</p> <h2 id="parent"><a href="#parent" class="header-anchor">#</a> $parent</h2> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// locate first non-abstract parent</span>
+<span class="token keyword">let</span> parent <span class="token operator">=</span> options<span class="token punctuation">.</span>parent
+<span class="token comment">// 如果存在父组件实例并且当前组件实例不是抽象组件（abstract为false）</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>parent <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>options<span class="token punctuation">.</span>abstract<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 当父组件实例是抽象组件且父组件实例的父组件存在时，执行循环体。保证最后找到的父组件不是抽象组件</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>parent<span class="token punctuation">.</span>$options<span class="token punctuation">.</span>abstract <span class="token operator">&amp;&amp;</span> parent<span class="token punctuation">.</span>$parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    parent <span class="token operator">=</span> parent<span class="token punctuation">.</span>$parent
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 将当前组件加入到父组件中的列表中</span>
+  parent<span class="token punctuation">.</span>$children<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 父组件实例</span>
+vm<span class="token punctuation">.</span>$parent <span class="token operator">=</span> parent
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">什么是抽象组件？</p> <p>在 Vue 中，抽象组件是一种特殊的组件，它们不会被渲染成真实的 DOM 元素，而是作为功能性的包装组件存在，用于提供一些可复用的逻辑或行为。</p></div> <p>首先如果存在父组件实例并且当前组件实例不是抽象组件时，执行<code>while</code>，直到找到父组件不是抽象组件或者没有父组件为止。然后将其赋值给<code>vm.$parent</code>。这样确保在子组件中，可以通过<code>$parent</code>找到父组件。</p> <p>将当前组件加入到父组件的列表中，后续在父组件中，就可以通过<code>$children</code>找到子组件。</p> <h2 id="root"><a href="#root" class="header-anchor">#</a> $root</h2> <p>挂载<code>$root</code>的方法很简单，只有一行代码</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// 根组件实例</span>
+vm<span class="token punctuation">.</span>$root <span class="token operator">=</span> parent <span class="token operator">?</span> parent<span class="token punctuation">.</span>$root <span class="token operator">:</span> vm
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>如果当前组件没有父组件，那么它自己就是根组件，它的<code>$root</code>属性还是它自己。而它的子组件的<code>$root</code>用的是<code>parent.$root</code>，相当于还是它自己，其孙组件的<code>$root</code>属性沿用其子组件的<code>$root</code>，一次类推。</p> <p>我们可以发现，这其实就是一个自顶向下将根组件的<code>$root</code>依次传递给每一个子组件的过程。</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p><code>initLifecycle</code> 函数功能并不复杂，只是对 Vue 实例进行一些属性的初始化。其中，最主要的是挂载 <code>$parent</code> 和 <code>$root</code> 属性，使得组件树中的每一个组件都可以通过 <code>$parent</code> 和 <code>$root</code> 访问到其相关的父组件和根组件。通过这些初始化，为 Vue 的生命周期的后续流程铺设了基础。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue2/lifecycle/mergeOptions.html" class="prev">
+        初始化阶段(合并属性)
+      </a></span> <span class="next"><a href="/vue2/lifecycle/initEvents.html">
+        初始化阶段(initEvents)
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.1677bde2.js" defer></script><script src="/assets/js/2.d41e95ac.js" defer></script><script src="/assets/js/11.e608b334.js" defer></script>
+  </body>
+</html>
