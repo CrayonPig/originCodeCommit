@@ -61,6 +61,8 @@ export function initState (vm: Component) {
   }
   // 初始化computed
   if (opts.computed) initComputed(vm, opts.computed)
+
+  // 初始化watch
   if (opts.watch && opts.watch !== nativeWatch) {
     initWatch(vm, opts.watch)
   }
@@ -213,9 +215,7 @@ function initComputed (vm: Component, computed: Object) {
       )
     }
 
-    // component-defined computed properties are already defined on the
-    // component prototype. We only need to define computed properties defined
-    // at instantiation here.
+    // 组件定义的计算属性已经在组件原型。我们只需要在这里实例化已定义的计算属性。
     if (!(key in vm)) {
       // 将component 每项由 函数形式改为{get,set}形式，并进行双向绑定
       defineComputed(vm, key, userDef)

@@ -21,6 +21,10 @@ module.exports = {
         '/vue2/lifecycle/mergeOptions',
         '/vue2/lifecycle/initLifecycle',
         '/vue2/lifecycle/initEvents',
+        '/vue2/lifecycle/initRender',
+        '/vue2/lifecycle/initInjections',
+        '/vue2/lifecycle/initState',
+        '/vue2/lifecycle/initProvide',
       ]
     },
   ]

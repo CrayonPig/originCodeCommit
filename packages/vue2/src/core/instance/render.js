@@ -16,29 +16,29 @@ import VNode, { createEmptyVNode } from '../vdom/vnode'
 import { isUpdatingChildComponent } from './lifecycle'
 
 export function initRender (vm: Component) {
-  // 用于存储组件实例的虚拟节点，表示组件在虚拟DOM树中的位置。
-  vm._vnode = null // the root of the child tree
-  vm._staticTrees = null // v-once cached trees
+  // 用于存储组件自身实例的虚拟节点，表示组件在虚拟DOM树中的位置。
+  vm._vnode = null 
+  //缓存 v-once 指令生成的静态树
+  vm._staticTrees = null 
+  
   const options = vm.$options
-  const parentVnode = vm.$vnode = options._parentVnode // the placeholder node in parent tree
+  // 父组件创建的占位节点
+  const parentVnode = vm.$vnode = options._parentVnode 
   const renderContext = parentVnode && parentVnode.context
+
   // 插槽内容的集合
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
+
   // 包含了具名插槽的作用域插槽函数的对象
   vm.$scopedSlots = emptyObject
-  // bind the createElement fn to this instance
-  // so that we get proper render context inside it.
-  // args order: tag, data, children, normalizationType, alwaysNormalize
-  // internal version is used by render functions compiled from templates
+
+  // _c 方法的参数顺序是：标签名、数据对象、子节点数组、规范化类型、是否总是规范化。
   // 在组件中创建虚拟节点的辅助函数，实际上就是调用 $createElement。
   vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
-  // normalization is always applied for the public version, used in
-  // user-written render functions.
+
   // 用于创建虚拟节点，即用于渲染组件的模板。
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
-  // $attrs & $listeners are exposed for easier HOC creation.
-  // they need to be reactive so that HOCs using them are always updated
   // 获取父组件的虚拟节点
   const parentData = parentVnode && parentVnode.data
 

@@ -10,18 +10,22 @@ export function resolveSlots (
   context: ?Component
 ): { [key: string]: Array<VNode> } {
   const slots = {}
+
+  // 如果没有子节点，返回一个空的插槽对象。
   if (!children) {
     return slots
   }
+
+  // 遍历每个子节点以解析插槽。
   for (let i = 0, l = children.length; i < l; i++) {
     const child = children[i]
     const data = child.data
-    // remove slot attribute if the node is resolved as a Vue slot node
+
+    // 如果节点被解析为Vue插槽节点，则删除插槽属性。以确保在后续的处理中不会将其误解为普通的属性
     if (data && data.attrs && data.attrs.slot) {
       delete data.attrs.slot
     }
-    // named slots should only be respected if the vnode was rendered in the
-    // same context.
+    // 相同上下文表明是一个具名插槽
     if ((child.context === context || child.fnContext === context) &&
       data && data.slot != null
     ) {
@@ -33,10 +37,11 @@ export function resolveSlots (
         slot.push(child)
       }
     } else {
+      // 非具名插槽直接存入
       (slots.default || (slots.default = [])).push(child)
     }
   }
-  // ignore slots that contains only whitespace
+  // 忽略只包含空格的插槽
   for (const name in slots) {
     if (slots[name].every(isWhitespace)) {
       delete slots[name]
