@@ -14,6 +14,7 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// 缓存runtime 版本的$mount
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
@@ -21,7 +22,7 @@ Vue.prototype.$mount = function (
 ): Component {
   el = el && query(el)
 
-  /* istanbul ignore if */
+  // 禁止挂在到body或html标签
   if (el === document.body || el === document.documentElement) {
     process.env.NODE_ENV !== 'production' && warn(
       `Do not mount Vue to <html> or <body> - mount to normal elements instead.`
@@ -30,12 +31,15 @@ Vue.prototype.$mount = function (
   }
 
   const options = this.$options
-  // resolve template/el and convert to render function
+  // 如果没有渲染函数时，将template/el编译成渲染函数
   if (!options.render) {
     let template = options.template
     if (template) {
       if (typeof template === 'string') {
+        // 如果是#开头，通过选择符获取innerHTML使用
+        // 如果是字符串不是#号开头，则是用户手动设置的模板，直接使用
         if (template.charAt(0) === '#') {
+          // 使用选择符获取模板
           template = idToTemplate(template)
           /* istanbul ignore if */
           if (process.env.NODE_ENV !== 'production' && !template) {
@@ -45,6 +49,7 @@ Vue.prototype.$mount = function (
             )
           }
         }
+      // 使用nodeType判断是否为一个真实的dom元素，如果是则使用DOM元素的innerHTML作为模板
       } else if (template.nodeType) {
         template = template.innerHTML
       } else {
@@ -54,6 +59,7 @@ Vue.prototype.$mount = function (
         return this
       }
     } else if (el) {
+      // 返回el提供的Dom元素的HTML字符串
       template = getOuterHTML(el)
     }
     if (template) {

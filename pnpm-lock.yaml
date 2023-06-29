@@ -7,8 +7,12 @@ importers:
 
   packages/docs:
     specifiers:
+      '@vuepress/plugin-medium-zoom': ^1.9.9
+      markdown-it-copy: ^1.2.0
       vuepress: ^1.9.9
     devDependencies:
+      '@vuepress/plugin-medium-zoom': 1.9.9
+      markdown-it-copy: 1.2.0
       vuepress: 1.9.9
 
   packages/vue2:
@@ -2101,7 +2105,7 @@ packages:
       url-loader: 1.1.2_webpack@4.46.0
       vue: 2.7.14
       vue-loader: 15.10.1_lbhzzmlqoxkdndxnphn2sqq4kq
-      vue-router: 3.6.5_vue@2.7.14
+      vue-router: 3.6.5
       vue-server-renderer: 2.7.14
       vue-template-compiler: 2.7.14
       vuepress-html-webpack-plugin: 3.2.0_webpack@4.46.0
@@ -2212,6 +2216,15 @@ packages:
     dependencies:
       '@vuepress/types': 1.9.9
       cross-spawn: 6.0.5
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
+  /@vuepress/plugin-medium-zoom/1.9.9:
+    resolution: {integrity: sha512-P8UfqUv0l28Td2COhvhVinBMiHyams8KKQVwnr6ZboFcRVG5xOsghtDbO++jn78rnszOz8OsLXilPMoiJ8iECQ==}
+    dependencies:
+      '@vuepress/types': 1.9.9
+      medium-zoom: 1.0.8
     transitivePeerDependencies:
       - debug
     dev: true
@@ -5172,8 +5185,8 @@ packages:
     resolution: {integrity: sha512-BoMaddIEJ6B4QVMSDu9IkVImlGOSGA1I2BQyOZHeLQ6qVOJLcLKn97+fL6dGbzWEiqDzfH4OkcveULmeq2MHFQ==}
     hasBin: true
     dependencies:
-      JSONStream: 1.3.5
       is-text-path: 1.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       meow: 4.0.1
       split2: 2.2.0
@@ -10431,6 +10444,10 @@ packages:
     resolution: {integrity: sha512-IxPOaq2LzrGuFGyYq80zaorXReh2ZHGFOB1/Hen429EJL1XkPI3FJTpx9TsJeua+j2qTru4h3W1TiCRdeivMmA==}
     dev: true
 
+  /markdown-it-copy/1.2.0:
+    resolution: {integrity: sha512-8Pm/cF7kpr+9VArhICCndb31zmz75hMR0WpmelUNn1RYe8vkqumLKt0xaInTT4mELhMqmnIr+8dm30w7Pzqc4A==}
+    dev: true
+
   /markdown-it-emoji/1.4.0:
     resolution: {integrity: sha512-QCz3Hkd+r5gDYtS2xsFXmBYrgw6KuWcJZLCEkdfAuwzZbShCmCfta+hwAMq4NX/4xPzkSHduMKgMkkPUJxSXNg==}
     dev: true
@@ -10478,6 +10495,10 @@ packages:
   /media-typer/0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
+    dev: true
+
+  /medium-zoom/1.0.8:
+    resolution: {integrity: sha512-CjFVuFq/IfrdqesAXfg+hzlDKu6A2n80ZIq0Kl9kWjoHh9j1N9Uvk5X0/MmN0hOfm5F9YBswlClhcwnmtwz7gA==}
     dev: true
 
   /mem/1.1.0:
@@ -15262,12 +15283,8 @@ packages:
       - whiskers
     dev: true
 
-  /vue-router/3.6.5_vue@2.7.14:
+  /vue-router/3.6.5:
     resolution: {integrity: sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ==}
-    peerDependencies:
-      vue: ^2
-    dependencies:
-      vue: 2.7.14
     dev: true
 
   /vue-server-renderer/2.7.14:

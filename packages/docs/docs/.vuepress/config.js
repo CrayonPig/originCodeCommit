@@ -6,16 +6,17 @@ module.exports = {
   description:
     "前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit",
   dest: "../../dist/",
+  plugins: ['@vuepress/medium-zoom'],
   markdown: {
     lineNumbers: true,
-    plugins: ['task-lists']
+    extendMarkdown: (md) => {
+      const options = {
+        btnText: '复制代码', // 'copy' | button text
+        successText: '成功', // 'copy success' | copy-success text
+      };
+      md.use(require("markdown-it-copy"), options);
+    },
   },
-  plugins: [
-    ['vuepress-plugin-code-copy', {
-      backgroundTransition: false,
-      successText: '复制成功！'
-    }]
-  ],
   configureWebpack: {
     resolve: {
       alias: {

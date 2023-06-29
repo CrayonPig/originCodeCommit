@@ -25,6 +25,8 @@ module.exports = {
         '/vue2/lifecycle/initInjections',
         '/vue2/lifecycle/initState',
         '/vue2/lifecycle/initProvide',
+        '/vue2/lifecycle/templateComplie',
+        '/vue2/lifecycle/mount',
       ]
     },
   ]

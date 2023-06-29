@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@vuepress/plugin-medium-zoom": "^1.9.9",
+    "markdown-it-copy": "^1.2.0",
     "vuepress": "^1.9.9"
   },
   "scripts": {
