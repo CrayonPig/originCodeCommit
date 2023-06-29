@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>初始化阶段(initInjections) | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d7a18e9.css" as="style"><link rel="preload" href="/assets/js/app.a6f75832.js" as="script"><link rel="preload" href="/assets/js/2.79703549.js" as="script"><link rel="preload" href="/assets/js/12.f10d4594.js" as="script"><link rel="prefetch" href="/assets/js/10.08cfc141.js"><link rel="prefetch" href="/assets/js/11.e3598f70.js"><link rel="prefetch" href="/assets/js/13.c2c09960.js"><link rel="prefetch" href="/assets/js/14.8752310e.js"><link rel="prefetch" href="/assets/js/15.7b8fcd9e.js"><link rel="prefetch" href="/assets/js/16.4e5dfe26.js"><link rel="prefetch" href="/assets/js/17.08820113.js"><link rel="prefetch" href="/assets/js/18.66dbec31.js"><link rel="prefetch" href="/assets/js/19.227b719f.js"><link rel="prefetch" href="/assets/js/20.20065052.js"><link rel="prefetch" href="/assets/js/21.66d44566.js"><link rel="prefetch" href="/assets/js/22.7cd37107.js"><link rel="prefetch" href="/assets/js/23.4cb23228.js"><link rel="prefetch" href="/assets/js/3.6759be5a.js"><link rel="prefetch" href="/assets/js/4.7a9297d4.js"><link rel="prefetch" href="/assets/js/5.7b03e186.js"><link rel="prefetch" href="/assets/js/6.337e8af3.js"><link rel="prefetch" href="/assets/js/7.79214ea9.js"><link rel="prefetch" href="/assets/js/8.f3cfab89.js"><link rel="prefetch" href="/assets/js/9.643f5d97.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d7a18e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vue2/" aria-current="page" class="sidebar-link">Vue2源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前期准备</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vue2/prepare/version.html" class="sidebar-link">构建版本</a></li><li><a href="/vue2/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vue2/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>生命周期</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/lifecycle/" aria-current="page" class="sidebar-link">简介</a></li><li><a href="/vue2/lifecycle/newVue.html" class="sidebar-link">初始化阶段(new Vue)</a></li><li><a href="/vue2/lifecycle/mergeOptions.html" class="sidebar-link">初始化阶段(合并属性)</a></li><li><a href="/vue2/lifecycle/initLifecycle.html" class="sidebar-link">初始化阶段(initLifecycle)</a></li><li><a href="/vue2/lifecycle/initEvents.html" class="sidebar-link">初始化阶段(initEvents)</a></li><li><a href="/vue2/lifecycle/initRender.html" class="sidebar-link">初始化阶段(initRender)</a></li><li><a href="/vue2/lifecycle/initInjections.html" aria-current="page" class="active sidebar-link">初始化阶段(initInjections)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue2/lifecycle/initInjections.html#initinjections" class="sidebar-link">initInjections</a></li><li class="sidebar-sub-header"><a href="/vue2/lifecycle/initInjections.html#resolveinject" class="sidebar-link">resolveInject</a></li></ul></li><li><a href="/vue2/lifecycle/initState.html" class="sidebar-link">初始化阶段(initState)</a></li><li><a href="/vue2/lifecycle/initProvide.html" class="sidebar-link">初始化阶段(initProvide)</a></li><li><a href="/vue2/lifecycle/templateComplie.html" class="sidebar-link">模板编译阶段</a></li><li><a href="/vue2/lifecycle/mount.html" class="sidebar-link">挂载阶段</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="初始化阶段-initinjections"><a href="#初始化阶段-initinjections" class="header-anchor">#</a> 初始化阶段(initInjections)</h1> <p><code>initInjections</code> 函数用于初始化组件的注入属性，它通过解析组件配置中的 <code>inject</code> 选项，将注入的属性定义为响应式数据。</p> <p><code>inject</code> 和 <code>provide</code> 通常是成对出现的，它们的作用是：允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效。</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p><code>inject</code> 和 <code>provide</code> 主要为高阶插件/组件库提供用例，并不推荐直接用于业务代码中。</p></div> <p><code>provide</code> 选项应该是一个对象或返回一个对象的函数。该对象包含可注入其子孙的属性。在该对象中你可以使用 <code>ES2015 Symbols</code> 作为 key，但是只在原生支持 <code>Symbol</code> 和 <code>Reflect.ownKeys</code> 的环境下可工作。</p> <p><code>inject</code> 选项应该是一个字符串数组或对象，其中对象的 key 是本地的绑定名。value 是个 key ( 字符串或 symbol) 或对象，用来在可用的注人内容中搜索。</p> <p>如果是对象，那么它有如下两个属性</p> <ul><li>from 属性是在可用的注入内容中搜索用的 key (字符串或 Symbol)</li> <li>default 属性是降级情况下使用的 value</li></ul> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>可用的注入内容指的是祖先组件通过 provide 注入了内容，子孙组件可以通过 inject 获取祖先组件注入的内容。</p></div> <p>虽然<code>inject</code>和<code>provide</code> 是成对出现的，但是二者在内部的实现是分开处理的，先处理 <code>inject</code>后处理 <code>provide</code>。从之前梳理的<code>_init</code>函数的逻辑中也可以看出，<code>inject</code> 在 <code>data/props</code> 之前初始化，而 <code>provide</code> 在 <code>data/props</code> 后面初始化。这样做的目的是让用户可以在 <code>data/props</code> 中使用 <code>inject</code> 所注人的内容。也就是说，可以让<code>data/props</code> 依赖 <code>inject</code>，所以需要将初始化 <code>inject</code>放在初始化<code>data/props</code>的前面。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// _init函数片段</span>
+
+<span class="token comment">// 在data/props之前，注入inject</span>
+<span class="token function">initInjections</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span> <span class="token comment">// resolve injections before data/props</span>
+<span class="token comment">// 初始化 props、methods、data、computed、watch</span>
+<span class="token function">initState</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span>
+<span class="token comment">// 数据初始化完成后，调用provide传递数据</span>
+<span class="token function">initProvide</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span> <span class="token comment">// resolve provide after data/props</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688047036474-78540">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// _init函数片段
+
+// 在data/props之前，注入inject
+initInjections(vm) // resolve injections before data/props
+// 初始化 props、methods、data、computed、watch
+initState(vm)
+// 数据初始化完成后，调用provide传递数据
+initProvide(vm) // resolve provide after data/props
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688047036474-78540" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h2 id="initinjections"><a href="#initinjections" class="header-anchor">#</a> initInjections</h2> <p>接下来我们看<code>initInjections</code>源码，代码在<code>src/core/instance/inject.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">initInjections</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">vm</span><span class="token operator">:</span> Component</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">resolveInject</span><span class="token punctuation">(</span>vm<span class="token punctuation">.</span>$options<span class="token punctuation">.</span>inject<span class="token punctuation">,</span> vm<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 禁用observe</span>
+    <span class="token function">toggleObserving</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+    Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 将解析出的inject绑定为当前组件的响应式数据</span>
+      <span class="token function">defineReactive</span><span class="token punctuation">(</span>vm<span class="token punctuation">,</span> key<span class="token punctuation">,</span> result<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">// 开启</span>
+    <span class="token function">toggleObserving</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688047036474-80163">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function initInjections (vm: Component) {
+  const result = resolveInject(vm.$options.inject, vm)
+  if (result) {
+    // 禁用observe
+    toggleObserving(false)
+    Object.keys(result).forEach(key =&gt; {
+      // 将解析出的inject绑定为当前组件的响应式数据
+      defineReactive(vm, key, result[key])
+    })
+    // 开启
+    toggleObserving(true)
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688047036474-80163" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>首先调用 <code>resolveInject</code> 函数来解析组件的注入属性。<code>resolveInject</code> 函数会根据组件的配置项 <code>$options.inject</code> 和当前组件实例 <code>vm</code> 来确定注入的属性。</p> <p>如果存在解析结果 <code>result</code>，则会执行以下操作：</p> <ol><li>禁用观测：调用 <code>toggleObserving(false)</code> 来禁用对属性的观测。</li> <li>遍历解析结果 <code>result</code> 的每个属性，使用 <code>Object.keys(result).forEach(key =&gt; { ... })</code>。</li> <li>在非生产环境下，使用 <code>defineReactive</code> 函数定义注入属性为响应式数据。该函数会为每个属性设置 getter 和 setter，并在修改属性值时发出警告，防止直接修改注入属性的值。</li> <li>在生产环境下，直接使用 <code>defineReactive</code> 函数定义注入属性为响应式数据。</li> <li>开启观测：调用 <code>toggleObserving(true)</code> 来开启对属性的观测。</li></ol> <h2 id="resolveinject"><a href="#resolveinject" class="header-anchor">#</a> resolveInject</h2> <p><code>resolveInject</code> 函数用于解析组件的注入属性配置，并根据提供的配置在组件的父级组件中查找提供的值。如果找到了提供的值，则将其存储在解析后的注入属性对象中。如果未找到提供的值，并且存在默认值，则将默认值赋给解析后的注入属性对象。最后，返回解析后的注入属性对象。</p> <p>源码在<code>src/core/instance/inject.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">resolveInject</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">inject</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">vm</span><span class="token operator">:</span> Component</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token operator">?</span>Object <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>inject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// inject is :any because flow is not smart enough to figure out cached</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+    <span class="token comment">// Reflect.ownKeys() 方法返回一个由所有键（包括符号键和非符号键）组成的数组，</span>
+    <span class="token comment">// 而 Object.keys() 方法只返回一个由字符串键组成的数组</span>
+    <span class="token comment">// 所以优先使用Reflect判断</span>
+    <span class="token keyword">const</span> keys <span class="token operator">=</span> hasSymbol
+      <span class="token operator">?</span> Reflect<span class="token punctuation">.</span><span class="token function">ownKeys</span><span class="token punctuation">(</span>inject<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">/* istanbul ignore next */</span>
+        <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">getOwnPropertyDescriptor</span><span class="token punctuation">(</span>inject<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">.</span>enumerable
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token operator">:</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>inject<span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> keys<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> key <span class="token operator">=</span> keys<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+      <span class="token keyword">const</span> provideKey <span class="token operator">=</span> inject<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>from
+      <span class="token keyword">let</span> source <span class="token operator">=</span> vm
+      <span class="token keyword">while</span> <span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 根组件_provided为空，后续步骤初始化_provided</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>source<span class="token punctuation">.</span>_provided <span class="token operator">&amp;&amp;</span> <span class="token function">hasOwn</span><span class="token punctuation">(</span>source<span class="token punctuation">.</span>_provided<span class="token punctuation">,</span> provideKey<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          result<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">.</span>_provided<span class="token punctuation">[</span>provideKey<span class="token punctuation">]</span>
+          <span class="token keyword">break</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 如果在父级没找到，则向祖先查找，如果父级找到了，直接break出去，不需要祖先覆盖</span>
+        source <span class="token operator">=</span> source<span class="token punctuation">.</span>$parent
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 没获取值的时候，如果设置了默认值，default字段，取默认值</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">'default'</span> <span class="token keyword">in</span> inject<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> provideDefault <span class="token operator">=</span> inject<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>default
+          <span class="token comment">// 如果获取到的值为function，则将this绑定到当前组件</span>
+          result<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> provideDefault <span class="token operator">===</span> <span class="token string">'function'</span>
+            <span class="token operator">?</span> <span class="token function">provideDefault</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>vm<span class="token punctuation">)</span>
+            <span class="token operator">:</span> provideDefault
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">warn</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Injection &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>key<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot; not found</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> vm<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> result
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688047036475-10545">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function resolveInject (inject: any, vm: Component): ?Object {
+  if (inject) {
+    // inject is :any because flow is not smart enough to figure out cached
+    const result = Object.create(null)
+    // Reflect.ownKeys() 方法返回一个由所有键（包括符号键和非符号键）组成的数组，
+    // 而 Object.keys() 方法只返回一个由字符串键组成的数组
+    // 所以优先使用Reflect判断
+    const keys = hasSymbol
+      ? Reflect.ownKeys(inject).filter(key =&gt; {
+        /* istanbul ignore next */
+        return Object.getOwnPropertyDescriptor(inject, key).enumerable
+      })
+      : Object.keys(inject)
+
+    for (let i = 0; i &lt; keys.length; i++) {
+      const key = keys[i]
+      const provideKey = inject[key].from
+      let source = vm
+      while (source) {
+        // 根组件_provided为空，后续步骤初始化_provided
+        if (source._provided &amp;&amp; hasOwn(source._provided, provideKey)) {
+          result[key] = source._provided[provideKey]
+          break
+        }
+        // 如果在父级没找到，则向祖先查找，如果父级找到了，直接break出去，不需要祖先覆盖
+        source = source.$parent
+      }
+      if (!source) {
+        // 没获取值的时候，如果设置了默认值，default字段，取默认值
+        if ('default' in inject[key]) {
+          const provideDefault = inject[key].default
+          // 如果获取到的值为function，则将this绑定到当前组件
+          result[key] = typeof provideDefault === 'function'
+            ? provideDefault.call(vm)
+            : provideDefault
+        } else if (process.env.NODE_ENV !== 'production') {
+          warn(`Injection &quot;${key}&quot; not found`, vm)
+        }
+      }
+    }
+    return result
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688047036475-10545" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><p>函数内部首先判断 <code>inject</code> 是否存在。如果存在，则执行以下操作：</p> <ol><li>创建一个空对象 <code>result</code>，用于存储解析后的注入属性。</li> <li>根据是否支持符号键（Symbol key），确定要遍历的键数组 <code>keys</code>。如果支持符号键，则使用 <code>Reflect.ownKeys(inject)</code>，否则使用 <code>Object.keys(inject)</code>。</li> <li>遍历键数组 <code>keys</code>，对于每个键 <code>key</code>，执行以下操作：</li></ol> <ul><li>获取 <code>inject[key]</code> 的 <code>from</code> 属性值，即提供注入值的键名。</li> <li>从当前组件实例 <code>vm</code> 开始向父级组件逐层查找，直到找到 <code>_provided</code> 属性，并且 <code>_provided</code> 对象中存在键为 <code>provideKey</code> 的属性。如果找到，则将该属性值存储在 <code>result[key]</code> 中，并终止循环。</li> <li>如果在所有父级组件中都未找到提供的值，则判断是否存在 <code>default</code> 字段。如果存在，则将 <code>inject[key].default</code> 的值赋给 <code>result[key]</code>，如果 <code>default</code> 是一个函数，则绑定当前组件实例 <code>vm</code>，并调用该函数获取默认值。</li> <li>如果既未找到提供的值，也不存在 <code>default</code> 字段，则在非生产环境下发出警告，提示注入属性未找到。</li></ul> <ol start="4"><li>返回解析后的注入属性对象 <code>result</code>。</li></ol></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue2/lifecycle/initRender.html" class="prev">
+        初始化阶段(initRender)
+      </a></span> <span class="next"><a href="/vue2/lifecycle/initState.html">
+        初始化阶段(initState)
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.a6f75832.js" defer></script><script src="/assets/js/2.79703549.js" defer></script><script src="/assets/js/12.f10d4594.js" defer></script>
+  </body>
+</html>
