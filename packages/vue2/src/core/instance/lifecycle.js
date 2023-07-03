@@ -96,42 +96,51 @@ export function lifecycleMixin (Vue: Class<Component>) {
 
   Vue.prototype.$destroy = function () {
     const vm: Component = this
+    // 防止重复调用
     if (vm._isBeingDestroyed) {
       return
     }
+  
     callHook(vm, 'beforeDestroy')
+  
+    // 表示组件正在销毁
     vm._isBeingDestroyed = true
-    // remove self from parent
+  
+    // 从父级中删除当前组件
     const parent = vm.$parent
+    // 如果父组件没有被销毁，并且当前组件不是一个抽象组件
     if (parent && !parent._isBeingDestroyed && !vm.$options.abstract) {
       remove(parent.$children, vm)
     }
-    // teardown watchers
+    // 销毁watcher监听
+    // _watcher 是组件的主 Watcher，负责监听组件中的响应式数据变化。
     if (vm._watcher) {
       vm._watcher.teardown()
     }
+    // _watchers 是组件所有的 Watcher 数组，包括主 Watcher 在内，存储了与组件的计算属性、侦听属性等相关联的其他 Watcher 实例。
     let i = vm._watchers.length
     while (i--) {
       vm._watchers[i].teardown()
     }
-    // remove reference from data ob
-    // frozen object may not have observer.
+  
+    // __ob__标识了一个对象的响应式特性，并管理依赖追踪和引用计数等功能，可通过vmCount--来释放对应的Observer对象
     if (vm._data.__ob__) {
       vm._data.__ob__.vmCount--
     }
-    // call the last hook...
+    // 标记组件已被销毁
     vm._isDestroyed = true
-    // invoke destroy hooks on current rendered tree
+    // 将当前虚拟节点_vnode 设置为null，触发当前渲染树的销毁
     vm.__patch__(vm._vnode, null)
-    // fire destroyed hook
+    // 触发destroyed生命周期钩子
     callHook(vm, 'destroyed')
-    // turn off all instance listeners.
+    // 关闭所有监听事件
     vm.$off()
-    // remove __vue__ reference
+    // 删除 __vue__ 引用
+    // __vue__ 用来获取组件实例
     if (vm.$el) {
       vm.$el.__vue__ = null
     }
-    // release circular reference (#6759)
+    // 解除循环引用
     if (vm.$vnode) {
       vm.$vnode.parent = null
     }
@@ -143,8 +152,10 @@ export function mountComponent (
   el: ?Element,
   hydrating?: boolean
 ): Component {
+  // 将组件实例$el设置为挂载的dom
   vm.$el = el
   if (!vm.$options.render) {
+  // 如果没有render，则创建一个空的VNode作为render
     vm.$options.render = createEmptyVNode
     if (process.env.NODE_ENV !== 'production') {
       /* istanbul ignore if */
@@ -164,6 +175,7 @@ export function mountComponent (
       }
     }
   }
+  // 调用生命周期 beforeMount
   callHook(vm, 'beforeMount')
 
   let updateComponent
@@ -187,13 +199,18 @@ export function mountComponent (
     }
   } else {
     updateComponent = () => {
+      // 执行渲染函数vm._render()得到一份最新的VNode节点树
+      // vm._update()方法对最新的VNode节点树与上一次渲染的旧VNode节点树进行对比并更新DOM节点(即patch操作)，完成一次渲染。
+      // hydrating 是一个布尔值，用于指示是否是服务端渲染（hydration）的过程。
       vm._update(vm._render(), hydrating)
     }
   }
 
-  // we set this to vm._watcher inside the watcher's constructor
-  // since the watcher's initial patch may call $forceUpdate (e.g. inside child
-  // component's mounted hook), which relies on vm._watcher being already defined
+  // 将updateComponent作为Watcher第二个参数传入，创建一个watcher实例。并且会立即执行updateComponent, 完成渲染
+
+  // Watcher实例化后，updateComponent函数中使用到的所有数据都将被watcher监听，一但发生改变，就执行第四个参数，也就是这里的before, 又通过私有属性_isMounted判断是否渲染完成后，再次调用beforeUpdate生命周期钩子。
+
+  // Watcher内部会在更新完成后调用updated生命周期钩子，从而完成整个挂载阶段的流程。
   new Watcher(vm, updateComponent, noop, {
     before () {
       if (vm._isMounted) {
@@ -203,8 +220,8 @@ export function mountComponent (
   }, true /* isRenderWatcher */)
   hydrating = false
 
-  // manually mounted instance, call mounted on self
-  // mounted is called for render-created child components in its inserted hook
+  // $vnode 组件实例的占位节点，用于表示组件在父组件中的位置
+  // $vnode 为null，表示组件初次挂载
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')

@@ -2,7 +2,7 @@
 
 前几篇文章中我们介绍了生命周期的初始化阶段，我们知道，在Vue初始化阶段完成后之后调用了`vm.$mount`方法，该方法表示Vue开始进入模板编译阶段，该阶段是一个将 Vue 组件的模板转换为渲染函数的过程。
 
-![lifecycle-mount](@assets/vue2/lifecycle-mount.png)
+![lifecycle-templateCompile](@assets/vue2/lifecycle-templateComplie.png)
 
 我们知道Vue 有很多不同的构建版本。实际上，在不同的构建版本中，`$mount` 的表现形式都不太一样。差异主要体现在完整版 `vue.js` 和只包含运行时版本 `vue.runtime.js`。
 
@@ -27,7 +27,7 @@ Vue.prototype.$mount = function (
 代码很简单，只有两行。
 
 - 检测`el`是否存在并且是否在浏览器环境中，如果是，则用`query`函数以根据选择器获取Dom元素
-- 最后调用`mountComponent`函数，`mountComponent`函数负责执行将Vue组件实例挂载到DOM元素上。此函数我们在模板编译阶段分析
+- 最后调用`mountComponent`函数进入挂载阶段，`mountComponent`函数负责执行将Vue组件实例挂载到DOM元素上。此函数我们在挂载阶段分析
 
 ## 完整版本
 

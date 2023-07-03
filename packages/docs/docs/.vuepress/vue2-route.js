@@ -12,6 +12,14 @@ module.exports = {
       ]
     },
     {
+      title: '变化侦测',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/reactive/',
+        '/vue2/reactive/object'
+      ]
+    },
+    {
       title: '生命周期',
       collapsable: false, // 可选的, 默认值是 true,
       sidebarDepth: 3,
@@ -25,8 +33,9 @@ module.exports = {
         '/vue2/lifecycle/initInjections',
         '/vue2/lifecycle/initState',
         '/vue2/lifecycle/initProvide',
-        '/vue2/lifecycle/templateComplie',
+        '/vue2/lifecycle/templateCompile',
         '/vue2/lifecycle/mount',
+        '/vue2/lifecycle/destroy',
       ]
     },
   ]
