@@ -103,6 +103,7 @@ function defineReactive (obj,key,val) {
   if (arguments.length === 2) {
     val = obj[key]
   }
+
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
@@ -195,13 +196,22 @@ function defineReactive (obj,key,val) {
   // 初始化依赖管理器
   const dep = new Dep()
 
+  // 如果存在val时对象或者数组创建observer
+  let childOb = !shallow && observe(val)
+
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
     get(){
       console.log(`${key}属性被读取`);
       // getter中收集依赖
-      dep.depend()
+      if (Dep.target) {
+        dep.depend()
+        if (childOb) {
+          // 为val收集依赖
+          childOb.dep.depend()
+        }
+      }
       return val;
     },
     set(newVal){

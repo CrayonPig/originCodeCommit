@@ -6,6 +6,7 @@
 import { def } from '../util/index'
 
 const arrayProto = Array.prototype
+// 创建一个继承自Array.prototype的对象，后续在此基础上修改。防止污染Array
 export const arrayMethods = Object.create(arrayProto)
 
 const methodsToPatch = [
@@ -37,8 +38,9 @@ methodsToPatch.forEach(function (method) {
         inserted = args.slice(2)
         break
     }
+    // 对新增元素的变化侦测
     if (inserted) ob.observeArray(inserted)
-    // notify change
+    // 触发依赖
     ob.dep.notify()
     return result
   })

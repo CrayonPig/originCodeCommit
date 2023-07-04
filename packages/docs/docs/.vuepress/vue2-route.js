@@ -16,7 +16,8 @@ module.exports = {
       collapsable: false, // 可选的, 默认值是 true,
       children: [
         '/vue2/reactive/',
-        '/vue2/reactive/object'
+        '/vue2/reactive/object',
+        '/vue2/reactive/array'
       ]
     },
     {

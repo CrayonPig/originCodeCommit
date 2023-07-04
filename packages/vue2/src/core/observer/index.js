@@ -47,10 +47,14 @@ export class Observer {
     // 表示此对象已经为响应式
     def(value, '__ob__', this); 
     if (Array.isArray(value)) {
+      // 支持原型继承（hasProto），使用原型继承的方式（protoAugment）
+      // 不支持原型继承（hasProto），使用拷贝属性的方式（copyAugment）
       const augment = hasProto
         ? protoAugment
         : copyAugment
+      // 将 arrayMethods 的方法混入数组对象
       augment(value, arrayMethods, arrayKeys)
+      // 对数组中的每一项调用 observe
       this.observeArray(value)
     } else {
       this.walk(value)
@@ -80,6 +84,7 @@ export class Observer {
 /**
  * Augment an target Object or Array by intercepting
  * the prototype chain using __proto__
+ * 原型继承的方式
  */
 function protoAugment (target, src: Object, keys: any) {
   /* eslint-disable no-proto */
@@ -90,6 +95,7 @@ function protoAugment (target, src: Object, keys: any) {
 /**
  * Augment an target Object or Array by defining
  * hidden properties.
+ * 拷贝属性的方式继承
  */
 /* istanbul ignore next */
 function copyAugment (target: Object, src: Object, keys: Array<string>) {
@@ -100,15 +106,16 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
 }
 
 /**
- * Attempt to create an observer instance for a value,
- * returns the new observer if successfully observed,
- * or the existing observer if the value already has one.
+ * 尝试为value创建Observer实例，
+ * 如果创建成功，则返回新的Observer，
+ * 如果value已经存在一个Observer，直接返回
  */
 export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
     return
   }
   let ob: Observer | void
+  // __ob__ 代表已有observer，直接返回
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
   } else if (
@@ -118,6 +125,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     Object.isExtensible(value) &&
     !value._isVue
   ) {
+    // 没有observer需要创建一个新的
     ob = new Observer(value)
   }
   if (asRootData && ob) {
@@ -152,7 +160,7 @@ export function defineReactive (
     // 传入参数没有val，则手动获取
     val = obj[key]
   }
-  // 创建观察者
+  // 如果存在val时对象或者数组创建observer
   let childOb = !shallow && observe(val)
 
   Object.defineProperty(obj, key, {
@@ -163,7 +171,7 @@ export function defineReactive (
       if (Dep.target) {
         dep.depend()
         if (childOb) {
-          // 如果存在子观察者，则也将数据加入子观察者的依赖项中
+          // 为val收集依赖
           childOb.dep.depend()
           if (Array.isArray(value)) {
             // 如果是数组，则跟踪数组依赖
@@ -271,8 +279,10 @@ export function del (target: Array<any> | Object, key: any) {
 function dependArray (value: Array<any>) {
   for (let e, i = 0, l = value.length; i < l; i++) {
     e = value[i]
+    // 已有observer时，直接收集数组的依赖
     e && e.__ob__ && e.__ob__.dep.depend()
     if (Array.isArray(e)) {
+      // 多重数组递归调用
       dependArray(e)
     }
   }
