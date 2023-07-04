@@ -35,15 +35,17 @@ export function toggleObserving (value: boolean) {
  * collect dependencies and dispatch updates.
  */
 export class Observer {
-  value: any;
-  dep: Dep;
-  vmCount: number; // number of vms that has this object as root $data
+  value: any; // 保存观察的对象
+  dep: Dep; // 依赖实例，用于跟踪依赖项
+  vmCount: number; // 作为根$数据拥有此对象的虚拟机数量
 
   constructor (value: any) {
-    this.value = value
-    this.dep = new Dep()
-    this.vmCount = 0
-    def(value, '__ob__', this)
+    this.value = value;
+    this.dep = new Dep(); 
+    this.vmCount = 0; // 初始化虚拟机数量为0
+    // 在对象上定义不可枚举的 __ob__ 属性，并将其值设置为当前 Observer 实例
+    // 表示此对象已经为响应式
+    def(value, '__ob__', this); 
     if (Array.isArray(value)) {
       const augment = hasProto
         ? protoAugment
@@ -55,15 +57,11 @@ export class Observer {
     }
   }
 
-  /**
-   * Walk through each property and convert them into
-   * getter/setters. This method should only be called when
-   * value type is Object.
-   */
+  // 遍历对象的所有属性，将每个属性转换为响应式
   walk (obj: Object) {
-    const keys = Object.keys(obj)
+    const keys = Object.keys(obj); // 获取对象的所有属性名
     for (let i = 0; i < keys.length; i++) {
-      defineReactive(obj, keys[i])
+      defineReactive(obj, keys[i]); // 将对象的每个属性转换为响应式
     }
   }
 
@@ -139,20 +137,24 @@ export function defineReactive (
   shallow?: boolean
 ) {
   const dep = new Dep()
-
+  // 获取obj的自身属性描述符
   const property = Object.getOwnPropertyDescriptor(obj, key)
+  // 如果是不可配置，则停止
   if (property && property.configurable === false) {
     return
   }
 
-  // cater for pre-defined getter/setters
+  // 处理预定义的 getter/setter
   const getter = property && property.get
   const setter = property && property.set
+
   if ((!getter || setter) && arguments.length === 2) {
+    // 传入参数没有val，则手动获取
     val = obj[key]
   }
-
+  // 创建观察者
   let childOb = !shallow && observe(val)
+
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
@@ -161,8 +163,10 @@ export function defineReactive (
       if (Dep.target) {
         dep.depend()
         if (childOb) {
+          // 如果存在子观察者，则也将数据加入子观察者的依赖项中
           childOb.dep.depend()
           if (Array.isArray(value)) {
+            // 如果是数组，则跟踪数组依赖
             dependArray(value)
           }
         }
@@ -171,7 +175,7 @@ export function defineReactive (
     },
     set: function reactiveSetter (newVal) {
       const value = getter ? getter.call(obj) : val
-      /* eslint-disable no-self-compare */
+      // 如果新值和旧值相同，或者都是 NaN，则不进行任何操作
       if (newVal === value || (newVal !== newVal && value !== value)) {
         return
       }
@@ -184,7 +188,9 @@ export function defineReactive (
       } else {
         val = newVal
       }
+      // 创建观察者
       childOb = !shallow && observe(newVal)
+      // 通知依赖项发生变化
       dep.notify()
     }
   })
