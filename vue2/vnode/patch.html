@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>patch | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d7a18e9.css" as="style"><link rel="preload" href="/assets/js/app.e279cdf5.js" as="script"><link rel="preload" href="/assets/js/2.d0cc971d.js" as="script"><link rel="preload" href="/assets/js/7.a8f048c0.js" as="script"><link rel="prefetch" href="/assets/js/10.93695c2c.js"><link rel="prefetch" href="/assets/js/11.3c28975e.js"><link rel="prefetch" href="/assets/js/12.d1f4df9e.js"><link rel="prefetch" href="/assets/js/13.3cfb3392.js"><link rel="prefetch" href="/assets/js/14.4f7c14b9.js"><link rel="prefetch" href="/assets/js/15.11e8bf1a.js"><link rel="prefetch" href="/assets/js/16.f144b5b8.js"><link rel="prefetch" href="/assets/js/17.b2064977.js"><link rel="prefetch" href="/assets/js/18.fe130512.js"><link rel="prefetch" href="/assets/js/19.e71590ed.js"><link rel="prefetch" href="/assets/js/20.2ddc4b15.js"><link rel="prefetch" href="/assets/js/21.0d92c48f.js"><link rel="prefetch" href="/assets/js/22.3e552d45.js"><link rel="prefetch" href="/assets/js/23.730e6c8d.js"><link rel="prefetch" href="/assets/js/24.564d3821.js"><link rel="prefetch" href="/assets/js/25.fbfb2b74.js"><link rel="prefetch" href="/assets/js/26.b73b6c6d.js"><link rel="prefetch" href="/assets/js/27.b1fe4fe7.js"><link rel="prefetch" href="/assets/js/28.61616c0f.js"><link rel="prefetch" href="/assets/js/29.be4eee72.js"><link rel="prefetch" href="/assets/js/3.2cfd5797.js"><link rel="prefetch" href="/assets/js/30.f0ea0fb5.js"><link rel="prefetch" href="/assets/js/4.2dcc77f6.js"><link rel="prefetch" href="/assets/js/5.dff7c1f7.js"><link rel="prefetch" href="/assets/js/6.f5da23ab.js"><link rel="prefetch" href="/assets/js/8.93b399ac.js"><link rel="prefetch" href="/assets/js/9.c165390a.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d7a18e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vue2/" aria-current="page" class="sidebar-link">Vue2源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前期准备</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vue2/prepare/version.html" class="sidebar-link">构建版本</a></li><li><a href="/vue2/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vue2/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>变化侦测</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/reactive/" class="sidebar-link">简介</a></li><li><a href="/vue2/reactive/object.html" class="sidebar-link">Object的变化侦测</a></li><li><a href="/vue2/reactive/array.html" class="sidebar-link">Array的变化侦测</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>虚拟DOM</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/vnode/" aria-current="page" class="sidebar-link">简介</a></li><li><a href="/vue2/vnode/vnode.html" class="sidebar-link">Vue中的虚拟DOM</a></li><li><a href="/vue2/vnode/patch.html" aria-current="page" class="active sidebar-link">patch</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue2/vnode/patch.html#创建节点" class="sidebar-link">创建节点</a></li><li class="sidebar-sub-header"><a href="/vue2/vnode/patch.html#删除节点" class="sidebar-link">删除节点</a></li><li class="sidebar-sub-header"><a href="/vue2/vnode/patch.html#更新节点" class="sidebar-link">更新节点</a></li><li class="sidebar-sub-header"><a href="/vue2/vnode/patch.html#总结" class="sidebar-link">总结</a></li></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>生命周期</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/lifecycle/" class="sidebar-link">简介</a></li><li><a href="/vue2/lifecycle/newVue.html" class="sidebar-link">初始化阶段(new Vue)</a></li><li><a href="/vue2/lifecycle/mergeOptions.html" class="sidebar-link">初始化阶段(合并属性)</a></li><li><a href="/vue2/lifecycle/initLifecycle.html" class="sidebar-link">初始化阶段(initLifecycle)</a></li><li><a href="/vue2/lifecycle/initEvents.html" class="sidebar-link">初始化阶段(initEvents)</a></li><li><a href="/vue2/lifecycle/initRender.html" class="sidebar-link">初始化阶段(initRender)</a></li><li><a href="/vue2/lifecycle/initInjections.html" class="sidebar-link">初始化阶段(initInjections)</a></li><li><a href="/vue2/lifecycle/initState.html" class="sidebar-link">初始化阶段(initState)</a></li><li><a href="/vue2/lifecycle/initProvide.html" class="sidebar-link">初始化阶段(initProvide)</a></li><li><a href="/vue2/lifecycle/templateCompile.html" class="sidebar-link">模板编译阶段</a></li><li><a href="/vue2/lifecycle/mount.html" class="sidebar-link">挂载阶段</a></li><li><a href="/vue2/lifecycle/destroy.html" class="sidebar-link">销毁阶段</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="patch"><a href="#patch" class="header-anchor">#</a> patch</h1> <p>介绍<code>虚拟DOM</code>的时候，我们就说过引入<code>虚拟DOM</code>的原因就是对比状态更新前后的<code>虚拟DOM</code>的差异，来更新<code>真实DOM</code>，达到减少操作<code>真实DOM</code>的目的。</p> <p>这对比的过程，就是<code>patch</code>的一部分，我们称之为<code>Diff</code>。而完整的<code>patch</code>函数是 Vue2 内部的一个核心函数，用于将新的<code>虚拟DOM</code>转化为<code>真实DOM</code>并应用到浏览器中。它会根据<code>Diff算法</code>的计算结果进行更新，包括添加、移动、修改或删除<code>真实DOM</code>节点，以确保最终的DOM结构与最新的<code>虚拟DOM</code>一致。</p> <p><code>patch</code>对现有DOM的更改主要做三件事情：</p> <ol><li>创建新增的节点：新的<code>VNode</code>中有而旧的<code>oldVNode</code>中没有，就在旧的<code>oldVNode</code>中创建。</li> <li>删除已经废弃的节点：新的<code>VNode</code>中没有而旧的<code>oldVNode</code>中有，就从旧的<code>oldVNode</code>中删除。</li> <li>修改需要更新的节点：新的<code>VNode</code>和旧的<code>oldVNode</code>中都有，就以新的<code>VNode</code>为准，更新旧的<code>oldVNode</code>。</li></ol> <h2 id="创建节点"><a href="#创建节点" class="header-anchor">#</a> 创建节点</h2> <p>创建节点通常发生在两种情况下</p> <ol><li>当<code>oldVNode</code>不存在而<code>vnode</code>存在时，需要使用<code>vnode</code>生成真实的DOM元素插入到视图中。一般发生在首次渲染时</li> <li>当<code>oldVNode</code>和<code>vnode</code>完全不是同一个节点时，需要使用<code>vnode</code>生成真实的DOM元素插入到视图中。</li></ol> <p>我们之前分析过<code>VNode</code>可以生成六种不同的节点类型，但实际上只有3种类型的节点能够被创建并插入到DOM中，它们分别是：元素节点、文本节点、注释节点。在创建节点的过程中，会根据它们的特点来进行不同的创建方式。源码在<code>/src/core/vdom/patch.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">createElm</span> <span class="token punctuation">(</span>
+    vnode<span class="token punctuation">,</span> <span class="token comment">// 虚拟节点</span>
+    insertedVnodeQueue<span class="token punctuation">,</span> <span class="token comment">// 插入虚拟节点队列</span>
+    parentElm<span class="token punctuation">,</span> <span class="token comment">// 父元素</span>
+    refElm<span class="token punctuation">,</span> <span class="token comment">// 参考元素</span>
+    nested<span class="token punctuation">,</span> <span class="token comment">// 是否嵌套</span>
+    ownerArray<span class="token punctuation">,</span> <span class="token comment">// 虚拟节点所属的数组</span>
+    index <span class="token comment">// 虚拟节点在数组中的索引</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> data <span class="token operator">=</span> vnode<span class="token punctuation">.</span>data
+    <span class="token keyword">const</span> children <span class="token operator">=</span> vnode<span class="token punctuation">.</span>children
+    <span class="token keyword">const</span> tag <span class="token operator">=</span> vnode<span class="token punctuation">.</span>tag
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>tag<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果是元素节点</span>
+      vnode<span class="token punctuation">.</span>elm <span class="token operator">=</span> vnode<span class="token punctuation">.</span>ns
+        <span class="token comment">// 创建 SVG 元素和其他 XML 具有命名空间的元素</span>
+        <span class="token operator">?</span> nodeOps<span class="token punctuation">.</span><span class="token function">createElementNS</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>ns<span class="token punctuation">,</span> tag<span class="token punctuation">)</span> 
+        <span class="token comment">// 创建普通元素</span>
+        <span class="token operator">:</span> nodeOps<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span> vnode<span class="token punctuation">)</span> 
+
+      <span class="token comment">// 设置作用域</span>
+      <span class="token function">setScope</span><span class="token punctuation">(</span>vnode<span class="token punctuation">)</span>
+      <span class="token comment">// 创建子节点</span>
+      <span class="token function">createChildren</span><span class="token punctuation">(</span>vnode<span class="token punctuation">,</span> children<span class="token punctuation">,</span> insertedVnodeQueue<span class="token punctuation">)</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果存在节点数据，则调用 invokeCreateHooks 函数执行创建钩子函数</span>
+        <span class="token function">invokeCreateHooks</span><span class="token punctuation">(</span>vnode<span class="token punctuation">,</span> insertedVnodeQueue<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token function">insert</span><span class="token punctuation">(</span>parentElm<span class="token punctuation">,</span> vnode<span class="token punctuation">.</span>elm<span class="token punctuation">,</span> refElm<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isTrue</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>isComment<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果是注释节点，创建注释节点并插入到父元素中</span>
+      vnode<span class="token punctuation">.</span>elm <span class="token operator">=</span> nodeOps<span class="token punctuation">.</span><span class="token function">createComment</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+      <span class="token function">insert</span><span class="token punctuation">(</span>parentElm<span class="token punctuation">,</span> vnode<span class="token punctuation">.</span>elm<span class="token punctuation">,</span> refElm<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 否则，创建文本节点并插入到父元素中</span>
+      vnode<span class="token punctuation">.</span>elm <span class="token operator">=</span> nodeOps<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+      <span class="token function">insert</span><span class="token punctuation">(</span>parentElm<span class="token punctuation">,</span> vnode<span class="token punctuation">.</span>elm<span class="token punctuation">,</span> refElm<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688557351610-68544">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function createElm (
+    vnode, // 虚拟节点
+    insertedVnodeQueue, // 插入虚拟节点队列
+    parentElm, // 父元素
+    refElm, // 参考元素
+    nested, // 是否嵌套
+    ownerArray, // 虚拟节点所属的数组
+    index // 虚拟节点在数组中的索引
+  ) {
+    const data = vnode.data
+    const children = vnode.children
+    const tag = vnode.tag
+    if (isDef(tag)) {
+      // 如果是元素节点
+      vnode.elm = vnode.ns
+        // 创建 SVG 元素和其他 XML 具有命名空间的元素
+        ? nodeOps.createElementNS(vnode.ns, tag) 
+        // 创建普通元素
+        : nodeOps.createElement(tag, vnode) 
+
+      // 设置作用域
+      setScope(vnode)
+      // 创建子节点
+      createChildren(vnode, children, insertedVnodeQueue)
+
+      if (isDef(data)) {
+        // 如果存在节点数据，则调用 invokeCreateHooks 函数执行创建钩子函数
+        invokeCreateHooks(vnode, insertedVnodeQueue)
+      }
+      insert(parentElm, vnode.elm, refElm)
+    } else if (isTrue(vnode.isComment)) {
+      // 如果是注释节点，创建注释节点并插入到父元素中
+      vnode.elm = nodeOps.createComment(vnode.text)
+      insert(parentElm, vnode.elm, refElm)
+    } else {
+      // 否则，创建文本节点并插入到父元素中
+      vnode.elm = nodeOps.createTextNode(vnode.text)
+      insert(parentElm, vnode.elm, refElm)
+    }
+  }
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688557351610-68544" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><blockquote><p><code>nodeOps</code>是Vue为了跨平台兼容性，对所有节点操作进行了封装，例如<code>nodeOps.createTextNode()</code>在浏览器端等同于<code>document.createTextNode()</code></p></blockquote> <p>从上述代码中，我们可以发现，创建节点时，我们先对节点类型做了判断</p> <ul><li>根据<code>tag</code>判断是否为元素节点，如果是元素节点，则调用<code>createElement</code>或<code>createElementNS</code>方法创建元素节点，再递归子节点，插入到当前节点中，最后把当前节点插入DOM中</li> <li>不是元素节点则根据<code>isComment</code>判断是否为注释节点，如果是注释节点，则调用<code>createComment</code>生成注释节点，插入DOM中</li> <li>如果都不是则为文本节点，则调用<code>createTextNode</code>生成文本节点，插入DOM中</li></ul> <p>这样就完成了创建流程，流程图如下</p> <p><img src="/assets/img/createElm.02d5c7b1.png" alt="创建节点流程图"></p> <h2 id="删除节点"><a href="#删除节点" class="header-anchor">#</a> 删除节点</h2> <p>删除节点的场景很简单，就是当一个节点只存在于<code>oldVNode</code>中时，从DOM中删除</p> <p>代码也很简单，获取父级节点，如果父级节点存在，则从父级中删除，如果父级不存在，说明整个节点都被删除了，无需操作</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">removeNode</span> <span class="token punctuation">(</span><span class="token parameter">el</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> parent <span class="token operator">=</span> nodeOps<span class="token punctuation">.</span><span class="token function">parentNode</span><span class="token punctuation">(</span>el<span class="token punctuation">)</span>
+  <span class="token comment">// element may have already been removed due to v-html / v-text</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    nodeOps<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>parent<span class="token punctuation">,</span> el<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688557351611-37437">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function removeNode (el) {
+  const parent = nodeOps.parentNode(el)
+  // element may have already been removed due to v-html / v-text
+  if (isDef(parent)) {
+    nodeOps.removeChild(parent, el)
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688557351611-37437" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h2 id="更新节点"><a href="#更新节点" class="header-anchor">#</a> 更新节点</h2> <p>新增节点和删除节点的场景，都是在新旧两个节点是完全不同的情况下。我们需要以新节点为标准渲染DOM，所以只能新增新节点和删除旧节点。</p> <p>相比于这种场景，新旧两个节点是同一节点的场景更为常见。在这个场景中，我们需要对新旧两个节点做更详细的对比。</p> <ol><li>如果 <code>vnode</code> 和 <code>oldVnode</code> 是同一个对象（引用相同），则直接返回，无需更新。</li> <li>如果 <code>vnode</code> 和 <code>oldVnode</code> 都是静态节点，并且它们的 key 相同，则更新 <code>vnode</code> 的一些属性到<code>oldVnode</code> 上，并返回。</li> <li>如果 <code>vnode</code> 为文本节点，则判断<code>oldVnode</code>是否为文本节点
+<ol><li><code>oldVnode</code>为文本节点，并且两者文本内容不同，则直接更新<code>oldVnode</code>的文本内容</li> <li><code>oldVnode</code>不为文本节点，则删除<code>oldVnode</code>子节点，并将其改为文本节点，更新文本内容</li></ol></li> <li>如果 <code>vnode</code> 为元素节点，则判断<code>vnode</code>是否包含子节点
+<ol><li>如果<code>vnode</code>有子节点，则判断<code>oldVnode</code>是否包含子节点
+<ol><li>如果<code>oldVnode</code>有子节点，则需要对比子节点后进行更新</li> <li>如果<code>oldVnode</code>没有子节点，那这个节点可能是空节点或者文本节点
+<ol><li>如果<code>oldVnode</code>是空节点，则将<code>vnode</code>子节点挨个添加到<code>oldVnode</code></li> <li>如果<code>oldVnode</code>是文本节点，则将文本内容清空后，将<code>vnode</code>子节点挨个添加到<code>oldVnode</code></li></ol></li></ol></li> <li>如果<code>vnode</code>没有子节点，又不是文本节点，说明是个空节点，直接将<code>oldVnode</code>内容清空，置为空节点</li></ol></li></ol> <p>带着这个逻辑，我们看看Vue源码中是如何处理更新节点的，源码在<code>/src/core/vdom/patch.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">patchVnode</span> <span class="token punctuation">(</span><span class="token parameter">oldVnode<span class="token punctuation">,</span> vnode<span class="token punctuation">,</span> insertedVnodeQueue<span class="token punctuation">,</span> removeOnly</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 节点相同不更新（引用相同）</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>oldVnode <span class="token operator">===</span> vnode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> elm <span class="token operator">=</span> vnode<span class="token punctuation">.</span>elm <span class="token operator">=</span> oldVnode<span class="token punctuation">.</span>elm
+
+    <span class="token comment">// 如果都是静态节点</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isTrue</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>isStatic<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+      <span class="token function">isTrue</span><span class="token punctuation">(</span>oldVnode<span class="token punctuation">.</span>isStatic<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+      <span class="token comment">// 相同的key</span>
+      vnode<span class="token punctuation">.</span>key <span class="token operator">===</span> oldVnode<span class="token punctuation">.</span>key <span class="token operator">&amp;&amp;</span>
+      <span class="token comment">// 新节点时克隆节点 || 只渲染一次的节点</span>
+      <span class="token punctuation">(</span><span class="token function">isTrue</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>isCloned<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">isTrue</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>isOnce<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 直接更新组件实例</span>
+      vnode<span class="token punctuation">.</span>componentInstance <span class="token operator">=</span> oldVnode<span class="token punctuation">.</span>componentInstance
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">let</span> i
+    <span class="token keyword">const</span> data <span class="token operator">=</span> vnode<span class="token punctuation">.</span>data
+    <span class="token keyword">const</span> oldCh <span class="token operator">=</span> oldVnode<span class="token punctuation">.</span>children
+    <span class="token keyword">const</span> ch <span class="token operator">=</span> vnode<span class="token punctuation">.</span>children
+
+    <span class="token comment">// 新节点没有文本内容text</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isUndef</span><span class="token punctuation">(</span>vnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 新旧节点的子节点都存在</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>oldCh<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isDef</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 并且不相等，更新子节点</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>oldCh <span class="token operator">!==</span> ch<span class="token punctuation">)</span> <span class="token function">updateChildren</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> oldCh<span class="token punctuation">,</span> ch<span class="token punctuation">,</span> insertedVnodeQueue<span class="token punctuation">,</span> removeOnly<span class="token punctuation">)</span>
+      <span class="token comment">// 只有新节点的有子节点</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果旧节点存在文本内容text，则清空DOM的文本内容</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>oldVnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span> nodeOps<span class="token punctuation">.</span><span class="token function">setTextContent</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span>
+        <span class="token comment">// 新的节点的子节点添加到旧的节点的 DOM 元素中。</span>
+        <span class="token function">addVnodes</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> ch<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ch<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> insertedVnodeQueue<span class="token punctuation">)</span>
+      <span class="token comment">// 新节点没有文本内容，而且只有旧节点的有子节点</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>oldCh<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 删除DOM的子节点</span>
+        <span class="token function">removeVnodes</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> oldCh<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> oldCh<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+      <span class="token comment">// 新节点没有文本内容，旧节点有文本内容</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isDef</span><span class="token punctuation">(</span>oldVnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 清空旧节点的内容</span>
+        nodeOps<span class="token punctuation">.</span><span class="token function">setTextContent</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token comment">// 新节点有文本内容并且跟旧节点文本不相等</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>oldVnode<span class="token punctuation">.</span>text <span class="token operator">!==</span> vnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 新节点是文本节点，直接把旧节点的文本内容替换</span>
+      nodeOps<span class="token punctuation">.</span><span class="token function">setTextContent</span><span class="token punctuation">(</span>elm<span class="token punctuation">,</span> vnode<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1688557351611-26517">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+    // 节点相同不更新（引用相同）
+    if (oldVnode === vnode) {
+      return
+    }
+
+    const elm = vnode.elm = oldVnode.elm
+
+    // 如果都是静态节点
+    if (isTrue(vnode.isStatic) &amp;&amp;
+      isTrue(oldVnode.isStatic) &amp;&amp;
+      // 相同的key
+      vnode.key === oldVnode.key &amp;&amp;
+      // 新节点时克隆节点 || 只渲染一次的节点
+      (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))
+    ) {
+      // 直接更新组件实例
+      vnode.componentInstance = oldVnode.componentInstance
+      return
+    }
+
+    let i
+    const data = vnode.data
+    const oldCh = oldVnode.children
+    const ch = vnode.children
+
+    // 新节点没有文本内容text
+    if (isUndef(vnode.text)) {
+      // 新旧节点的子节点都存在
+      if (isDef(oldCh) &amp;&amp; isDef(ch)) {
+        // 并且不相等，更新子节点
+        if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+      // 只有新节点的有子节点
+      } else if (isDef(ch)) {
+        // 如果旧节点存在文本内容text，则清空DOM的文本内容
+        if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, '')
+        // 新的节点的子节点添加到旧的节点的 DOM 元素中。
+        addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+      // 新节点没有文本内容，而且只有旧节点的有子节点
+      } else if (isDef(oldCh)) {
+        // 删除DOM的子节点
+        removeVnodes(elm, oldCh, 0, oldCh.length - 1)
+      // 新节点没有文本内容，旧节点有文本内容
+      } else if (isDef(oldVnode.text)) {
+        // 清空旧节点的内容
+        nodeOps.setTextContent(elm, '')
+      }
+    // 新节点有文本内容并且跟旧节点文本不相等
+    } else if (oldVnode.text !== vnode.text) {
+      // 新节点是文本节点，直接把旧节点的文本内容替换
+      nodeOps.setTextContent(elm, vnode.text)
+    }
+  }
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1688557351611-26517" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br></div></div><p>在<code>vnode</code> 和 <code>oldVnode</code>都有子节点时，调用了 <code>updateChildren</code>方法去对比子节点，这个方法我们下节去分析</p> <p>源码中的顺序跟我们分析的顺序不太一样，但整体的判断逻辑是一致的，可以跟着流程图对比源码中的注释一起梳理</p> <p><img src="/assets/img/patchVnode.7b0442aa.png" alt="更新节点"></p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>这节主要分析了<code>patch</code>中的<code>Diff</code>部分，针对创建节点、删除节点、更新节点三部分分析了适用场景及源码逻辑，并辅助有流程图去分析。</p> <p>对于<code>vnode</code> 和 <code>oldVnode</code>都有子节点时的逻辑，我们在下节进行详细的分析。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue2/vnode/vnode.html" class="prev">
+        Vue中的虚拟DOM
+      </a></span> <span class="next"><a href="/vue2/lifecycle/">
+        简介
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e279cdf5.js" defer></script><script src="/assets/js/2.d0cc971d.js" defer></script><script src="/assets/js/7.a8f048c0.js" defer></script>
+  </body>
+</html>
