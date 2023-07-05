@@ -96,6 +96,7 @@ export function createPatchFunction (backend) {
     return remove
   }
 
+  // 删除节点
   function removeNode (el) {
     const parent = nodeOps.parentNode(el)
     // element may have already been removed due to v-html / v-text
@@ -122,26 +123,28 @@ export function createPatchFunction (backend) {
 
   let creatingElmInVPre = 0
 
+  // 创建DOM
   function createElm (
-    vnode,
-    insertedVnodeQueue,
-    parentElm,
-    refElm,
-    nested,
-    ownerArray,
-    index
+    vnode, // 虚拟节点
+    insertedVnodeQueue, // 插入虚拟节点队列
+    parentElm, // 父元素
+    refElm, // 参考元素
+    nested, // 是否嵌套
+    ownerArray, // 虚拟节点所属的数组
+    index // 虚拟节点在数组中的索引
   ) {
     if (isDef(vnode.elm) && isDef(ownerArray)) {
-      // This vnode was used in a previous render!
-      // now it's used as a new node, overwriting its elm would cause
-      // potential patch errors down the road when it's used as an insertion
-      // reference node. Instead, we clone the node on-demand before creating
-      // associated DOM element for it.
+      // 如果虚拟节点已经有关联的 DOM 元素，并且存在所属的数组
+      // 说明该虚拟节点在之前的渲染中被使用过
+      // 现在作为一个新节点使用，如果直接覆盖它的 elm 属性会导致潜在的补丁错误
+      // 因此，在创建关联的 DOM 元素之前，我们会先克隆这个节点
       vnode = ownerArray[index] = cloneVNode(vnode)
     }
 
-    vnode.isRootInsert = !nested // for transition enter check
+    // 用于过渡效果的插入检查
+    vnode.isRootInsert = !nested 
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
+      // 如果是组件节点，通过 createComponent 函数创建组件实例并挂载
       return
     }
 
@@ -149,6 +152,7 @@ export function createPatchFunction (backend) {
     const children = vnode.children
     const tag = vnode.tag
     if (isDef(tag)) {
+      // 如果是元素节点
       if (process.env.NODE_ENV !== 'production') {
         if (data && data.pre) {
           creatingElmInVPre++
@@ -164,8 +168,11 @@ export function createPatchFunction (backend) {
       }
 
       vnode.elm = vnode.ns
-        ? nodeOps.createElementNS(vnode.ns, tag)
-        : nodeOps.createElement(tag, vnode)
+        // 创建 SVG 元素和其他 XML 具有命名空间的元素
+        ? nodeOps.createElementNS(vnode.ns, tag) 
+        // 创建普通元素
+        : nodeOps.createElement(tag, vnode) 
+      // 设置作用域
       setScope(vnode)
 
       /* istanbul ignore if */
@@ -188,8 +195,10 @@ export function createPatchFunction (backend) {
           insert(parentElm, vnode.elm, refElm)
         }
       } else {
+        // 创建子节点
         createChildren(vnode, children, insertedVnodeQueue)
         if (isDef(data)) {
+        // 如果存在节点数据，则调用 invokeCreateHooks 函数执行创建钩子函数
           invokeCreateHooks(vnode, insertedVnodeQueue)
         }
         insert(parentElm, vnode.elm, refElm)
@@ -199,9 +208,11 @@ export function createPatchFunction (backend) {
         creatingElmInVPre--
       }
     } else if (isTrue(vnode.isComment)) {
+      // 如果是注释节点，创建注释节点并插入到父元素中
       vnode.elm = nodeOps.createComment(vnode.text)
       insert(parentElm, vnode.elm, refElm)
     } else {
+      // 否则，创建文本节点并插入到父元素中
       vnode.elm = nodeOps.createTextNode(vnode.text)
       insert(parentElm, vnode.elm, refElm)
     }
@@ -499,60 +510,81 @@ export function createPatchFunction (backend) {
   }
 
   function patchVnode (oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+    // 节点相同不更新（引用相同）
     if (oldVnode === vnode) {
       return
     }
 
     const elm = vnode.elm = oldVnode.elm
 
+    // 异步占位符
     if (isTrue(oldVnode.isAsyncPlaceholder)) {
+      // 如果异步组件已更新，则混合更新
       if (isDef(vnode.asyncFactory.resolved)) {
         hydrate(oldVnode.elm, vnode, insertedVnodeQueue)
       } else {
+        // 未更新，仅占位
         vnode.isAsyncPlaceholder = true
       }
       return
     }
 
-    // reuse element for static trees.
-    // note we only do this if the vnode is cloned -
-    // if the new node is not cloned it means the render functions have been
-    // reset by the hot-reload-api and we need to do a proper re-render.
+    // 如果都是静态节点
     if (isTrue(vnode.isStatic) &&
       isTrue(oldVnode.isStatic) &&
+      // 相同的key
       vnode.key === oldVnode.key &&
+      // 新节点时克隆节点 || 只渲染一次的节点
       (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))
     ) {
+      // 直接更新组件实例
       vnode.componentInstance = oldVnode.componentInstance
       return
     }
 
     let i
     const data = vnode.data
+    // data存在 && hook存在 && prepatch预补丁函数存在
     if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
+      // 执行预补丁函数
       i(oldVnode, vnode)
     }
 
     const oldCh = oldVnode.children
     const ch = vnode.children
+    // 处理子节点的更新，触发相应回调和钩子函数
     if (isDef(data) && isPatchable(vnode)) {
       for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
       if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
     }
+
+    // 新节点没有文本内容text
     if (isUndef(vnode.text)) {
+      // 新旧节点的子节点都存在
       if (isDef(oldCh) && isDef(ch)) {
+        // 并且不相等，更新子节点
         if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+      // 只有新节点的有子节点
       } else if (isDef(ch)) {
+        // 如果旧节点存在文本内容text，则清空DOM的文本内容
         if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, '')
+        // 新的节点的子节点添加到旧的节点的 DOM 元素中。
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+      // 新节点没有文本内容，而且只有旧节点的有子节点
       } else if (isDef(oldCh)) {
+        // 删除DOM的子节点
         removeVnodes(elm, oldCh, 0, oldCh.length - 1)
+      // 新节点没有文本内容，旧节点有文本内容
       } else if (isDef(oldVnode.text)) {
+        // 清空旧节点的内容
         nodeOps.setTextContent(elm, '')
       }
+    // 新节点有文本内容并且跟旧节点文本不相等
     } else if (oldVnode.text !== vnode.text) {
+      // 新节点是文本节点，直接把旧节点的文本内容替换
       nodeOps.setTextContent(elm, vnode.text)
     }
+    // 处理新节点的更新，触发相应回调和钩子函数
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.postpatch)) i(oldVnode, vnode)
     }

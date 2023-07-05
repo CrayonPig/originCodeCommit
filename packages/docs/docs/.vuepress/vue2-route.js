@@ -21,6 +21,15 @@ module.exports = {
       ]
     },
     {
+      title: '虚拟DOM',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/vnode/',
+        '/vue2/vnode/vnode',
+        '/vue2/vnode/patch',
+      ]
+    },
+    {
       title: '生命周期',
       collapsable: false, // 可选的, 默认值是 true,
       sidebarDepth: 3,
