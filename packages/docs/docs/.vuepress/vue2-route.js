@@ -27,6 +27,9 @@ module.exports = {
         '/vue2/vnode/',
         '/vue2/vnode/vnode',
         '/vue2/vnode/patch',
+        '/vue2/vnode/updateChildren',
+        '/vue2/vnode/optimizeUpdateChildren',
+        '/vue2/vnode/diffSummary',
       ]
     },
     {
