@@ -33,6 +33,15 @@ module.exports = {
       ]
     },
     {
+      title: '模板编译',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/compile/',
+        '/vue2/compile/parse',
+        '/vue2/compile/parseHtml',
+      ]
+    },
+    {
       title: '生命周期',
       collapsable: false, // 可选的, 默认值是 true,
       sidebarDepth: 3,

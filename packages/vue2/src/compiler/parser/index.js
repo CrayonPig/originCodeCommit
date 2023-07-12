@@ -115,6 +115,7 @@ export function parse (
     shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
     shouldKeepComment: options.comments,
     start (tag, attrs, unary) {
+      // 每当解析到标签的开始位置时，触发该函数
       // check namespace.
       // inherit parent ns if there is one
       const ns = (currentParent && currentParent.ns) || platformGetTagNamespace(tag)
@@ -124,7 +125,7 @@ export function parse (
       if (isIE && ns === 'svg') {
         attrs = guardIESVGBug(attrs)
       }
-
+      // 生成元素类型的AST节点
       let element: ASTElement = createASTElement(tag, attrs, currentParent)
       if (ns) {
         element.ns = ns
@@ -222,6 +223,7 @@ export function parse (
     },
 
     end () {
+      // 每当解析到标签的结束位置时，触发该函数
       // remove trailing whitespace
       const element = stack[stack.length - 1]
       const lastNode = element.children[element.children.length - 1]
@@ -235,6 +237,7 @@ export function parse (
     },
 
     chars (text: string) {
+    // 每当解析到文本时，触发该函数
       if (!currentParent) {
         if (process.env.NODE_ENV !== 'production') {
           if (text === template) {
@@ -265,6 +268,7 @@ export function parse (
       if (text) {
         let res
         if (!inVPre && text !== ' ' && (res = parseText(text, delimiters))) {
+          // 文本中带变量，创建动态文本节点
           children.push({
             type: 2,
             expression: res.expression,
@@ -272,6 +276,7 @@ export function parse (
             text
           })
         } else if (text !== ' ' || !children.length || children[children.length - 1].text !== ' ') {
+          // 文本中不变量，创建静态文本节点
           children.push({
             type: 3,
             text
@@ -280,6 +285,7 @@ export function parse (
       }
     },
     comment (text: string) {
+      // 每当解析到注释时，触发该函数
       currentParent.children.push({
         type: 3,
         text,
