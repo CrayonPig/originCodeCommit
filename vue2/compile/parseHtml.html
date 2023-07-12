@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>模板解析阶段（HTML解析器） | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d7a18e9.css" as="style"><link rel="preload" href="/assets/js/app.a3a3ab63.js" as="script"><link rel="preload" href="/assets/js/2.7030d6aa.js" as="script"><link rel="preload" href="/assets/js/11.309be7be.js" as="script"><link rel="prefetch" href="/assets/js/10.e6ecd050.js"><link rel="prefetch" href="/assets/js/12.4630e445.js"><link rel="prefetch" href="/assets/js/13.d78d45e0.js"><link rel="prefetch" href="/assets/js/14.8e8599a2.js"><link rel="prefetch" href="/assets/js/15.3d0fd3f8.js"><link rel="prefetch" href="/assets/js/16.b7e9c366.js"><link rel="prefetch" href="/assets/js/17.9d13e44b.js"><link rel="prefetch" href="/assets/js/18.d8c5d55e.js"><link rel="prefetch" href="/assets/js/19.d6472763.js"><link rel="prefetch" href="/assets/js/20.15f81965.js"><link rel="prefetch" href="/assets/js/21.b54dc750.js"><link rel="prefetch" href="/assets/js/22.c9299d16.js"><link rel="prefetch" href="/assets/js/23.f9233eb0.js"><link rel="prefetch" href="/assets/js/24.71a30518.js"><link rel="prefetch" href="/assets/js/25.211a1c4c.js"><link rel="prefetch" href="/assets/js/26.d9b740c1.js"><link rel="prefetch" href="/assets/js/27.a990d43d.js"><link rel="prefetch" href="/assets/js/28.c869d616.js"><link rel="prefetch" href="/assets/js/29.475f844a.js"><link rel="prefetch" href="/assets/js/3.6c5801ba.js"><link rel="prefetch" href="/assets/js/30.0d50b0ee.js"><link rel="prefetch" href="/assets/js/31.15857556.js"><link rel="prefetch" href="/assets/js/32.a5b20447.js"><link rel="prefetch" href="/assets/js/33.ddad069e.js"><link rel="prefetch" href="/assets/js/34.19270bfc.js"><link rel="prefetch" href="/assets/js/35.ce973feb.js"><link rel="prefetch" href="/assets/js/36.944ebc4e.js"><link rel="prefetch" href="/assets/js/4.9fd71228.js"><link rel="prefetch" href="/assets/js/5.ae88b403.js"><link rel="prefetch" href="/assets/js/6.439693f6.js"><link rel="prefetch" href="/assets/js/7.3b043961.js"><link rel="prefetch" href="/assets/js/8.c285fd81.js"><link rel="prefetch" href="/assets/js/9.eea52753.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d7a18e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vue2/" aria-current="page" class="sidebar-link">Vue2源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前期准备</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vue2/prepare/version.html" class="sidebar-link">构建版本</a></li><li><a href="/vue2/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vue2/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>变化侦测</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/reactive/" class="sidebar-link">简介</a></li><li><a href="/vue2/reactive/object.html" class="sidebar-link">Object的变化侦测</a></li><li><a href="/vue2/reactive/array.html" class="sidebar-link">Array的变化侦测</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>虚拟DOM</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/vnode/" class="sidebar-link">简介</a></li><li><a href="/vue2/vnode/vnode.html" class="sidebar-link">Vue中的虚拟DOM</a></li><li><a href="/vue2/vnode/patch.html" class="sidebar-link">patch（Diff算法）</a></li><li><a href="/vue2/vnode/updateChildren.html" class="sidebar-link">更新子节点</a></li><li><a href="/vue2/vnode/optimizeUpdateChildren.html" class="sidebar-link">优化更新子节点</a></li><li><a href="/vue2/vnode/diffSummary.html" class="sidebar-link">Diff算法总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>模板编译</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/compile/" aria-current="page" class="sidebar-link">简介</a></li><li><a href="/vue2/compile/parse.html" class="sidebar-link">模板解析阶段（整体运行流程）</a></li><li><a href="/vue2/compile/parseHtml.html" aria-current="page" class="active sidebar-link">模板解析阶段（HTML解析器）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue2/compile/parseHtml.html#整体流程" class="sidebar-link">整体流程</a></li><li class="sidebar-sub-header"><a href="/vue2/compile/parseHtml.html#解析不同内容" class="sidebar-link">解析不同内容</a></li><li class="sidebar-sub-header"><a href="/vue2/compile/parseHtml.html#ast层级结构" class="sidebar-link">AST层级结构</a></li><li class="sidebar-sub-header"><a href="/vue2/compile/parseHtml.html#回归源码" class="sidebar-link">回归源码</a></li><li class="sidebar-sub-header"><a href="/vue2/compile/parseHtml.html#总结" class="sidebar-link">总结</a></li></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>生命周期</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/lifecycle/" class="sidebar-link">简介</a></li><li><a href="/vue2/lifecycle/newVue.html" class="sidebar-link">初始化阶段(new Vue)</a></li><li><a href="/vue2/lifecycle/mergeOptions.html" class="sidebar-link">初始化阶段(合并属性)</a></li><li><a href="/vue2/lifecycle/initLifecycle.html" class="sidebar-link">初始化阶段(initLifecycle)</a></li><li><a href="/vue2/lifecycle/initEvents.html" class="sidebar-link">初始化阶段(initEvents)</a></li><li><a href="/vue2/lifecycle/initRender.html" class="sidebar-link">初始化阶段(initRender)</a></li><li><a href="/vue2/lifecycle/initInjections.html" class="sidebar-link">初始化阶段(initInjections)</a></li><li><a href="/vue2/lifecycle/initState.html" class="sidebar-link">初始化阶段(initState)</a></li><li><a href="/vue2/lifecycle/initProvide.html" class="sidebar-link">初始化阶段(initProvide)</a></li><li><a href="/vue2/lifecycle/templateCompile.html" class="sidebar-link">模板编译阶段</a></li><li><a href="/vue2/lifecycle/mount.html" class="sidebar-link">挂载阶段</a></li><li><a href="/vue2/lifecycle/destroy.html" class="sidebar-link">销毁阶段</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="模板解析阶段-html解析器"><a href="#模板解析阶段-html解析器" class="header-anchor">#</a> 模板解析阶段（HTML解析器）</h1> <p>上一小节中，我们知道了模板解析的整体运行流程，先使用HTML解析器解析模板，如果遇到文本就用文本过滤器解析，如果文本中遇到过滤器就使用过滤器解析器解析。</p> <p>我们按照运行流程，先从HTML解析器开始研究。</p> <h2 id="整体流程"><a href="#整体流程" class="header-anchor">#</a> 整体流程</h2> <p>HTML解析器的简化代码如下，完整源码在<code>/src/complier/parser/index.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">parse</span><span class="token punctuation">(</span><span class="token parameter">template<span class="token punctuation">,</span> options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment">// ...</span>
+  <span class="token function">parseHTML</span><span class="token punctuation">(</span>template<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+    <span class="token function">start</span> <span class="token punctuation">(</span><span class="token parameter">tag<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> unary</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 每当解析到标签的开始位置时，触发该函数</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">end</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 每当解析到标签的结束位置时，触发该函数</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">chars</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">text</span><span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 每当解析到文本时，触发该函数</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">comment</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">text</span><span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 每当解析到注释时，触发该函数</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> root
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793436-25611">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function parse(template, options) {
+   // ...
+  parseHTML(template, {
+    // ...
+    start (tag, attrs, unary) {
+      // 每当解析到标签的开始位置时，触发该函数
+    },
+    end () {
+      // 每当解析到标签的结束位置时，触发该函数
+    },
+    chars (text: string) {
+      // 每当解析到文本时，触发该函数
+    },
+    comment (text: string) {
+      // 每当解析到注释时，触发该函数
+    }
+  })
+  return root
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793436-25611" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>光看代码，可能不太理解，我们举个例子说明下:</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Hello world<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793444-96779">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;div&gt;
+  &lt;h1&gt;Hello world&lt;/h1&gt;
+&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793444-96779" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>首先，解析器是从前向后解析的，解析的过程如下：</p> <ol><li>解析<code>&lt;div&gt;</code>，触发标签开始的钩子函数<code>start</code></li> <li>解析<code>&lt;h1&gt;</code>，触发标签开始的钩子函数<code>start</code></li> <li>解析文本<code>Hello world</code>，触发文本钩子函数<code>chars</code></li> <li>解析<code>&lt;/h1&gt;</code>，触发标签结束的钩子函数<code>end</code></li> <li>解析<code>&lt;/div&gt;</code>，触发标签结束的钩子函数<code>end</code></li></ol> <p>按照上述流程，我们可以分别在钩子函数中构建不同的<code>AST</code>节点。</p> <ul><li>在<code>start</code>钩子函数中构建元素类型的节点</li> <li>在<code>chars</code>钩子函数中
+<ul><li>如果是静态文本构建静态文本类型的节点</li> <li>如果是动态文本构建动态文本类型的节点</li></ul></li> <li>在<code>comment</code>钩子函数中构建注释类型的节点</li></ul> <p>当HTMl解析器不再触发钩子函数时，就说明所有的模板解析完毕，所有的类型的节点都在钩子函数中构建完成，即<code>AST</code>构建完成，也就完成HTML解析器的流程。</p> <h2 id="解析不同内容"><a href="#解析不同内容" class="header-anchor">#</a> 解析不同内容</h2> <p>HTML解析器要从模板字符串中解析出不同的内容，我们首先就要知道模板字符串能解析出哪些内容，经过整理，有如下内容类型</p> <ul><li>文本，例如 <code>Hello world</code></li> <li>HTML注释，例如<code>&lt;!-- 我是注释 --&gt;</code></li> <li>条件注释，例如<code>&lt;!-- [if !IE]&gt; --&gt;我是注释&lt;!--&lt; ![endif] --&gt;</code></li> <li>DOCTYPE，例如<code>&lt;!DOCTYPE html&gt;</code></li> <li>开始标签，例如<code>&lt;div&gt;</code></li> <li>结束标签，例如<code>&lt;/div&gt;</code></li> <li>纯文本内容元素，例如<code>script,style,textarea</code></li></ul> <p>其中，我们经常遇到的是开始标签、结束标签、文本和注释。接下来我们挨个分析所有的内容类型</p> <h3 id="html注释"><a href="#html注释" class="header-anchor">#</a> HTML注释</h3> <p>由于HTML注释的格式是固定的，所以解析HTML注释较为简单，只需要判断是否符合<code>&lt;!--</code>开头，以<code>--&gt;</code>结尾的规则，如果符合规则，说明是HTML注释，获取中间的内容。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> comment <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^&lt;!\--</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>comment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 如果是&lt;!-- 开头，则继续查找是否存在--&gt;</span>
+  <span class="token keyword">const</span> commentEnd <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'--&gt;'</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>commentEnd <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 若存在 --&gt;, 继续判断options中是否保留注释</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>shouldKeepComment<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 若保留注释，则把注释截取出来传给options.comment，创建注释类型的AST节点</span>
+      options<span class="token punctuation">.</span><span class="token function">comment</span><span class="token punctuation">(</span>html<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> commentEnd<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 若不保留注释，则将游标移动到--&gt;之后，继续向后解析</span>
+    <span class="token function">advance</span><span class="token punctuation">(</span>commentEnd <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span>
+    <span class="token keyword">continue</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793448-87604">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const comment = /^&lt;!\--/
+if (comment.test(html)) {
+  // 如果是&lt;!-- 开头，则继续查找是否存在--&gt;
+  const commentEnd = html.indexOf('--&gt;')
+
+  if (commentEnd &gt;= 0) {
+    // 若存在 --&gt;, 继续判断options中是否保留注释
+    if (options.shouldKeepComment) {
+      // 若保留注释，则把注释截取出来传给options.comment，创建注释类型的AST节点
+      options.comment(html.substring(4, commentEnd))
+    }
+    // 若不保留注释，则将游标移动到--&gt;之后，继续向后解析
+    advance(commentEnd + 3)
+    continue
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793448-87604" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>在上述代码中，通过判断是否符合<code>&lt;!--</code>开头，以<code>--&gt;</code>结尾的规则来判断是否为HTML注释，再根据<code>options.shouldKeepComment</code>判断是否触发钩子函数创建注释节点。</p> <p><code>options.shouldKeepComment</code> 就是我们平时在模板中可以在<code>&lt;template&gt;&lt;/template</code>&gt;标签上配置的<code>comments</code>选项，通过在这里判断，我们可以在渲染模板时决定是否保留注释。</p> <p><code>advance</code>函数是用来移动解析游标的，解析完一部分就把游标向后移动一部分，确保不会重复解析，其代码如下：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">advance</span> <span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  index <span class="token operator">+=</span> n   <span class="token comment">// index为解析游标</span>
+  html <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793449-64382">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function advance (n) {
+  index += n   // index为解析游标
+  html = html.substring(n)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793449-64382" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="条件注释"><a href="#条件注释" class="header-anchor">#</a> 条件注释</h3> <p>由于条件注释不触发钩子函数，我们只需要利用正则匹配到条件注释后，将其忽略即可。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// 解析是否是条件注释</span>
+<span class="token keyword">const</span> conditionalComment <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^&lt;!\[</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>conditionalComment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 若为条件注释，则继续查找是否存在']&gt;'</span>
+  <span class="token keyword">const</span> conditionalEnd <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">']&gt;'</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>conditionalEnd <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 若存在 ']&gt;',则从原本的html字符串中把条件注释截掉，</span>
+    <span class="token comment">// 把剩下的内容重新赋给html，继续向后匹配</span>
+    <span class="token function">advance</span><span class="token punctuation">(</span>conditionalEnd <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">continue</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793453-64983">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 解析是否是条件注释
+const conditionalComment = /^&lt;!\[/
+if (conditionalComment.test(html)) {
+  // 若为条件注释，则继续查找是否存在']&gt;'
+  const conditionalEnd = html.indexOf(']&gt;')
+
+  if (conditionalEnd &gt;= 0) {
+    // 若存在 ']&gt;',则从原本的html字符串中把条件注释截掉，
+    // 把剩下的内容重新赋给html，继续向后匹配
+    advance(conditionalEnd + 2)
+    continue
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793453-64983" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>从上述代码中，我们可以发现，匹配到条件注释后，将其忽略，继续匹配。通俗点说，在Vue中写条件注释是没有用的，会直接被忽略掉。</p> <h3 id="doctype"><a href="#doctype" class="header-anchor">#</a> DOCTYPE</h3> <p>解析<code>DOCTYPE</code>跟解析条件注释相同，利用正则匹配后，忽略掉。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> doctype <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^&lt;!DOCTYPE [^&gt;]+&gt;</span><span class="token regex-delimiter">/</span><span class="token regex-flags">i</span></span>
+<span class="token comment">// 解析是否是DOCTYPE</span>
+<span class="token keyword">const</span> doctypeMatch <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>doctype<span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>doctypeMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">advance</span><span class="token punctuation">(</span>doctypeMatch<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+  <span class="token keyword">continue</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793454-38934">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const doctype = /^&lt;!DOCTYPE [^&gt;]+&gt;/i
+// 解析是否是DOCTYPE
+const doctypeMatch = html.match(doctype)
+if (doctypeMatch) {
+  advance(doctypeMatch[0].length)
+  continue
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793454-38934" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="开始标签"><a href="#开始标签" class="header-anchor">#</a> 开始标签</h3> <p>开始标签相对于前几个来说，考虑的情况稍微复杂一些。需要考虑如下情况</p> <ol><li>匹配开始标签</li> <li>解析标签名<code>tag</code>、标签属性<code>attrs</code>、标签是否自闭合<code>unary</code></li> <li>匹配自闭合标签，如<code>&lt;img /&gt;</code></li></ol> <h4 id="匹配开始标签"><a href="#匹配开始标签" class="header-anchor">#</a> 匹配开始标签</h4> <p>先使用正则匹配模板字符串是否具有开始标签的特征</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">/**
+ * 匹配开始标签的正则
+ */</span>
+<span class="token keyword">const</span> ncname <span class="token operator">=</span> <span class="token string">'[a-zA-Z_][\\w\\-\\.]*'</span>
+<span class="token keyword">const</span> qnameCapture <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">((?:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\\:)?</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span>
+<span class="token keyword">const</span> startTagOpen <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">^&lt;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>qnameCapture<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> start <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagOpen<span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> match <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">tagName</span><span class="token operator">:</span> start<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">attrs</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">start</span><span class="token operator">:</span> index
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 以开始标签开始的模板：</span>
+<span class="token string">'&lt;div&gt;&lt;/div&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token parameter">startTagOpen</span><span class="token punctuation">)</span>  <span class="token operator">=&gt;</span> <span class="token punctuation">[</span><span class="token string">'&lt;div'</span><span class="token punctuation">,</span><span class="token string">'div'</span><span class="token punctuation">,</span><span class="token literal-property property">index</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token literal-property property">input</span><span class="token operator">:</span><span class="token string">'&lt;div&gt;&lt;/div&gt;'</span><span class="token punctuation">]</span>
+<span class="token comment">// 以结束标签开始的模板：</span>
+<span class="token string">'&lt;/div&gt;&lt;div&gt;&lt;/div&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token parameter">startTagOpen</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">null</span>
+<span class="token comment">// 以文本开始的模板：</span>
+<span class="token string">'我是文本&lt;/p&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token parameter">startTagOpen</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">null</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793454-662">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="/**
+ * 匹配开始标签的正则
+ */
+const ncname = '[a-zA-Z_][\\w\\-\\.]*'
+const qnameCapture = `((?:${ncname}\\:)?${ncname})`
+const startTagOpen = new RegExp(`^&lt;${qnameCapture}`)
+
+const start = html.match(startTagOpen)
+if (start) {
+  const match = {
+    tagName: start[1],
+    attrs: [],
+    start: index
+  }
+}
+
+// 以开始标签开始的模板：
+'&lt;div&gt;&lt;/div&gt;'.match(startTagOpen)  =&gt; ['&lt;div','div',index:0,input:'&lt;div&gt;&lt;/div&gt;']
+// 以结束标签开始的模板：
+'&lt;/div&gt;&lt;div&gt;&lt;/div&gt;'.match(startTagOpen) =&gt; null
+// 以文本开始的模板：
+'我是文本&lt;/p&gt;'.match(startTagOpen) =&gt; null
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793454-662" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>上述代码可以看出，匹配到开始标签后，会返回一个数组，数组第二项就是该标签的标签名。</p> <h4 id="匹配标签中的属性"><a href="#匹配标签中的属性" class="header-anchor">#</a> 匹配标签中的属性</h4> <p>还记得我们之前介绍的简化代码中的<code>start</code>钩子函数，它接受三个参数：标签名<code>tag</code>、标签属性<code>attrs</code>、标签是否自闭合<code>unary</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token function">start</span> <span class="token punctuation">(</span><span class="token parameter">tag<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> unary</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 每当解析到标签的开始位置时，触发该函数</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793456-88802">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="start (tag, attrs, unary) {
+  // 每当解析到标签的开始位置时，触发该函数
+},
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793456-88802" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>所以我们匹配到开始标签的第二步，要解析标签属性。以如下为例：</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>a<span class="token punctuation">&quot;</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>b<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793456-25741">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;div class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793456-25741" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>在经过第一步标签匹配，获取到标签名<code>tag</code>后，模板字符串如下</p> <div class="language-txt line-numbers-mode"><pre class="language-txt"><code>class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793457-46496">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793457-46496" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>将该模板字符串利用正则匹配，获取其中的属性</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> attribute <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*([^\s&quot;'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|'([^']*)'+|([^\s&quot;'=&lt;&gt;`]+)))?</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">let</span> html <span class="token operator">=</span> <span class="token string">'class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;'</span>
+<span class="token keyword">let</span> attr <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>attribute<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>attr<span class="token punctuation">)</span>
+<span class="token comment">// [&quot;class=&quot;a&quot;&quot;, &quot;class&quot;, &quot;=&quot;, &quot;a&quot;, undefined, undefined, index: 0, input: &quot;class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;&quot;, groups: undefined]</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793457-17363">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const attribute = /^\s*([^\s&quot;'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|'([^']*)'+|([^\s&quot;'=&lt;&gt;`]+)))?/
+let html = 'class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;'
+let attr = html.match(attribute)
+console.log(attr)
+// [&quot;class=&quot;a&quot;&quot;, &quot;class&quot;, &quot;=&quot;, &quot;a&quot;, undefined, undefined, index: 0, input: &quot;class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;&quot;, groups: undefined]
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793457-17363" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>可以看到，匹配出数组的第二项和第四项就是该标签的属性名和属性值<code>class=&quot;a&quot;</code>。</p> <p>在匹配属性值的时候会遇到两种情况</p> <ol><li>匹配的结果为空，说明该标签没有设置属性</li> <li>匹配结果不为空，说明该标签有属性，截取属性后循环匹配，直到找不到属性为止</li></ol> <p>循环匹配代码如下：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> attribute <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*([^\s&quot;'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|'([^']*)'+|([^\s&quot;'=&lt;&gt;`]+)))?</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">const</span> startTagClose <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*(\/?)&gt;</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">const</span> match <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">tagName</span><span class="token operator">:</span> start<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">attrs</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">start</span><span class="token operator">:</span> index
+<span class="token punctuation">}</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>end <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>attr <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>attribute<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">advance</span><span class="token punctuation">(</span>attr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+  match<span class="token punctuation">.</span>attrs<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>attr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793458-70545">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const attribute = /^\s*([^\s&quot;'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|'([^']*)'+|([^\s&quot;'=&lt;&gt;`]+)))?/
+const startTagClose = /^\s*(\/?)&gt;/
+const match = {
+  tagName: start[1],
+  attrs: [],
+  start: index
+}
+while (!(end = html.match(startTagClose)) &amp;&amp; (attr = html.match(attribute))) {
+  advance(attr[0].length)
+  match.attrs.push(attr)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793458-70545" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>在上面代码的<code>while</code>循环中，如果剩下的字符串不符合开始标签的结束特征（<code>startTagClose</code>）并且符合标签属性的特征的话，那就说明还有未提取出的标签属性，那就进入循环，继续提取，直到把所有标签属性都提取完毕。</p> <p>不符合开始标签的结束特征（<code>startTagClose</code>），具体指的是，如果匹配的模板字符串不符合成对标签<code>&gt;</code>或者自闭合标签<code>/&gt;</code>的特征</p> <h4 id="匹配自闭合标签"><a href="#匹配自闭合标签" class="header-anchor">#</a> 匹配自闭合标签</h4> <p>我们知道，HTML标签有两种方式成对标签<code>&lt;div&gt;&lt;/div&gt;</code>或者自闭合标签<code>&lt;img /&gt;</code>，这两种方式在<code>AST</code>中处理方式不太一样</p> <ul><li>成对标签：有专门的结束钩子函数<code>end</code>处理</li> <li>自闭合标签：在匹配开始标签钩子函数<code>start</code>时候处理</li></ul> <p>我们这里先研究自闭合标签的处理方式。其实自闭合标签处理也比较简单，当我们匹配完属性后，模板字符串只有两种情况</p> <ul><li>成对标签： <code>&gt;&lt;/div&gt;</code></li> <li>自闭合标签： <code>/&gt;</code></li></ul> <p>所以我们只需要利用剩下的模板字符串来匹配开头是否为<code>/&gt;</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> startTagClose <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*(\/?)&gt;</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">let</span> end <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span>
+<span class="token string">'&gt;&lt;/div&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span> <span class="token comment">// [&quot;&gt;&quot;, &quot;&quot;, index: 0, input: &quot;&gt;&lt;/div&gt;&quot;, groups: undefined]</span>
+<span class="token string">'/&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span> <span class="token comment">// [&quot;/&gt;&quot;, &quot;/&quot;, index: 0, input: &quot;/&gt;&lt;div&gt;&lt;/div&gt;&quot;, groups: undefined]</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793458-44278">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const startTagClose = /^\s*(\/?)&gt;/
+let end = html.match(startTagClose)
+'&gt;&lt;/div&gt;'.match(startTagClose) // [&quot;&gt;&quot;, &quot;&quot;, index: 0, input: &quot;&gt;&lt;/div&gt;&quot;, groups: undefined]
+'/&gt;'.match(startTagClose) // [&quot;/&gt;&quot;, &quot;/&quot;, index: 0, input: &quot;/&gt;&lt;div&gt;&lt;/div&gt;&quot;, groups: undefined]
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793458-44278" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>可以看到，正则匹配自闭合标签返回的数组中，第二项为<code>/</code>，所以我们只需要判断匹配结果的第二项是否为<code>\</code>即可判断出当前标签是否为自闭合标签</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> startTagClose <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*(\/?)&gt;</span><span class="token regex-delimiter">/</span></span>
+<span class="token keyword">let</span> end <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ match<span class="token punctuation">.</span>unarySlash <span class="token operator">=</span> end<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+ <span class="token function">advance</span><span class="token punctuation">(</span>end<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+ match<span class="token punctuation">.</span>end <span class="token operator">=</span> index
+ <span class="token keyword">return</span> match
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793459-10737">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const startTagClose = /^\s*(\/?)&gt;/
+let end = html.match(startTagClose)
+if (end) {
+ match.unarySlash = end[1]
+ advance(end[0].length)
+ match.end = index
+ return match
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793459-10737" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>到这步，就完成了标签开始的解析。</p> <h3 id="开始标签完整源码"><a href="#开始标签完整源码" class="header-anchor">#</a> 开始标签完整源码</h3> <p>源码在<code>src/compiler/parser/html-parser.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> ncname <span class="token operator">=</span> <span class="token string">'[a-zA-Z_][\\w\\-\\.]*'</span>
+<span class="token keyword">const</span> qnameCapture <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">((?:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\\:)?</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span>
+<span class="token keyword">const</span> startTagOpen <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">^&lt;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>qnameCapture<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> startTagClose <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^\s*(\/?)&gt;</span><span class="token regex-delimiter">/</span></span>
+
+<span class="token keyword">const</span> startTagMatch <span class="token operator">=</span> <span class="token function">parseStartTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>startTagMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">handleStartTag</span><span class="token punctuation">(</span>startTagMatch<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">shouldIgnoreFirstNewline</span><span class="token punctuation">(</span>lastTag<span class="token punctuation">,</span> html<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">advance</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">continue</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">parseStartTag</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> start <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagOpen<span class="token punctuation">)</span>
+  <span class="token comment">// '&lt;div&gt;&lt;/div&gt;'.match(startTagOpen)  =&gt; ['&lt;div','div',index:0,input:'&lt;div&gt;&lt;/div&gt;']</span>
+  <span class="token comment">// '&lt;/div&gt;&lt;div&gt;&lt;/div&gt;'.match(startTagOpen) =&gt; null</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> match <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">tagName</span><span class="token operator">:</span> start<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">attrs</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">start</span><span class="token operator">:</span> index
+    <span class="token punctuation">}</span>
+    <span class="token function">advance</span><span class="token punctuation">(</span>start<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+    <span class="token keyword">let</span> end<span class="token punctuation">,</span> attr
+    <span class="token comment">/**
+     * &lt;div a=1 b=2 c=3&gt;&lt;/div&gt;
+     * 从&lt;div之后到开始标签的结束符号'&gt;'之前，一直匹配属性attrs
+     * 所有属性匹配完之后，html字符串还剩下
+     * 自闭合标签剩下：'/&gt;'
+     * 非自闭合标签剩下：'&gt;&lt;/div&gt;'
+     */</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>end <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>startTagClose<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>attr <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>attribute<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">advance</span><span class="token punctuation">(</span>attr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+      match<span class="token punctuation">.</span>attrs<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>attr<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * 这里判断了该标签是否为自闭合标签
+     * 自闭合标签如:&lt;input type='text' /&gt;
+     * 非自闭合标签如:&lt;div&gt;&lt;/div&gt;
+     * '&gt;&lt;/div&gt;'.match(startTagClose) =&gt; [&quot;&gt;&quot;, &quot;&quot;, index: 0, input: &quot;&gt;&lt;/div&gt;&quot;, groups: undefined]
+     * '/&gt;&lt;div&gt;&lt;/div&gt;'.match(startTagClose) =&gt; [&quot;/&gt;&quot;, &quot;/&quot;, index: 0, input: &quot;/&gt;&lt;div&gt;&lt;/div&gt;&quot;, groups: undefined]
+     * 因此，我们可以通过end[1]是否是&quot;/&quot;来判断该标签是否是自闭合标签
+     */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      match<span class="token punctuation">.</span>unarySlash <span class="token operator">=</span> end<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+      <span class="token function">advance</span><span class="token punctuation">(</span>end<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+      match<span class="token punctuation">.</span>end <span class="token operator">=</span> index
+      <span class="token keyword">return</span> match
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793459-93051">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const ncname = '[a-zA-Z_][\\w\\-\\.]*'
+const qnameCapture = `((?:${ncname}\\:)?${ncname})`
+const startTagOpen = new RegExp(`^&lt;${qnameCapture}`)
+const startTagClose = /^\s*(\/?)&gt;/
+
+const startTagMatch = parseStartTag()
+  if (startTagMatch) {
+  handleStartTag(startTagMatch)
+  if (shouldIgnoreFirstNewline(lastTag, html)) {
+    advance(1)
+  }
+  continue
+}
+
+function parseStartTag () {
+  const start = html.match(startTagOpen)
+  // '&lt;div&gt;&lt;/div&gt;'.match(startTagOpen)  =&gt; ['&lt;div','div',index:0,input:'&lt;div&gt;&lt;/div&gt;']
+  // '&lt;/div&gt;&lt;div&gt;&lt;/div&gt;'.match(startTagOpen) =&gt; null
+  if (start) {
+    const match = {
+      tagName: start[1],
+      attrs: [],
+      start: index
+    }
+    advance(start[0].length)
+    let end, attr
+    /**
+     * &lt;div a=1 b=2 c=3&gt;&lt;/div&gt;
+     * 从&lt;div之后到开始标签的结束符号'&gt;'之前，一直匹配属性attrs
+     * 所有属性匹配完之后，html字符串还剩下
+     * 自闭合标签剩下：'/&gt;'
+     * 非自闭合标签剩下：'&gt;&lt;/div&gt;'
+     */
+    while (!(end = html.match(startTagClose)) &amp;&amp; (attr = html.match(attribute))) {
+      advance(attr[0].length)
+      match.attrs.push(attr)
+    }
+
+    /**
+     * 这里判断了该标签是否为自闭合标签
+     * 自闭合标签如:&lt;input type='text' /&gt;
+     * 非自闭合标签如:&lt;div&gt;&lt;/div&gt;
+     * '&gt;&lt;/div&gt;'.match(startTagClose) =&gt; [&quot;&gt;&quot;, &quot;&quot;, index: 0, input: &quot;&gt;&lt;/div&gt;&quot;, groups: undefined]
+     * '/&gt;&lt;div&gt;&lt;/div&gt;'.match(startTagClose) =&gt; [&quot;/&gt;&quot;, &quot;/&quot;, index: 0, input: &quot;/&gt;&lt;div&gt;&lt;/div&gt;&quot;, groups: undefined]
+     * 因此，我们可以通过end[1]是否是&quot;/&quot;来判断该标签是否是自闭合标签
+     */
+    if (end) {
+      match.unarySlash = end[1]
+      advance(end[0].length)
+      match.end = index
+      return match
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793459-93051" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><p>通过源码可以看到，调用<code>parseStartTag</code>函数，如果模板字符串符合开始标签的特征，则解析开始标签，并将解析结果返回，如果不符合开始标签的特征，则返回<code>undefined</code>。</p> <p>解析完毕后，并没有直接调用<code>start</code>钩子函数，而是通过<code>handleStartTag</code>将标签中提取的属性进行二次处理。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">handleStartTag</span> <span class="token punctuation">(</span><span class="token parameter">match</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 开始标签的标签名</span>
+  <span class="token keyword">const</span> tagName <span class="token operator">=</span> match<span class="token punctuation">.</span>tagName    
+  <span class="token comment">// 是否为自闭合标签的标志，成对标签为&quot;&quot;,自闭合标签为&quot;/&quot;   </span>
+  <span class="token keyword">const</span> unarySlash <span class="token operator">=</span> match<span class="token punctuation">.</span>unarySlash  
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>expectHTML<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>lastTag <span class="token operator">===</span> <span class="token string">'p'</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isNonPhrasingTag</span><span class="token punctuation">(</span>tagName<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">parseEndTag</span><span class="token punctuation">(</span>lastTag<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">canBeLeftOpenTag</span><span class="token punctuation">(</span>tagName<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> lastTag <span class="token operator">===</span> tagName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">parseEndTag</span><span class="token punctuation">(</span>tagName<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 布尔值，标志是否为自闭合标签</span>
+  <span class="token keyword">const</span> unary <span class="token operator">=</span> <span class="token function">isUnaryTag</span><span class="token punctuation">(</span>tagName<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span><span class="token operator">!</span>unarySlash 
+  <span class="token comment">// match.attrs 数组的长度</span>
+  <span class="token keyword">const</span> l <span class="token operator">=</span> match<span class="token punctuation">.</span>attrs<span class="token punctuation">.</span>length 
+  <span class="token comment">// 一个与match.attrs数组长度相等的数组</span>
+  <span class="token keyword">const</span> attrs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span> 
+  <span class="token comment">// 循环处理提取出来的标签属性数组</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> args <span class="token operator">=</span> match<span class="token punctuation">.</span>attrs<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token comment">// hackish work around FF bug https://bugzilla.mozilla.org/show_bug.cgi?id=369778</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token constant">IS_REGEX_CAPTURING_BROKEN</span> <span class="token operator">&amp;&amp;</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'&quot;&quot;'</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">delete</span> args<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">delete</span> args<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">delete</span> args<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 获取标签属性的属性值</span>
+    <span class="token keyword">const</span> value <span class="token operator">=</span> args<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">||</span> args<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">||</span> args<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token string">''</span>
+
+    <span class="token keyword">const</span> shouldDecodeNewlines <span class="token operator">=</span> tagName <span class="token operator">===</span> <span class="token string">'a'</span> <span class="token operator">&amp;&amp;</span> args<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'href'</span>
+    <span class="token comment">// 对a标签的 href属性值中的换行符或制表符做兼容处理</span>
+    <span class="token operator">?</span> options<span class="token punctuation">.</span>shouldDecodeNewlinesForHref
+    <span class="token comment">// 对属性值中的换行符或制表符做兼容处理</span>
+      <span class="token operator">:</span> options<span class="token punctuation">.</span>shouldDecodeNewlines
+    attrs<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 标签属性的属性名，如class</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> args<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
+      <span class="token comment">// 标签属性的属性值，如class对应的a</span>
+      <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token function">decodeAttr</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> shouldDecodeNewlines<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 如果该标签是成对标签，则将标签推入栈中</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>unary<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">tag</span><span class="token operator">:</span> tagName<span class="token punctuation">,</span> <span class="token literal-property property">lowerCasedTag</span><span class="token operator">:</span> tagName<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token literal-property property">attrs</span><span class="token operator">:</span> attrs <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    lastTag <span class="token operator">=</span> tagName
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 该标签是自闭合标签，调用start钩子函数创建AST节点</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    options<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span>tagName<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> unary<span class="token punctuation">,</span> match<span class="token punctuation">.</span>start<span class="token punctuation">,</span> match<span class="token punctuation">.</span>end<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793460-85194">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function handleStartTag (match) {
+  // 开始标签的标签名
+  const tagName = match.tagName    
+  // 是否为自闭合标签的标志，成对标签为&quot;&quot;,自闭合标签为&quot;/&quot;   
+  const unarySlash = match.unarySlash  
+
+  if (expectHTML) {
+    if (lastTag === 'p' &amp;&amp; isNonPhrasingTag(tagName)) {
+      parseEndTag(lastTag)
+    }
+    if (canBeLeftOpenTag(tagName) &amp;&amp; lastTag === tagName) {
+      parseEndTag(tagName)
+    }
+  }
+
+  // 布尔值，标志是否为自闭合标签
+  const unary = isUnaryTag(tagName) || !!unarySlash 
+  // match.attrs 数组的长度
+  const l = match.attrs.length 
+  // 一个与match.attrs数组长度相等的数组
+  const attrs = new Array(l) 
+  // 循环处理提取出来的标签属性数组
+  for (let i = 0; i &lt; l; i++) {
+    const args = match.attrs[i]
+    // hackish work around FF bug https://bugzilla.mozilla.org/show_bug.cgi?id=369778
+    if (IS_REGEX_CAPTURING_BROKEN &amp;&amp; args[0].indexOf('&quot;&quot;') === -1) {
+      if (args[3] === '') { delete args[3] }
+      if (args[4] === '') { delete args[4] }
+      if (args[5] === '') { delete args[5] }
+    }
+    // 获取标签属性的属性值
+    const value = args[3] || args[4] || args[5] || ''
+
+    const shouldDecodeNewlines = tagName === 'a' &amp;&amp; args[1] === 'href'
+    // 对a标签的 href属性值中的换行符或制表符做兼容处理
+    ? options.shouldDecodeNewlinesForHref
+    // 对属性值中的换行符或制表符做兼容处理
+      : options.shouldDecodeNewlines
+    attrs[i] = {
+      // 标签属性的属性名，如class
+      name: args[1], 
+      // 标签属性的属性值，如class对应的a
+      value: decodeAttr(value, shouldDecodeNewlines)
+    }
+  }
+  // 如果该标签是成对标签，则将标签推入栈中
+  if (!unary) {
+    stack.push({ tag: tagName, lowerCasedTag: tagName.toLowerCase(), attrs: attrs })
+    lastTag = tagName
+  }
+  // 该标签是自闭合标签，调用start钩子函数创建AST节点
+  if (options.start) {
+    options.start(tagName, attrs, unary, match.start, match.end)
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793460-85194" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div></div><p><code>handleStartTag</code>过程并不复杂，主要是将我们之前获取到的标签属性<code>[&quot;class=&quot;a&quot;&quot;, &quot;class&quot;, &quot;=&quot;, &quot;a&quot;, undefined, undefined, index: 0, input: &quot;class=&quot;a&quot; id=&quot;b&quot;&gt;&lt;/div&gt;&quot;, groups: undefined]</code>格式，需要统一处理成<code>{name: '', value: ''}</code>的形式，方便<code>AST</code>创建节点使用。</p> <p>需要说明都是，如果该标签是成对标签时，则将标签推入栈中，具体关于栈的内容，我们在本小节后续讲解。</p> <h3 id="结束标签"><a href="#结束标签" class="header-anchor">#</a> 结束标签</h3> <p>结束标签就简单很多，只需判断剩下的模板字符串是否符合结束标签的特征，如果符合，就将结束标签名提取出来，再调用钩子函数<code>end</code>。</p> <p>首先使用正则判断是否符合结束标签</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> ncname <span class="token operator">=</span> <span class="token string">'[a-zA-Z_][\\w\\-\\.]*'</span>
+<span class="token keyword">const</span> qnameCapture <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">((?:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\\:)?</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ncname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span>
+<span class="token keyword">const</span> endTag <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">^&lt;\\/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>qnameCapture<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">[^&gt;]*&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> endTagMatch <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>endTag<span class="token punctuation">)</span>
+
+<span class="token string">'&lt;/div&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>endTag<span class="token punctuation">)</span>  <span class="token comment">// [&quot;&lt;/div&gt;&quot;, &quot;div&quot;, index: 0, input: &quot;&lt;/div&gt;&quot;, groups: undefined]</span>
+<span class="token string">'&lt;div&gt;'</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>endTag<span class="token punctuation">)</span>  <span class="token comment">// null</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793462-23620">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const ncname = '[a-zA-Z_][\\w\\-\\.]*'
+const qnameCapture = `((?:${ncname}\\:)?${ncname})`
+const endTag = new RegExp(`^&lt;\\/${qnameCapture}[^&gt;]*&gt;`)
+const endTagMatch = html.match(endTag)
+
+'&lt;/div&gt;'.match(endTag)  // [&quot;&lt;/div&gt;&quot;, &quot;div&quot;, index: 0, input: &quot;&lt;/div&gt;&quot;, groups: undefined]
+'&lt;div&gt;'.match(endTag)  // null
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793462-23620" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>上述代码中，匹配到结束标签后，会返回一个数组，数组第二项就是该标签的标签名。</p> <p>接着再调用钩子函数<code>end</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>endTagMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> curIndex <span class="token operator">=</span> index
+  <span class="token function">advance</span><span class="token punctuation">(</span>endTagMatch<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+  <span class="token function">parseEndTag</span><span class="token punctuation">(</span>endTagMatch<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> curIndex<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+  <span class="token keyword">continue</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793463-24790">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="if (endTagMatch) {
+  const curIndex = index
+  advance(endTagMatch[0].length)
+  parseEndTag(endTagMatch[1], curIndex, index)
+  continue
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793463-24790" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>上述代码中，没有直接调用钩子函数<code>end</code>，而是调用了<code>parseEndTag</code>，在<code>parseEndTag</code>内部调用钩子函数<code>end</code>。<code>parseEndTag</code>函数我们稍后解析，这里先简单理解为调用钩子函数<code>end</code>。</p> <h3 id="文本"><a href="#文本" class="header-anchor">#</a> 文本</h3> <p>文本类型相比于前几种类型比较特殊，前面五种类型都是以<code>&lt;</code>开头的，只有文本类型的内容不是以<code>&lt;</code>开头的。所以解析模板字符串时，如果不是
+以<code>&lt;</code>开头的，就当做文本处理。</p> <p>有同学就会问了，如果我文本中包含<code>&lt;</code>怎么处理呢？</p> <p>其实思路很简单，以模板字符串<code>1&lt;2&lt;/div&gt;</code>为例，当截取完<code>1</code>之后，剩余模板为</p> <div class="language-txt line-numbers-mode"><pre class="language-txt"><code>&lt;2&lt;/div&gt;
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793463-68006">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;2&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793463-68006" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>此时进行判断:</p> <ol><li>符合开始标签的特征么？ 不符合</li> <li>符合结束标签的特征么？ 不符合</li> <li>符合注释的特征么？ 不符合</li></ol> <p>以上不符合，那就说明<code>&lt;</code>是属于文本的一部分</p> <p>梳理完思路后，我们看源码是如何实现的，源码在<code>src/compiler/parser/html-parser.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">let</span> textEnd <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'&lt;'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span>textEnd <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 不是'&lt;'开头，按文本处理</span>
+<span class="token keyword">let</span> text<span class="token punctuation">,</span> rest<span class="token punctuation">,</span> next
+<span class="token keyword">if</span> <span class="token punctuation">(</span>textEnd <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 把'&lt;'之前的都当做文本处理</span>
+  rest <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>textEnd<span class="token punctuation">)</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>
+    <span class="token operator">!</span>endTag<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>rest<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+    <span class="token operator">!</span>startTagOpen<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>rest<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+    <span class="token operator">!</span>comment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>rest<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+    <span class="token operator">!</span>conditionalComment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>rest<span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// &lt; in plain text, be forgiving and treat it as text</span>
+    <span class="token comment">/**
+     * 用'&lt;'以后的内容rest去匹配endTag、startTagOpen、comment、conditionalComment
+     * 如果都匹配不上，表示'&lt;'是属于文本本身的内容
+     */</span>
+    <span class="token comment">// 在'&lt;'之后查找是否还有'&lt;'</span>
+    next <span class="token operator">=</span> rest<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'&lt;'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment">// 如果没有了，表示'&lt;'后面也是文本</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>next <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span>
+    <span class="token comment">// 如果还有，表示'&lt;'是文本中的一个字符</span>
+    textEnd <span class="token operator">+=</span> next
+    <span class="token comment">// 那就把next之后的内容截出来继续下一轮循环匹配</span>
+    rest <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>textEnd<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// '&lt;'是结束标签的开始 ,说明从开始到'&lt;'都是文本，截取出来</span>
+  text <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> textEnd<span class="token punctuation">)</span>
+  <span class="token function">advance</span><span class="token punctuation">(</span>textEnd<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 整个模板字符串里没有找到`&lt;`,说明整个模板字符串都是文本</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>textEnd <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  text <span class="token operator">=</span> html
+  html <span class="token operator">=</span> <span class="token string">''</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 把截取出来的text转化成textAST</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>chars <span class="token operator">&amp;&amp;</span> text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  options<span class="token punctuation">.</span><span class="token function">chars</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793464-85387">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="let textEnd = html.indexOf('&lt;')
+
+if(textEnd === 0) {
+  // ...
+}
+
+// 不是'&lt;'开头，按文本处理
+let text, rest, next
+if (textEnd &gt;= 0) {
+  // 把'&lt;'之前的都当做文本处理
+  rest = html.slice(textEnd)
+  while (
+    !endTag.test(rest) &amp;&amp;
+    !startTagOpen.test(rest) &amp;&amp;
+    !comment.test(rest) &amp;&amp;
+    !conditionalComment.test(rest)
+  ) {
+    // &lt; in plain text, be forgiving and treat it as text
+    /**
+     * 用'&lt;'以后的内容rest去匹配endTag、startTagOpen、comment、conditionalComment
+     * 如果都匹配不上，表示'&lt;'是属于文本本身的内容
+     */
+    // 在'&lt;'之后查找是否还有'&lt;'
+    next = rest.indexOf('&lt;', 1)
+    // 如果没有了，表示'&lt;'后面也是文本
+    if (next &lt; 0) break
+    // 如果还有，表示'&lt;'是文本中的一个字符
+    textEnd += next
+    // 那就把next之后的内容截出来继续下一轮循环匹配
+    rest = html.slice(textEnd)
+  }
+  // '&lt;'是结束标签的开始 ,说明从开始到'&lt;'都是文本，截取出来
+  text = html.substring(0, textEnd)
+  advance(textEnd)
+}
+
+// 整个模板字符串里没有找到`&lt;`,说明整个模板字符串都是文本
+if (textEnd &lt; 0) {
+  text = html
+  html = ''
+}
+
+// 把截取出来的text转化成textAST
+if (options.chars &amp;&amp; text) {
+  options.chars(text)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793464-85387" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><p>从上述代码，我们可以发现，判断<code>textEnd === 0</code>（模板字符串以<code>&lt;</code>开头）后，并没有直接<code>else</code>判断字符串，这里就是为了模板字符串以<code>&lt;</code>开头匹配前五种类型不匹配后，将其作为文本的一部分。后续判断文本的时候也是<code>textEnd &gt;= 0</code>而不是<code>textEnd &gt; 0</code>。</p> <h4 id="纯文本内容元素"><a href="#纯文本内容元素" class="header-anchor">#</a> 纯文本内容元素</h4> <p>上述几种情况解析时，都是默认当前元素的父级不是纯文本内容元素。</p> <p>纯文本内容元素是指<code>script</code>、<code>style</code>、<code>textarea</code>三种元素，解析时会把该标签内容都当做文本处理。</p> <p>在<code>parseHTML</code>的<code>while</code>中最先判断的就是父级元素是不是纯文本内容元素。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code> <span class="token keyword">while</span> <span class="token punctuation">(</span>html<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 判断父元素是否为script、style、textarea纯文本内容元素</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>lastTag <span class="token operator">||</span> <span class="token operator">!</span><span class="token function">isPlainTextElement</span><span class="token punctuation">(</span>lastTag<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 父元素为正常元素</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 父元素为script、style、textarea纯文本内容元素</span>
+       <span class="token keyword">let</span> endTagLength <span class="token operator">=</span> <span class="token number">0</span>
+      <span class="token keyword">const</span> stackedTag <span class="token operator">=</span> lastTag<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token comment">// 匹配结束标签前包括结束标签自身在内的所有文本</span>
+      <span class="token keyword">const</span> reStackedTag <span class="token operator">=</span> reCache<span class="token punctuation">[</span>stackedTag<span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">(</span>reCache<span class="token punctuation">[</span>stackedTag<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token string">'([\\s\\S]*?)(&lt;/'</span> <span class="token operator">+</span> stackedTag <span class="token operator">+</span> <span class="token string">'[^&gt;]*&gt;)'</span><span class="token punctuation">,</span> <span class="token string">'i'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> rest <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>reStackedTag<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">all<span class="token punctuation">,</span> text<span class="token punctuation">,</span> endTag</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// replace第二个参数为自定义替换函数</span>
+        <span class="token comment">// all 完整的匹配子字符串</span>
+        <span class="token comment">// text 结束标签前的所有内容</span>
+        <span class="token comment">// endTag 结束标签本身</span>
+        endTagLength <span class="token operator">=</span> endTag<span class="token punctuation">.</span>length
+
+        <span class="token comment">// stackedTag 不是纯文本元素并且不是 'noscript'，</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isPlainTextElement</span><span class="token punctuation">(</span>stackedTag<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> stackedTag <span class="token operator">!==</span> <span class="token string">'noscript'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          text <span class="token operator">=</span> text
+            <span class="token comment">// 删除注释标记，保留注释内容</span>
+            <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">&lt;!\--([\s\S]*?)--&gt;</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">,</span> <span class="token string">'$1'</span><span class="token punctuation">)</span> <span class="token comment">// #7298</span>
+            <span class="token comment">// 删除 CDATA 标记，保留 CDATA 内容</span>
+            <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">&lt;!\[CDATA\[([\s\S]*?)]]&gt;</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">,</span> <span class="token string">'$1'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// stackedTag是pre,textarea，并且text开头为\n，则删除\n</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">shouldIgnoreFirstNewline</span><span class="token punctuation">(</span>stackedTag<span class="token punctuation">,</span> text<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          text <span class="token operator">=</span> text<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 触发钩子函数`chars`</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>chars<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          options<span class="token punctuation">.</span><span class="token function">chars</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token string">''</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      index <span class="token operator">+=</span> html<span class="token punctuation">.</span>length <span class="token operator">-</span> rest<span class="token punctuation">.</span>length
+      html <span class="token operator">=</span> rest
+      <span class="token function">parseEndTag</span><span class="token punctuation">(</span>stackedTag<span class="token punctuation">,</span> index <span class="token operator">-</span> endTagLength<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793465-81944">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content=" while (html) {
+    // 判断父元素是否为script、style、textarea纯文本内容元素
+    if (!lastTag || !isPlainTextElement(lastTag)) {
+      // 父元素为正常元素
+    } else {
+      // 父元素为script、style、textarea纯文本内容元素
+       let endTagLength = 0
+      const stackedTag = lastTag.toLowerCase()
+      // 匹配结束标签前包括结束标签自身在内的所有文本
+      const reStackedTag = reCache[stackedTag] || (reCache[stackedTag] = new RegExp('([\\s\\S]*?)(&lt;/' + stackedTag + '[^&gt;]*&gt;)', 'i'))
+      const rest = html.replace(reStackedTag, function (all, text, endTag) {
+        // replace第二个参数为自定义替换函数
+        // all 完整的匹配子字符串
+        // text 结束标签前的所有内容
+        // endTag 结束标签本身
+        endTagLength = endTag.length
+
+        // stackedTag 不是纯文本元素并且不是 'noscript'，
+        if (!isPlainTextElement(stackedTag) &amp;&amp; stackedTag !== 'noscript') {
+          text = text
+            // 删除注释标记，保留注释内容
+            .replace(/&lt;!\--([\s\S]*?)--&gt;/g, '$1') // #7298
+            // 删除 CDATA 标记，保留 CDATA 内容
+            .replace(/&lt;!\[CDATA\[([\s\S]*?)]]&gt;/g, '$1')
+        }
+
+        // stackedTag是pre,textarea，并且text开头为\n，则删除\n
+        if (shouldIgnoreFirstNewline(stackedTag, text)) {
+          text = text.slice(1)
+        }
+        // 触发钩子函数`chars`
+        if (options.chars) {
+          options.chars(text)
+        }
+        return ''
+      })
+      index += html.length - rest.length
+      html = rest
+      parseEndTag(stackedTag, index - endTagLength, index)
+    }
+ }
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793465-81944" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><p>上述代码可以看出，当父元素是纯文本内容元素时，只需要把内容视作文本，并且把这些文本截取出来，触发钩子函数<code>chars</code>，然后再将结束标签截取出来触发钩子函数<code>end</code></p> <h2 id="ast层级结构"><a href="#ast层级结构" class="header-anchor">#</a> AST层级结构</h2> <p>有的同学可能已经发现一个问题，我们之前看到的<code>AST</code>是有层级关系的，是一个树状结构。但我们以上分析的创建<code>AST</code>节点都是平级的，没有层级关系，这个怎么处理呢？</p> <p>其实处理的思路也很简单，我们只需要维护一个栈<code>stack</code>，用栈来记录层级关系，这个层级关系也可以理解为DOM的深度。</p> <p>HTML解析器在解析HTML时，是从前向后解析。每当遇到开始标签，就触发钩子函数<code>start</code>。每当遇到结束标签，就会触发钩子函数<code>end</code>。</p> <p>基于 HTML 解析器的逻辑，我们可以在每次触发钩子函数 <code>start</code> 时，把当前构建的节点推入栈中。每当触发钩子函数 <code>end</code> 时，就从栈中弹出一个节点。</p> <p>这样就可以保证每当触发钩子函数<code>start</code>是，栈的最后一个节点就是当前正在构建的节点的父节点。</p> <p>举例说明</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793469-98069">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;div&gt;&lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793469-98069" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol><li>解析到开始标签<code>&lt;div&gt;</code>时，<code>div</code>入栈</li> <li>解析到开始标签<code>&lt;p&gt;</code>时，<code>p</code>入栈</li> <li>解析到开始标签<code>&lt;span&gt;</code>时，<code>span</code>入栈</li> <li>解析到结束标签<code>&lt;/span&gt;</code>时，栈的顶端是<code>span</code>，使用<code>span</code>的开始标签和结束标签构建AST节点，栈弹出<code>span</code></li> <li>后续同理</li></ol> <p>这样我们就梳理出了<code>AST</code>的树状结构，过程如图所示：</p> <p><img src="/assets/img/htmlParseStack.6ca1dbf0.png" alt="栈"></p> <h2 id="回归源码"><a href="#回归源码" class="header-anchor">#</a> 回归源码</h2> <p>当上述逻辑都梳理完毕后，我们可以开始分析<code>HTML</code>解析器<code>parseHTML</code>函数的源码，源码在<code>src/compiler/parser/html-parser.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">parseHTML</span> <span class="token punctuation">(</span><span class="token parameter">html<span class="token punctuation">,</span> options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 维护AST节点层级的栈</span>
+  <span class="token keyword">const</span> expectHTML <span class="token operator">=</span> options<span class="token punctuation">.</span>expectHTML
+  <span class="token keyword">const</span> isUnaryTag <span class="token operator">=</span> options<span class="token punctuation">.</span>isUnaryTag <span class="token operator">||</span> no
+  <span class="token keyword">const</span> canBeLeftOpenTag <span class="token operator">=</span> options<span class="token punctuation">.</span>canBeLeftOpenTag <span class="token operator">||</span> no <span class="token comment">//用来检测一个标签是否是可以省略闭合标签的非自闭合标签</span>
+  <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>   <span class="token comment">//解析游标，标识当前从何处开始解析模板字符串</span>
+  <span class="token keyword">let</span> last<span class="token punctuation">,</span>   <span class="token comment">// 存储剩余还未解析的模板字符串</span>
+      lastTag  <span class="token comment">// 存储着位于 stack 栈顶的元素</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>html<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    last <span class="token operator">=</span> html
+    <span class="token comment">// Make sure we're not in a plaintext content element like script/style</span>
+    <span class="token comment">// 判断父元素是否为script、style、textarea纯文本内容元素</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>lastTag <span class="token operator">||</span> <span class="token operator">!</span><span class="token function">isPlainTextElement</span><span class="token punctuation">(</span>lastTag<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> textEnd <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'&lt;'</span><span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>textEnd <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果开头是&lt;，则判断是否为注释、开始标签、结束标签、DOCTYPE</span>
+        
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>comment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 判断是否为注释</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 解析是否是条件注释</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>conditionalComment<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 解析是否是DOCTYPE</span>
+        <span class="token keyword">const</span> doctypeMatch <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>doctype<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>doctypeMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 解析结束标签</span>
+        <span class="token keyword">const</span> endTagMatch <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>endTag<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>endTagMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 解析开始标签</span>
+        <span class="token keyword">const</span> startTagMatch <span class="token operator">=</span> <span class="token function">parseStartTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>startTagMatch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 不是'&lt;'开头，按文本处理</span>
+      <span class="token keyword">let</span> text<span class="token punctuation">,</span> rest<span class="token punctuation">,</span> next
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>textEnd <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 整个模板字符串里没有找到`&lt;`,说明整个模板字符串都是文本</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>textEnd <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        text <span class="token operator">=</span> html
+        html <span class="token operator">=</span> <span class="token string">''</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 把截取出来的text转化成textAST</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>chars <span class="token operator">&amp;&amp;</span> text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        options<span class="token punctuation">.</span><span class="token function">chars</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 父元素为script、style、textarea纯文本内容元素</span>
+     
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>html <span class="token operator">===</span> last<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      options<span class="token punctuation">.</span>chars <span class="token operator">&amp;&amp;</span> options<span class="token punctuation">.</span><span class="token function">chars</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>stack<span class="token punctuation">.</span>length <span class="token operator">&amp;&amp;</span> options<span class="token punctuation">.</span>warn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        options<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Mal-formatted tag at end of template: &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>html<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">break</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 处理栈中剩余未处理的标签</span>
+  <span class="token comment">// Clean up any remaining tags</span>
+  <span class="token function">parseEndTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">function</span> <span class="token function">advance</span> <span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    index <span class="token operator">+=</span> n
+    html <span class="token operator">=</span> html<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">parseStartTag</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 匹配开始标签</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">handleStartTag</span> <span class="token punctuation">(</span><span class="token parameter">match</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 处理 parseStartTag 的结果</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">parseEndTag</span> <span class="token punctuation">(</span><span class="token parameter">tagName<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 解析 结束标签</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793469-25179">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function parseHTML (html, options) {
+  const stack = [] // 维护AST节点层级的栈
+  const expectHTML = options.expectHTML
+  const isUnaryTag = options.isUnaryTag || no
+  const canBeLeftOpenTag = options.canBeLeftOpenTag || no //用来检测一个标签是否是可以省略闭合标签的非自闭合标签
+  let index = 0   //解析游标，标识当前从何处开始解析模板字符串
+  let last,   // 存储剩余还未解析的模板字符串
+      lastTag  // 存储着位于 stack 栈顶的元素
+  while (html) {
+    last = html
+    // Make sure we're not in a plaintext content element like script/style
+    // 判断父元素是否为script、style、textarea纯文本内容元素
+    if (!lastTag || !isPlainTextElement(lastTag)) {
+      let textEnd = html.indexOf('&lt;')
+      if (textEnd === 0) {
+      // 如果开头是&lt;，则判断是否为注释、开始标签、结束标签、DOCTYPE
+        
+        if (comment.test(html)) {
+          // 判断是否为注释
+        }
+
+        // 解析是否是条件注释
+        if (conditionalComment.test(html)) {
+         
+        }
+
+        // 解析是否是DOCTYPE
+        const doctypeMatch = html.match(doctype)
+        if (doctypeMatch) {
+          
+        }
+
+        // 解析结束标签
+        const endTagMatch = html.match(endTag)
+        if (endTagMatch) {
+          
+        }
+
+        // 解析开始标签
+        const startTagMatch = parseStartTag()
+        if (startTagMatch) {
+         
+        }
+      }
+
+      // 不是'&lt;'开头，按文本处理
+      let text, rest, next
+      if (textEnd &gt;= 0) {
+        
+      }
+
+      // 整个模板字符串里没有找到`&lt;`,说明整个模板字符串都是文本
+      if (textEnd &lt; 0) {
+        text = html
+        html = ''
+      }
+
+      // 把截取出来的text转化成textAST
+      if (options.chars &amp;&amp; text) {
+        options.chars(text)
+      }
+    } else {
+      // 父元素为script、style、textarea纯文本内容元素
+     
+    }
+
+    if (html === last) {
+      options.chars &amp;&amp; options.chars(html)
+      if (process.env.NODE_ENV !== 'production' &amp;&amp; !stack.length &amp;&amp; options.warn) {
+        options.warn(`Mal-formatted tag at end of template: &quot;${html}&quot;`)
+      }
+      break
+    }
+  }
+
+  // 处理栈中剩余未处理的标签
+  // Clean up any remaining tags
+  parseEndTag()
+
+  function advance (n) {
+    index += n
+    html = html.substring(n)
+  }
+
+  function parseStartTag () {
+    // 匹配开始标签
+  }
+
+  function handleStartTag (match) {
+    // 处理 parseStartTag 的结果
+  }
+
+  function parseEndTag (tagName, start, end) {
+    // 解析 结束标签
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793469-25179" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br></div></div><p>简化后的整体逻辑比较简单，具体解析细节上面都有分析，这里就不赘述了。</p> <p>需要分析的是，我们之前暂时忽略的<code>parseEndTag</code>函数</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// tagName 结束标签名</span>
+<span class="token comment">// start 结束标签在模板字符串的开始位置</span>
+<span class="token comment">// end 结束标签在模板字符串的结束位置</span>
+<span class="token keyword">function</span> <span class="token function">parseEndTag</span> <span class="token punctuation">(</span><span class="token parameter">tagName<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> pos<span class="token punctuation">,</span> lowerCasedTagName
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> start <span class="token operator">=</span> index
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>end <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> end <span class="token operator">=</span> index
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>tagName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    lowerCasedTagName <span class="token operator">=</span> tagName<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// Find the closest opened tag of the same type</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>tagName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 从后往前遍历栈，在栈中寻找与tagName相同的标签并记录其所在的位置pos，</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>pos <span class="token operator">=</span> stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> pos <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> pos<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>stack<span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">.</span>lowerCasedTag <span class="token operator">===</span> lowerCasedTagName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">break</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 如果tagName不存在，则将pos置为0</span>
+    <span class="token comment">// If no tag name is provided, clean shop</span>
+    pos <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>pos <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Close all the open elements, up the stack</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> stack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> pos<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token punctuation">(</span>i <span class="token operator">&gt;</span> pos <span class="token operator">||</span> <span class="token operator">!</span>tagName<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+        options<span class="token punctuation">.</span>warn
+      <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 栈的索引大于pos，那么该元素一定是缺少闭合标签的。</span>
+        options<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">tag &lt;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>stack<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>tag<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&gt; has no matching end tag.</span><span class="token template-punctuation string">`</span></span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 为了保证解析结果的正确性， i&gt;pos 或 tagName不存在时，立即闭合</span>
+      <span class="token comment">// i === pos 时，正常闭合</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        options<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>stack<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>tag<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// Remove the open elements from the stack</span>
+    <span class="token comment">// 把pos位置以后的元素都从stack栈中弹出</span>
+    stack<span class="token punctuation">.</span>length <span class="token operator">=</span> pos
+    <span class="token comment">// 以及把lastTag更新为栈顶元素:</span>
+    lastTag <span class="token operator">=</span> pos <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">[</span>pos <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>tag
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>lowerCasedTagName <span class="token operator">===</span> <span class="token string">'br'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 浏览器会将&lt;/br&gt;标签解析为正常的 &lt;br&gt;标签</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 创建&lt;br&gt;AST节点</span>
+      options<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span>tagName<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> start<span class="token punctuation">,</span> end<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>lowerCasedTagName <span class="token operator">===</span> <span class="token string">'p'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 浏览器会将&lt;/p&gt;标签解析为正常的 &lt;p /&gt;标签</span>
+    <span class="token comment">// 补全p标签, 创建&lt;br&gt;AST节点</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>start<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      options<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span>tagName<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> start<span class="token punctuation">,</span> end<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>end<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      options<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>tagName<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689173793473-82786">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// tagName 结束标签名
+// start 结束标签在模板字符串的开始位置
+// end 结束标签在模板字符串的结束位置
+function parseEndTag (tagName, start, end) {
+  let pos, lowerCasedTagName
+  if (start == null) start = index
+  if (end == null) end = index
+
+  if (tagName) {
+    lowerCasedTagName = tagName.toLowerCase()
+  }
+
+  // Find the closest opened tag of the same type
+  if (tagName) {
+    // 从后往前遍历栈，在栈中寻找与tagName相同的标签并记录其所在的位置pos，
+    for (pos = stack.length - 1; pos &gt;= 0; pos--) {
+      if (stack[pos].lowerCasedTag === lowerCasedTagName) {
+        break
+      }
+    }
+  } else {
+    // 如果tagName不存在，则将pos置为0
+    // If no tag name is provided, clean shop
+    pos = 0
+  }
+
+  if (pos &gt;= 0) {
+    // Close all the open elements, up the stack
+    for (let i = stack.length - 1; i &gt;= pos; i--) {
+      if (process.env.NODE_ENV !== 'production' &amp;&amp;
+        (i &gt; pos || !tagName) &amp;&amp;
+        options.warn
+      ) {
+        // 栈的索引大于pos，那么该元素一定是缺少闭合标签的。
+        options.warn(
+          `tag &lt;${stack[i].tag}&gt; has no matching end tag.`
+        )
+      }
+      // 为了保证解析结果的正确性， i&gt;pos 或 tagName不存在时，立即闭合
+      // i === pos 时，正常闭合
+      if (options.end) {
+        options.end(stack[i].tag, start, end)
+      }
+    }
+    // Remove the open elements from the stack
+    // 把pos位置以后的元素都从stack栈中弹出
+    stack.length = pos
+    // 以及把lastTag更新为栈顶元素:
+    lastTag = pos &amp;&amp; stack[pos - 1].tag
+  } else if (lowerCasedTagName === 'br') {
+    // 浏览器会将&lt;/br&gt;标签解析为正常的 &lt;br&gt;标签
+    if (options.start) {
+      // 创建&lt;br&gt;AST节点
+      options.start(tagName, [], true, start, end)
+    }
+  } else if (lowerCasedTagName === 'p') {
+    // 浏览器会将&lt;/p&gt;标签解析为正常的 &lt;p /&gt;标签
+    // 补全p标签, 创建&lt;br&gt;AST节点
+    if (options.start) {
+      options.start(tagName, [], false, start, end)
+    }
+    if (options.end) {
+      options.end(tagName, start, end)
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689173793473-82786" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br></div></div><p><code>parseEndTag</code>接收三个参数：</p> <ul><li><code>tagName</code> 结束标签名</li> <li><code>start</code> 结束标签在模板字符串的开始位置</li> <li><code>end</code> 结束标签在模板字符串的结束位置</li></ul> <p>这三个参数其实都是可选的，根据传参的不同其功能也不同。</p> <ol><li>三个参数都传递，用于处理普通的结束标签</li> <li>只传递<code>tagName</code></li> <li>三个参数都不传递，用于处理栈中剩余未处理的标签</li></ol> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>本小节介绍了HTML解析器的工作流程和具体原理。</p> <p>首先介绍了HTML解析器的工作流程，HTML解析器从前到后解析，解析到不同类型的内容调用对应的钩子函数生成相应的<code>AST</code>节点，直到解析完整个模板字符串。</p> <p>接着介绍了HTML解析器是如何解析用户所写的模板字符串中各种类型的内容的，把各种类型的解析方式都分别进行了介绍。</p> <p>其次，介绍了在解析器通过维护栈的方式，保证构建的AST节点层级与真正DOM层级一致。</p> <p>了解以上思路后，通过源码回顾整体流程和处理细节。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue2/compile/parse.html" class="prev">
+        模板解析阶段（整体运行流程）
+      </a></span> <span class="next"><a href="/vue2/lifecycle/">
+        简介
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.a3a3ab63.js" defer></script><script src="/assets/js/2.7030d6aa.js" defer></script><script src="/assets/js/11.309be7be.js" defer></script>
+  </body>
+</html>
