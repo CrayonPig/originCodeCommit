@@ -39,6 +39,7 @@ module.exports = {
         '/vue2/compile/',
         '/vue2/compile/parse',
         '/vue2/compile/parseHtml',
+        '/vue2/compile/parseTxt',
       ]
     },
     {
