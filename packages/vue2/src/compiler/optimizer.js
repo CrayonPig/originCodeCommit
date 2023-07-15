@@ -20,11 +20,18 @@ const genStaticKeysCached = cached(genStaticKeys)
  */
 export function optimize (root: ?ASTElement, options: CompilerOptions) {
   if (!root) return
+
+  // 生成静态键列表
   isStaticKey = genStaticKeysCached(options.staticKeys || '')
+
+  // 判断是否是保留标签
   isPlatformReservedTag = options.isReservedTag || no
+
   // first pass: mark all non-static nodes.
+  // 标记静态节点
   markStatic(root)
   // second pass: mark static roots.
+  // 标记静态根节点
   markStaticRoots(root, false)
 }
 
@@ -36,11 +43,13 @@ function genStaticKeys (keys: string): Function {
 }
 
 function markStatic (node: ASTNode) {
+  // 判断是否为静态节点
   node.static = isStatic(node)
+
   if (node.type === 1) {
-    // do not make component slot content static. this avoids
-    // 1. components not able to mutate slot nodes
-    // 2. static slot content fails for hot-reloading
+    // 不将组件插槽内容标记为静态，以避免：
+    // 1. 组件无法更改插槽节点
+    // 2. 静态插槽内容在热重载时失败
     if (
       !isPlatformReservedTag(node.tag) &&
       node.tag !== 'slot' &&
@@ -48,17 +57,23 @@ function markStatic (node: ASTNode) {
     ) {
       return
     }
+
+    // 遍历节点的子节点，并标记静态节点
     for (let i = 0, l = node.children.length; i < l; i++) {
       const child = node.children[i]
       markStatic(child)
+      // 子节点如果不是静态节点，父节点肯定不是静态节点
       if (!child.static) {
         node.static = false
       }
     }
+
+    // 如果节点具有条件指令，则遍历条件块，并标记静态节点
     if (node.ifConditions) {
       for (let i = 1, l = node.ifConditions.length; i < l; i++) {
         const block = node.ifConditions[i].block
         markStatic(block)
+        // 条件块内不是静态节点，父节点肯定不是静态节点
         if (!block.static) {
           node.static = false
         }
@@ -98,31 +113,37 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
 }
 
 function isStatic (node: ASTNode): boolean {
-  if (node.type === 2) { // expression
+  if (node.type === 2) { // 带变量的动态节点
     return false
   }
-  if (node.type === 3) { // text
+  if (node.type === 3) { // 不带变量的纯文本节点
     return true
   }
-  return !!(node.pre || (
-    !node.hasBindings && // no dynamic bindings
-    !node.if && !node.for && // not v-if or v-for or v-else
-    !isBuiltInTag(node.tag) && // not a built-in
-    isPlatformReservedTag(node.tag) && // not a component
-    !isDirectChildOfTemplateFor(node) &&
-    Object.keys(node).every(isStaticKey)
+  return !!(node.pre || ( // 使用指令v-pre
+    !node.hasBindings && // 没有动态绑定
+    !node.if && !node.for && // 没有 v-if 或 v-for 或 v-else
+    !isBuiltInTag(node.tag) && // 不是内置标签
+    isPlatformReservedTag(node.tag) && // 不是组件
+    !isDirectChildOfTemplateFor(node) && // 判断节点是否是 template 标签的直接子节点且带有 v-for 属性
+    Object.keys(node).every(isStaticKey) // 节点是否为预设的静态键
   ))
 }
 
 function isDirectChildOfTemplateFor (node: ASTElement): boolean {
+  // 判断节点是否是 template 标签的直接子节点且带有 v-for 属性
   while (node.parent) {
     node = node.parent
+     // 如果节点的标签不是 template
     if (node.tag !== 'template') {
       return false
     }
+
+    // 如果节点具有 v-for 属性
     if (node.for) {
       return true
     }
   }
+  
+  // 节点不是 template 标签的直接子节点或不带有 v-for 属性，返回 false
   return false
 }

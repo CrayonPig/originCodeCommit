@@ -135,7 +135,7 @@ while ((match = tagRE.exec(text))) {
 
 此处`while`循环是通过`tagRE.exec(text)`查询是否有匹配到的变量。
 
-这里需要提的是，在具有`g`修饰的正则表达式中调用的`exec`函数，会在`lastIndex`属性指定的字符处开始检索字符串，调用完毕后，如果匹配到结果，把`lastIndex`设置为紧挨着匹配子串的字符位置。如果没匹配到结果，将`lastIndex`重置为0。以我们之前例子来讲：
+这里需要提的是，在具有`g`修饰的正则表达式中调用的`exec`函数，会在`lastIndex`属性指定的字符处开始检索字符串，调用完毕后，如果匹配到结果，把`lastIndex`设置为紧挨着匹配子串的字符位置。如果没匹配到结果，将`lastIndex`重置为0。[文档在此](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) 以我们之前例子来讲：
 
 ```js
 let text = "我叫{{name}}，我今年{{age}}岁了"
