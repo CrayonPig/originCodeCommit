@@ -42,6 +42,7 @@ export function generate (
   options: CompilerOptions
 ): CodegenResult {
   const state = new CodegenState(options)
+  // ast 不存在，生成一个空div vnode
   const code = ast ? genElement(ast, state) : '_c("div")'
   return {
     render: `with(this){return ${code}}`,
@@ -50,26 +51,36 @@ export function generate (
 }
 
 export function genElement (el: ASTElement, state: CodegenState): string {
+  // 静态节点并且未处理过
   if (el.staticRoot && !el.staticProcessed) {
     return genStatic(el, state)
+  // 节点具有 once 属性且未被处理过
   } else if (el.once && !el.onceProcessed) {
     return genOnce(el, state)
+  // 节点具有 for 属性且未被处理过
   } else if (el.for && !el.forProcessed) {
     return genFor(el, state)
+  // 节点具有 if 属性且未被处理过
   } else if (el.if && !el.ifProcessed) {
     return genIf(el, state)
+  // 节点是 template 标签且没有 slotTarget 属性
   } else if (el.tag === 'template' && !el.slotTarget) {
     return genChildren(el, state) || 'void 0'
+  // 插槽
   } else if (el.tag === 'slot') {
     return genSlot(el, state)
+  // 组件或元素
   } else {
     // component or element
     let code
+    // 如果是组件
     if (el.component) {
       code = genComponent(el.component, el, state)
+    // 是元素节点
     } else {
+      // 如果节点没有属性，无需处理
       const data = el.plain ? undefined : genData(el, state)
-
+      // 如果有内联的模板内容，不需要生成子节点
       const children = el.inlineTemplate ? null : genChildren(el, state, true)
       code = `_c('${el.tag}'${
         data ? `,${data}` : '' // data
@@ -77,6 +88,7 @@ export function genElement (el: ASTElement, state: CodegenState): string {
         children ? `,${children}` : '' // children
       })`
     }
+
     // module transforms
     for (let i = 0; i < state.transforms.length; i++) {
       code = state.transforms[i](el, code)

@@ -82,14 +82,21 @@ function markStatic (node: ASTNode) {
   }
 }
 
+/**
+ * 标记静态根节点
+ * @param {ASTNode} node - 节点
+ * @param {boolean} isInFor - 是否在 v-for 指令中
+ */
 function markStaticRoots (node: ASTNode, isInFor: boolean) {
+  // 只能是元素节点
   if (node.type === 1) {
+    // 如果节点是静态节点或者只渲染一次的节点，设置 staticInFor 属性为 isInFor
     if (node.static || node.once) {
       node.staticInFor = isInFor
     }
-    // For a node to qualify as a static root, it should have children that
-    // are not just static text. Otherwise the cost of hoisting out will
-    // outweigh the benefits and it's better off to just always render it fresh.
+
+    // 要使节点符合静态根节点的要求，它必须有子节点
+    // 这个子节点不能是只有一个静态文本的子节点，否则优化成本将超过收益
     if (node.static && node.children.length && !(
       node.children.length === 1 &&
       node.children[0].type === 3
@@ -99,11 +106,15 @@ function markStaticRoots (node: ASTNode, isInFor: boolean) {
     } else {
       node.staticRoot = false
     }
+
+    // 遍历节点的子节点，并递归调用 markStaticRoots 函数
     if (node.children) {
       for (let i = 0, l = node.children.length; i < l; i++) {
         markStaticRoots(node.children[i], isInFor || !!node.for)
       }
     }
+
+    // 如果节点具有条件指令，继续遍历条件块，并递归调用 markStaticRoots 函数
     if (node.ifConditions) {
       for (let i = 1, l = node.ifConditions.length; i < l; i++) {
         markStaticRoots(node.ifConditions[i].block, isInFor)

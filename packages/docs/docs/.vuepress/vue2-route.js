@@ -41,6 +41,8 @@ module.exports = {
         '/vue2/compile/parseHtml',
         '/vue2/compile/parseTxt',
         '/vue2/compile/optimize',
+        '/vue2/compile/codegen',
+        '/vue2/compile/summary',
       ]
     },
     {
