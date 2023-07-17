@@ -319,10 +319,12 @@ function createWatcher (
   handler: any,
   options?: Object
 ) {
+  // 如果是个对象，则把handler提出来
   if (isPlainObject(handler)) {
     options = handler
     handler = handler.handler
   }
+  // 回调使用的是this上挂载的方法
   if (typeof handler === 'string') {
     handler = vm[handler]
   }
@@ -361,12 +363,19 @@ export function stateMixin (Vue: Class<Component>) {
     options?: Object
   ): Function {
     const vm: Component = this
+    // 如果cb是个对象，说明格式是
+    // {
+    //   handler: function (val, oldVal) { /* ... */ },
+    //   deep: true
+    // }
     if (isPlainObject(cb)) {
       return createWatcher(vm, expOrFn, cb, options)
     }
     options = options || {}
+    // 区分用户创建的watcher实例和Vue内部创建的watcher实例
     options.user = true
     const watcher = new Watcher(vm, expOrFn, cb, options)
+    // immediate 立即触发
     if (options.immediate) {
       cb.call(vm, watcher.value)
     }

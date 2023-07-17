@@ -215,16 +215,24 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   ) {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
+  
+  // 如果是数组，并且key是有效的数组索引
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 使用较大的数值作为新的长度
     target.length = Math.max(target.length, key)
+    // 使用splice触发Array拦截器，完成响应
     target.splice(key, 1, val)
     return val
   }
+  // 不是数组就是对象
+  // 如果key存在，则更新对象中该key的值为val
   if (key in target && !(key in Object.prototype)) {
     target[key] = val
     return val
   }
+  // __ob__ 代表是否为响应式对象
   const ob = (target: any).__ob__
+  // 不能为Vue实例或者 Vue 实例的根数据对象
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
       'Avoid adding reactive properties to a Vue instance or its root $data ' +
@@ -232,11 +240,15 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     )
     return val
   }
+  // 不是一个响应式对象，只需要简单的增加一个属性
   if (!ob) {
     target[key] = val
     return val
   }
+  // 如果是响应式对象，调用defineReactive
+  // defineReactive方会将新属性添加完之后并将其转化成响应式
   defineReactive(ob.value, key, val)
+  // 通知依赖更新
   ob.dep.notify()
   return val
 }
@@ -250,11 +262,16 @@ export function del (target: Array<any> | Object, key: any) {
   ) {
     warn(`Cannot delete reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
+  // 如果是数组，并且是有效索引长度
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 调用splice触发Array拦截器，完成响应
     target.splice(key, 1)
     return
   }
+
+  // __ob__ 代表是否为响应式对象
   const ob = (target: any).__ob__
+  // 不能为Vue实例或者 Vue 实例的根数据对象
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
       'Avoid deleting properties on a Vue instance or its root $data ' +
@@ -262,13 +279,17 @@ export function del (target: Array<any> | Object, key: any) {
     )
     return
   }
+  // 不存在这个属性，无需处理
   if (!hasOwn(target, key)) {
     return
   }
+  // 删除此属性
   delete target[key]
+  // 不是响应式对象，直接完成
   if (!ob) {
     return
   }
+  // 是响应式对象，通知依赖更新
   ob.dep.notify()
 }
 
