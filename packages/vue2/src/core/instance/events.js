@@ -47,11 +47,14 @@ export function eventsMixin (Vue: Class<Component>) {
   const hookRE = /^hook:/
   Vue.prototype.$on = function (event: string | Array<string>, fn: Function): Component {
     const vm: Component = this
+    // 如果是数组，说明需要一次注册多个事件
     if (Array.isArray(event)) {
       for (let i = 0, l = event.length; i < l; i++) {
+        // 每个事件单独注册
         this.$on(event[i], fn)
       }
     } else {
+      // 如果是字符串，把事件注册到当前实例的_events中
       (vm._events[event] || (vm._events[event] = [])).push(fn)
       // optimize hook:event cost by using a boolean flag marked at registration
       // instead of a hash lookup
@@ -64,6 +67,7 @@ export function eventsMixin (Vue: Class<Component>) {
 
   Vue.prototype.$once = function (event: string, fn: Function): Component {
     const vm: Component = this
+    // 自定义触发事件，先取消事件注册，再触发传入的事件
     function on () {
       vm.$off(event, on)
       fn.apply(vm, arguments)
@@ -75,27 +79,29 @@ export function eventsMixin (Vue: Class<Component>) {
 
   Vue.prototype.$off = function (event?: string | Array<string>, fn?: Function): Component {
     const vm: Component = this
-    // all
+    // 没有传参，则清空所有事件
     if (!arguments.length) {
       vm._events = Object.create(null)
       return vm
     }
-    // array of events
+    // events 是个数组，则挨个删除
     if (Array.isArray(event)) {
       for (let i = 0, l = event.length; i < l; i++) {
         this.$off(event[i], fn)
       }
       return vm
     }
-    // specific event
     const cbs = vm._events[event]
+    // event没被注册过事件，无需处理
     if (!cbs) {
       return vm
     }
+    // 没传需要取消的事件回调，则清空该event所属所有事件
     if (!fn) {
       vm._events[event] = null
       return vm
     }
+    // 只取消特定的事件回调，则遍历该event下所有事件进行对比
     if (fn) {
       // specific handler
       let cb
@@ -125,10 +131,14 @@ export function eventsMixin (Vue: Class<Component>) {
         )
       }
     }
+    // 在事件中心中找到对应的注册事件
     let cbs = vm._events[event]
     if (cbs) {
+      // 注册事件可能会有多个
       cbs = cbs.length > 1 ? toArray(cbs) : cbs
+      // 获取传入的额外参数
       const args = toArray(arguments, 1)
+      // 循环触发注册的事件
       for (let i = 0, l = cbs.length; i < l; i++) {
         try {
           cbs[i].apply(vm, args)

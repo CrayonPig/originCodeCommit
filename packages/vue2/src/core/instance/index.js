@@ -25,6 +25,7 @@ initMixin(Vue)
 // 挂载$data、$props、$set、$delete、$watch方法
 stateMixin(Vue)
 // vue内部实现发布订阅模式
+// 挂载$on、$emit、$off和$once方法
 eventsMixin(Vue)
 // 挂载$forceUpdate、$destroy、_update方法
 lifecycleMixin(Vue)
