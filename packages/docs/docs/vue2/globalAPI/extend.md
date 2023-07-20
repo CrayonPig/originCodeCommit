@@ -1,21 +1,62 @@
-/* @flow */
+# Vue.extend
 
-import { ASSET_TYPES } from 'shared/constants'
-import { defineComputed, proxy } from '../instance/state'
-import { extend, mergeOptions, validateComponentName } from '../util/index'
+## 用法回顾
+
+其用法如下：
+
+```javascript
+Vue.extend( options )
+```
+
+- **参数**：
+
+  - `{Object} options`
+
+- **作用**：
+
+  使用基础 `Vue` 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
+
+  `data` 选项是特例，需要注意 - 在 `Vue.extend()` 中它必须是函数
+
+  ```html
+  <div id="mount-point"></div>
+  ```
+
+  ```javascript
+  // 创建构造器
+  var Profile = Vue.extend({
+    template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+    data: function () {
+      return {
+        firstName: 'Walter',
+        lastName: 'White',
+        alias: 'Heisenberg'
+      }
+    }
+  })
+  // 创建 Profile 实例，并挂载到一个元素上。
+  new Profile().$mount('#mount-point')
+  ```
+
+  结果如下：
+
+  ```html
+  <p>Walter White aka Heisenberg</p>
+  ```
+
+## 原理分析
+
+通过用法回顾，我们知道`Vue.extend`的作用是创建一个子类，所以实现思路就是创建一个子类，然后继承Vue构造函数的一些功能。
+
+虽然在平时的开发中很少用到它，但是在 Vue 源码内部，`extend` 方法却很重要。因为在 Vue 中，组件的本质就是通过 `extend` 方法创建出来的 Vue 构造函数的子类构造函数。
+
+```js
+// src/core/global-api/extend.js
 
 export function initExtend (Vue: GlobalAPI) {
-  /**
-   * Each instance constructor, including Vue, has a unique
-   * cid. This enables us to create wrapped "child
-   * constructors" for prototypal inheritance and cache them.
-   */
   Vue.cid = 0
   let cid = 1
 
-  /**
-   * Class inheritance
-   */
   Vue.extend = function (extendOptions: Object): Function {
     // 初始化用户传入的参数
     extendOptions = extendOptions || {}
@@ -53,9 +94,6 @@ export function initExtend (Vue: GlobalAPI) {
     // 将父类存到子类的super字段中
     Sub['super'] = Super
 
-    // For props and computed properties, we define the proxy getters on
-    // the Vue instances at extension time, on the extended prototype. This
-    // avoids Object.defineProperty calls for each instance created.
     // 初始化props
     if (Sub.options.props) {
       initProps(Sub)
@@ -65,14 +103,11 @@ export function initExtend (Vue: GlobalAPI) {
       initComputed(Sub)
     }
 
-    // allow further extension/mixin/plugin usage
     // 复制父类的extend/mixin/use
     Sub.extend = Super.extend
     Sub.mixin = Super.mixin
     Sub.use = Super.use
 
-    // create asset registers, so extended classes
-    // can have their private assets too.
     // 复制父类的'component','directive', 'filter'
     ASSET_TYPES.forEach(function (type) {
       Sub[type] = Super[type]
@@ -82,9 +117,6 @@ export function initExtend (Vue: GlobalAPI) {
       Sub.options.components[name] = Sub
     }
 
-    // keep a reference to the super options at extension time.
-    // later at instantiation we can check if Super's options have
-    // been updated.
     // 定义子类特殊的属性
     Sub.superOptions = Super.options
     Sub.extendOptions = extendOptions
@@ -112,3 +144,8 @@ function initComputed (Comp) {
     defineComputed(Comp.prototype, key, computed[key])
   }
 }
+```
+
+上述代码的逻辑较为简单，跟我们之前分析的一样，创建一个子类，然后继承Vue构造函数的一些功能。里面大量的初始化方法，我们在**生命周期篇**都已经介绍过了，此处不再重复介绍
+
+这里需要注意的是，Vue为了性能考虑，在`Vue.extend`方法中增加了缓存策略。反复调用`Vue.extend`会同一个结果。

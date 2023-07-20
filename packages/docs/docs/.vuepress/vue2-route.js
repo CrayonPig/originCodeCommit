@@ -71,6 +71,36 @@ module.exports = {
       children: [
         '/vue2/instanceMethods/data',
         '/vue2/instanceMethods/event',
+        '/vue2/instanceMethods/lifecycle',
+      ]
+    },
+    {
+      title: '全局API',
+      collapsable: false, // 可选的, 默认值是 true,
+      sidebarDepth: 3,
+      children: [
+        '/vue2/globalAPI/',
+        '/vue2/globalAPI/extend',
+        '/vue2/globalAPI/nextTick',
+        '/vue2/globalAPI/set',
+        '/vue2/globalAPI/delete',
+        '/vue2/globalAPI/directive',
+        '/vue2/globalAPI/filter',
+        '/vue2/globalAPI/component',
+        '/vue2/globalAPI/use',
+        '/vue2/globalAPI/mixin',
+        '/vue2/globalAPI/compile',
+        '/vue2/globalAPI/observable',
+        '/vue2/globalAPI/version',
+      ]
+    },
+    {
+      title: '过滤器',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/filter/',
+        '/vue2/filter/parse',
+        '/vue2/filter/principle',
       ]
     },
   ]
