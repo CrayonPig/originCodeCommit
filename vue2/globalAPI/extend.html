@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue.extend | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d7a18e9.css" as="style"><link rel="preload" href="/assets/js/app.8b098689.js" as="script"><link rel="preload" href="/assets/js/2.186c2832.js" as="script"><link rel="preload" href="/assets/js/35.92b3add7.js" as="script"><link rel="prefetch" href="/assets/js/10.576db908.js"><link rel="prefetch" href="/assets/js/11.7fcde9bd.js"><link rel="prefetch" href="/assets/js/12.e3dd9a99.js"><link rel="prefetch" href="/assets/js/13.15ec62c6.js"><link rel="prefetch" href="/assets/js/14.93e7914e.js"><link rel="prefetch" href="/assets/js/15.49b368cc.js"><link rel="prefetch" href="/assets/js/16.97912b2f.js"><link rel="prefetch" href="/assets/js/17.ec832d6c.js"><link rel="prefetch" href="/assets/js/18.d4b4bf23.js"><link rel="prefetch" href="/assets/js/19.332624df.js"><link rel="prefetch" href="/assets/js/20.1b3328b7.js"><link rel="prefetch" href="/assets/js/21.c76d6606.js"><link rel="prefetch" href="/assets/js/22.61742456.js"><link rel="prefetch" href="/assets/js/23.cd2097dd.js"><link rel="prefetch" href="/assets/js/24.9493d1e7.js"><link rel="prefetch" href="/assets/js/25.e47cb3c6.js"><link rel="prefetch" href="/assets/js/26.bc6d0f4e.js"><link rel="prefetch" href="/assets/js/27.b92c483c.js"><link rel="prefetch" href="/assets/js/28.1bdc6539.js"><link rel="prefetch" href="/assets/js/29.903dc78d.js"><link rel="prefetch" href="/assets/js/3.537ff61e.js"><link rel="prefetch" href="/assets/js/30.5c88577d.js"><link rel="prefetch" href="/assets/js/31.8d27284c.js"><link rel="prefetch" href="/assets/js/32.0ff2fe7c.js"><link rel="prefetch" href="/assets/js/33.9dac84a8.js"><link rel="prefetch" href="/assets/js/34.8a235179.js"><link rel="prefetch" href="/assets/js/36.0f1bfdcc.js"><link rel="prefetch" href="/assets/js/37.6b4900dd.js"><link rel="prefetch" href="/assets/js/38.9cd827c8.js"><link rel="prefetch" href="/assets/js/39.b58efdfa.js"><link rel="prefetch" href="/assets/js/4.e806dd18.js"><link rel="prefetch" href="/assets/js/40.3d8a7bb1.js"><link rel="prefetch" href="/assets/js/41.589f74ee.js"><link rel="prefetch" href="/assets/js/42.a2145c3f.js"><link rel="prefetch" href="/assets/js/43.3af7c300.js"><link rel="prefetch" href="/assets/js/44.56a1c786.js"><link rel="prefetch" href="/assets/js/45.96f11149.js"><link rel="prefetch" href="/assets/js/46.72b39982.js"><link rel="prefetch" href="/assets/js/47.0df2e26e.js"><link rel="prefetch" href="/assets/js/48.7971aa7f.js"><link rel="prefetch" href="/assets/js/49.aee0c33e.js"><link rel="prefetch" href="/assets/js/5.135e1375.js"><link rel="prefetch" href="/assets/js/50.b7fcd535.js"><link rel="prefetch" href="/assets/js/51.874e1fc2.js"><link rel="prefetch" href="/assets/js/52.8776ce16.js"><link rel="prefetch" href="/assets/js/53.43a7e675.js"><link rel="prefetch" href="/assets/js/54.eb2f9b44.js"><link rel="prefetch" href="/assets/js/55.8ed49cf6.js"><link rel="prefetch" href="/assets/js/56.f5119eef.js"><link rel="prefetch" href="/assets/js/57.6b90ef53.js"><link rel="prefetch" href="/assets/js/58.9a54768b.js"><link rel="prefetch" href="/assets/js/59.31401396.js"><link rel="prefetch" href="/assets/js/6.bcf34b26.js"><link rel="prefetch" href="/assets/js/7.3bc42faa.js"><link rel="prefetch" href="/assets/js/8.fb81714f.js"><link rel="prefetch" href="/assets/js/9.2fbed123.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d7a18e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link router-link-active">
+  Vue2
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vue2/" aria-current="page" class="sidebar-link">Vue2源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前期准备</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vue2/prepare/version.html" class="sidebar-link">构建版本</a></li><li><a href="/vue2/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vue2/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>变化侦测</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/reactive/" class="sidebar-link">简介</a></li><li><a href="/vue2/reactive/object.html" class="sidebar-link">Object的变化侦测</a></li><li><a href="/vue2/reactive/array.html" class="sidebar-link">Array的变化侦测</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>虚拟DOM</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/vnode/" class="sidebar-link">简介</a></li><li><a href="/vue2/vnode/vnode.html" class="sidebar-link">Vue中的虚拟DOM</a></li><li><a href="/vue2/vnode/patch.html" class="sidebar-link">patch（Diff算法）</a></li><li><a href="/vue2/vnode/updateChildren.html" class="sidebar-link">更新子节点</a></li><li><a href="/vue2/vnode/optimizeUpdateChildren.html" class="sidebar-link">优化更新子节点</a></li><li><a href="/vue2/vnode/diffSummary.html" class="sidebar-link">Diff算法总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>模板编译</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/compile/" class="sidebar-link">简介</a></li><li><a href="/vue2/compile/parse.html" class="sidebar-link">模板解析阶段（整体运行流程）</a></li><li><a href="/vue2/compile/parseHtml.html" class="sidebar-link">模板解析阶段（HTML解析器）</a></li><li><a href="/vue2/compile/parseTxt.html" class="sidebar-link">模板解析阶段（文本解析器）</a></li><li><a href="/vue2/compile/optimize.html" class="sidebar-link">优化阶段</a></li><li><a href="/vue2/compile/codegen.html" class="sidebar-link">代码生成阶段</a></li><li><a href="/vue2/compile/summary.html" class="sidebar-link">总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>生命周期</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/lifecycle/" class="sidebar-link">简介</a></li><li><a href="/vue2/lifecycle/newVue.html" class="sidebar-link">初始化阶段(new Vue)</a></li><li><a href="/vue2/lifecycle/mergeOptions.html" class="sidebar-link">初始化阶段(合并属性)</a></li><li><a href="/vue2/lifecycle/initLifecycle.html" class="sidebar-link">初始化阶段(initLifecycle)</a></li><li><a href="/vue2/lifecycle/initEvents.html" class="sidebar-link">初始化阶段(initEvents)</a></li><li><a href="/vue2/lifecycle/initRender.html" class="sidebar-link">初始化阶段(initRender)</a></li><li><a href="/vue2/lifecycle/initInjections.html" class="sidebar-link">初始化阶段(initInjections)</a></li><li><a href="/vue2/lifecycle/initState.html" class="sidebar-link">初始化阶段(initState)</a></li><li><a href="/vue2/lifecycle/initProvide.html" class="sidebar-link">初始化阶段(initProvide)</a></li><li><a href="/vue2/lifecycle/templateCompile.html" class="sidebar-link">模板编译阶段</a></li><li><a href="/vue2/lifecycle/mount.html" class="sidebar-link">挂载阶段</a></li><li><a href="/vue2/lifecycle/destroy.html" class="sidebar-link">销毁阶段</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>实例方法</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/instanceMethods/data.html" class="sidebar-link">数据相关的方法</a></li><li><a href="/vue2/instanceMethods/event.html" class="sidebar-link">事件相关的方法</a></li><li><a href="/vue2/instanceMethods/lifecycle.html" class="sidebar-link">生命周期相关的方法</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>全局API</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/globalAPI/" aria-current="page" class="sidebar-link">前言</a></li><li><a href="/vue2/globalAPI/extend.html" aria-current="page" class="active sidebar-link">Vue.extend</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue2/globalAPI/extend.html#用法回顾" class="sidebar-link">用法回顾</a></li><li class="sidebar-sub-header"><a href="/vue2/globalAPI/extend.html#原理分析" class="sidebar-link">原理分析</a></li></ul></li><li><a href="/vue2/globalAPI/nextTick.html" class="sidebar-link">Vue.nextTick</a></li><li><a href="/vue2/globalAPI/set.html" class="sidebar-link">Vue.set</a></li><li><a href="/vue2/globalAPI/delete.html" class="sidebar-link">Vue.delete</a></li><li><a href="/vue2/globalAPI/directive.html" class="sidebar-link">Vue.directive</a></li><li><a href="/vue2/globalAPI/filter.html" class="sidebar-link">Vue.filter</a></li><li><a href="/vue2/globalAPI/component.html" class="sidebar-link">Vue.component</a></li><li><a href="/vue2/globalAPI/use.html" class="sidebar-link">Vue.use</a></li><li><a href="/vue2/globalAPI/mixin.html" class="sidebar-link">Vue.mixin</a></li><li><a href="/vue2/globalAPI/compile.html" class="sidebar-link">Vue.compile</a></li><li><a href="/vue2/globalAPI/observable.html" class="sidebar-link">Vue.observable</a></li><li><a href="/vue2/globalAPI/version.html" class="sidebar-link">Vue.version</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>过滤器</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue2/filter/" class="sidebar-link">用法回顾</a></li><li><a href="/vue2/filter/parse.html" class="sidebar-link">过滤器解析器</a></li><li><a href="/vue2/filter/principle.html" class="sidebar-link">工作原理</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue-extend"><a href="#vue-extend" class="header-anchor">#</a> Vue.extend</h1> <h2 id="用法回顾"><a href="#用法回顾" class="header-anchor">#</a> 用法回顾</h2> <p>其用法如下：</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>Vue<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span> options <span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689858627318-1564">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="Vue.extend( options )
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689858627318-1564" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li><p><strong>参数</strong>：</p> <ul><li><code>{Object} options</code></li></ul></li> <li><p><strong>作用</strong>：</p> <p>使用基础 <code>Vue</code> 构造器，创建一个“子类”。参数是一个包含组件选项的对象。</p> <p><code>data</code> 选项是特例，需要注意 - 在 <code>Vue.extend()</code> 中它必须是函数</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>mount-point<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689858627318-68744">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;div id=&quot;mount-point&quot;&gt;&lt;/div&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689858627318-68744" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 创建构造器</span>
+<span class="token keyword">var</span> Profile <span class="token operator">=</span> Vue<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token string">'&lt;p&gt;{{firstName}} {{lastName}} aka {{alias}}&lt;/p&gt;'</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">data</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">firstName</span><span class="token operator">:</span> <span class="token string">'Walter'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">lastName</span><span class="token operator">:</span> <span class="token string">'White'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">alias</span><span class="token operator">:</span> <span class="token string">'Heisenberg'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// 创建 Profile 实例，并挂载到一个元素上。</span>
+<span class="token keyword">new</span> <span class="token class-name">Profile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$mount</span><span class="token punctuation">(</span><span class="token string">'#mount-point'</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689858627318-69257">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 创建构造器
+var Profile = Vue.extend({
+  template: '&lt;p&gt;{{firstName}} {{lastName}} aka {{alias}}&lt;/p&gt;',
+  data: function () {
+    return {
+      firstName: 'Walter',
+      lastName: 'White',
+      alias: 'Heisenberg'
+    }
+  }
+})
+// 创建 Profile 实例，并挂载到一个元素上。
+new Profile().$mount('#mount-point')
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689858627318-69257" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>结果如下：</p> <div class="language-html line-numbers-mode"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Walter White aka Heisenberg<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689858627318-50432">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;p&gt;Walter White aka Heisenberg&lt;/p&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689858627318-50432" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></li></ul> <h2 id="原理分析"><a href="#原理分析" class="header-anchor">#</a> 原理分析</h2> <p>通过用法回顾，我们知道<code>Vue.extend</code>的作用是创建一个子类，所以实现思路就是创建一个子类，然后继承Vue构造函数的一些功能。</p> <p>虽然在平时的开发中很少用到它，但是在 Vue 源码内部，<code>extend</code> 方法却很重要。因为在 Vue 中，组件的本质就是通过 <code>extend</code> 方法创建出来的 Vue 构造函数的子类构造函数。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/core/global-api/extend.js</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">initExtend</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">Vue</span><span class="token operator">:</span> GlobalAPI</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Vue<span class="token punctuation">.</span>cid <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token keyword">let</span> cid <span class="token operator">=</span> <span class="token number">1</span>
+
+  Vue<span class="token punctuation">.</span><span class="token function-variable function">extend</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">extendOptions</span><span class="token operator">:</span> Object</span><span class="token punctuation">)</span><span class="token operator">:</span> Function <span class="token punctuation">{</span>
+    <span class="token comment">// 初始化用户传入的参数</span>
+    extendOptions <span class="token operator">=</span> extendOptions <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment">// 指向父类</span>
+    <span class="token keyword">const</span> Super <span class="token operator">=</span> <span class="token keyword">this</span>
+    <span class="token comment">// 父类cid</span>
+    <span class="token keyword">const</span> SuperId <span class="token operator">=</span> Super<span class="token punctuation">.</span>cid
+    <span class="token comment">// 获取缓存项</span>
+    <span class="token keyword">const</span> cachedCtors <span class="token operator">=</span> extendOptions<span class="token punctuation">.</span>_Ctor <span class="token operator">||</span> <span class="token punctuation">(</span>extendOptions<span class="token punctuation">.</span>_Ctor <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">// 如果父类已经创建过子类，直接使用缓存</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cachedCtors<span class="token punctuation">[</span>SuperId<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> cachedCtors<span class="token punctuation">[</span>SuperId<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 获取name，初始化没设置，就使用父类的</span>
+    <span class="token keyword">const</span> name <span class="token operator">=</span> extendOptions<span class="token punctuation">.</span>name <span class="token operator">||</span> Super<span class="token punctuation">.</span>options<span class="token punctuation">.</span>name
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">validateComponentName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建子类Sub</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">Sub</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">VueComponent</span> <span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 调用原型上的_init</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">_init</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 继承父类原型方法</span>
+    <span class="token class-name">Sub</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token class-name">Super</span><span class="token punctuation">.</span>prototype<span class="token punctuation">)</span>
+    <span class="token class-name">Sub</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Sub
+    <span class="token comment">// 添加子类唯一标识</span>
+    Sub<span class="token punctuation">.</span>cid <span class="token operator">=</span> cid<span class="token operator">++</span>
+    <span class="token comment">// 合并父类和子类选项并设置为子类选项</span>
+    Sub<span class="token punctuation">.</span>options <span class="token operator">=</span> <span class="token function">mergeOptions</span><span class="token punctuation">(</span>
+      Super<span class="token punctuation">.</span>options<span class="token punctuation">,</span>
+      extendOptions
+    <span class="token punctuation">)</span>
+    <span class="token comment">// 将父类存到子类的super字段中</span>
+    Sub<span class="token punctuation">[</span><span class="token string">'super'</span><span class="token punctuation">]</span> <span class="token operator">=</span> Super
+
+    <span class="token comment">// 初始化props</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Sub<span class="token punctuation">.</span>options<span class="token punctuation">.</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">initProps</span><span class="token punctuation">(</span>Sub<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 初始化computed</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Sub<span class="token punctuation">.</span>options<span class="token punctuation">.</span>computed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">initComputed</span><span class="token punctuation">(</span>Sub<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 复制父类的extend/mixin/use</span>
+    Sub<span class="token punctuation">.</span>extend <span class="token operator">=</span> Super<span class="token punctuation">.</span>extend
+    Sub<span class="token punctuation">.</span>mixin <span class="token operator">=</span> Super<span class="token punctuation">.</span>mixin
+    Sub<span class="token punctuation">.</span>use <span class="token operator">=</span> Super<span class="token punctuation">.</span>use
+
+    <span class="token comment">// 复制父类的'component','directive', 'filter'</span>
+    <span class="token constant">ASSET_TYPES</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">type</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Sub<span class="token punctuation">[</span>type<span class="token punctuation">]</span> <span class="token operator">=</span> Super<span class="token punctuation">[</span>type<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">// enable recursive self-lookup</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Sub<span class="token punctuation">.</span>options<span class="token punctuation">.</span>components<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> Sub
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 定义子类特殊的属性</span>
+    Sub<span class="token punctuation">.</span>superOptions <span class="token operator">=</span> Super<span class="token punctuation">.</span>options
+    Sub<span class="token punctuation">.</span>extendOptions <span class="token operator">=</span> extendOptions
+    Sub<span class="token punctuation">.</span>sealedOptions <span class="token operator">=</span> <span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> Sub<span class="token punctuation">.</span>options<span class="token punctuation">)</span>
+
+    <span class="token comment">// cache constructor</span>
+    <span class="token comment">// 将初始化完毕的子类加入到缓存中</span>
+    cachedCtors<span class="token punctuation">[</span>SuperId<span class="token punctuation">]</span> <span class="token operator">=</span> Sub
+    <span class="token keyword">return</span> Sub
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">initProps</span> <span class="token punctuation">(</span><span class="token parameter">Comp</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> props <span class="token operator">=</span> Comp<span class="token punctuation">.</span>options<span class="token punctuation">.</span>props
+  <span class="token comment">// 将key代理到_props</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">proxy</span><span class="token punctuation">(</span><span class="token class-name">Comp</span><span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">_props</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">initComputed</span> <span class="token punctuation">(</span><span class="token parameter">Comp</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> computed <span class="token operator">=</span> Comp<span class="token punctuation">.</span>options<span class="token punctuation">.</span>computed
+  <span class="token comment">// 遍历computed，重新定义一遍</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> computed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">defineComputed</span><span class="token punctuation">(</span><span class="token class-name">Comp</span><span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> key<span class="token punctuation">,</span> computed<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1689858627318-91070">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/core/global-api/extend.js
+
+export function initExtend (Vue: GlobalAPI) {
+  Vue.cid = 0
+  let cid = 1
+
+  Vue.extend = function (extendOptions: Object): Function {
+    // 初始化用户传入的参数
+    extendOptions = extendOptions || {}
+    // 指向父类
+    const Super = this
+    // 父类cid
+    const SuperId = Super.cid
+    // 获取缓存项
+    const cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {})
+    // 如果父类已经创建过子类，直接使用缓存
+    if (cachedCtors[SuperId]) {
+      return cachedCtors[SuperId]
+    }
+    // 获取name，初始化没设置，就使用父类的
+    const name = extendOptions.name || Super.options.name
+    if (process.env.NODE_ENV !== 'production' &amp;&amp; name) {
+      validateComponentName(name)
+    }
+
+    // 创建子类Sub
+    const Sub = function VueComponent (options) {
+      // 调用原型上的_init
+      this._init(options)
+    }
+    // 继承父类原型方法
+    Sub.prototype = Object.create(Super.prototype)
+    Sub.prototype.constructor = Sub
+    // 添加子类唯一标识
+    Sub.cid = cid++
+    // 合并父类和子类选项并设置为子类选项
+    Sub.options = mergeOptions(
+      Super.options,
+      extendOptions
+    )
+    // 将父类存到子类的super字段中
+    Sub['super'] = Super
+
+    // 初始化props
+    if (Sub.options.props) {
+      initProps(Sub)
+    }
+    // 初始化computed
+    if (Sub.options.computed) {
+      initComputed(Sub)
+    }
+
+    // 复制父类的extend/mixin/use
+    Sub.extend = Super.extend
+    Sub.mixin = Super.mixin
+    Sub.use = Super.use
+
+    // 复制父类的'component','directive', 'filter'
+    ASSET_TYPES.forEach(function (type) {
+      Sub[type] = Super[type]
+    })
+    // enable recursive self-lookup
+    if (name) {
+      Sub.options.components[name] = Sub
+    }
+
+    // 定义子类特殊的属性
+    Sub.superOptions = Super.options
+    Sub.extendOptions = extendOptions
+    Sub.sealedOptions = extend({}, Sub.options)
+
+    // cache constructor
+    // 将初始化完毕的子类加入到缓存中
+    cachedCtors[SuperId] = Sub
+    return Sub
+  }
+}
+
+function initProps (Comp) {
+  const props = Comp.options.props
+  // 将key代理到_props
+  for (const key in props) {
+    proxy(Comp.prototype, `_props`, key)
+  }
+}
+
+function initComputed (Comp) {
+  const computed = Comp.options.computed
+  // 遍历computed，重新定义一遍
+  for (const key in computed) {
+    defineComputed(Comp.prototype, key, computed[key])
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1689858627318-91070" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br></div></div><p>上述代码的逻辑较为简单，跟我们之前分析的一样，创建一个子类，然后继承Vue构造函数的一些功能。里面大量的初始化方法，我们在<strong>生命周期篇</strong>都已经介绍过了，此处不再重复介绍</p> <p>这里需要注意的是，Vue为了性能考虑，在<code>Vue.extend</code>方法中增加了缓存策略。反复调用<code>Vue.extend</code>会同一个结果。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue2/globalAPI/" class="prev router-link-active">
+        前言
+      </a></span> <span class="next"><a href="/vue2/globalAPI/nextTick.html">
+        Vue.nextTick
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.8b098689.js" defer></script><script src="/assets/js/2.186c2832.js" defer></script><script src="/assets/js/35.92b3add7.js" defer></script>
+  </body>
+</html>
