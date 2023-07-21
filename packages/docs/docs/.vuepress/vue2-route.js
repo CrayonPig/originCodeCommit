@@ -103,5 +103,21 @@ module.exports = {
         '/vue2/filter/principle',
       ]
     },
+    {
+      title: '指令',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/directives/',
+        // '/vue2/directives/inside',
+        '/vue2/directives/custom',
+      ]
+    },
+    {
+      title: '内置组件',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vue2/builtInComponents/keepalive',
+      ]
+    },
   ]
 }
