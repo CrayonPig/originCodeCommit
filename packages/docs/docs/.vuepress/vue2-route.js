@@ -2,7 +2,7 @@ module.exports = {
   '/vue2/': [
     '/vue2/',
     {
-      title: '前期准备',
+      title: '准备工作',
       collapsable: false, // 可选的, 默认值是 true,
       children: [
         '/vue2/prepare/directory',

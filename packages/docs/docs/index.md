@@ -8,6 +8,8 @@ actionLink: /vue2/
 features:
 - title: Vue2
   details: 0.0
+- title: Vue Router V3
+  details: 0.0
 
 ---
 
