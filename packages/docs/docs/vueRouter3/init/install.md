@@ -106,12 +106,12 @@ export function install (Vue) {
 
 代码不多，我们一起分析下上述代码做了哪些事情
 
-1. 防止重复注册组件实例
-2. 将路由相关的逻辑混入到每个 Vue 组件实例的`beforeCreate`和`destroyed`钩子函数中
-3. 设置`$router`和`$route`的代理
+1. 防止重复注册组件实例，通过增加内部标识`installed` 和缓存Vue实例`_Vue`，在下一次调用时判断为已注册过，不重复注册
+2. 将路由相关的逻辑通过`Vue.mixin`混入到每个 Vue 组件实例的`beforeCreate`和`destroyed`钩子函数中
+3. 设置`$router`和`$route`的代理，分别指向当前实例上的`_router`以及`_route`属性
 4. 全局注册组件`router-link`和`router-view`
 5. 设置路由的钩子函数与 `vue.created` 一样的 `mixin` 合并策略
 
-这里需要注意的是，虽然我们在`new Vue`之前执行的`Vue.use`，但实际执行`Vue.mixin`的时机是在`new Vue`之后的
+这里需要注意的是，虽然我们在`new Vue`之前调用的`Vue.use`，但实际执行`Vue.use`的时机是在`new Vue`之后的
 
 这里我们只需要记住组件注册的时候发生了什么事情就行，具体逻辑我们在后续分析，等不及的同学可以先看上述注释

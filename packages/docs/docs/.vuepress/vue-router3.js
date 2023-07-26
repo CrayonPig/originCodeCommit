@@ -16,6 +16,10 @@ module.exports = {
       children: [
         '/vueRouter3/init/',
         '/vueRouter3/init/install',
+        '/vueRouter3/init/instantiate',
+        '/vueRouter3/init/mount',
+        '/vueRouter3/init/addComponent',
+        '/vueRouter3/init/summary',
       ]
     },
   ]

@@ -205,9 +205,7 @@ export default class VueRouter {
       )
     }
 
-    // this.$router.history 增加 route 改变的事件监听
-    // 第一个参数： (route)=>{xxx} 会被记录到 history.cb 属性上
-    // 当 history.updateRoute(route) 被调用时，则 history.cb() 函数会被调用
+    // 在路由变化时，将新的路由对象同步到所有 Vue 实例中，从而触发 Vue 的重新渲染，展示新的页面内容
     history.listen(route => {
       this.apps.forEach(app => {
         app._route = route

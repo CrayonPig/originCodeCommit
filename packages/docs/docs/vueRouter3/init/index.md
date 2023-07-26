@@ -23,7 +23,7 @@ const app = new Vue({
 </div>
 ```
 
-上述代码共有三步：
+上述代码共有四步：
 
 1. 调用`Vue.use`注册插件
 2. 传入 `routes` 配置，创建 `router` 实例
