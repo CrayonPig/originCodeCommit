@@ -22,5 +22,13 @@ module.exports = {
         '/vueRouter3/init/summary',
       ]
     },
+    {
+      title: '路由匹配',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vueRouter3/matcher/',
+        '/vueRouter3/matcher/matcher',
+      ]
+    },
   ]
 }
