@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>匹配器 | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.3d7a18e9.css" as="style"><link rel="preload" href="/assets/js/app.cdd8e6d7.js" as="script"><link rel="preload" href="/assets/js/2.5874ce7c.js" as="script"><link rel="preload" href="/assets/js/72.dd43b3ed.js" as="script"><link rel="prefetch" href="/assets/js/10.0e3a490b.js"><link rel="prefetch" href="/assets/js/11.f4a631e8.js"><link rel="prefetch" href="/assets/js/12.d509c3bd.js"><link rel="prefetch" href="/assets/js/13.278c417e.js"><link rel="prefetch" href="/assets/js/14.0db62d62.js"><link rel="prefetch" href="/assets/js/15.e34fad80.js"><link rel="prefetch" href="/assets/js/16.aa05dc68.js"><link rel="prefetch" href="/assets/js/17.7a2407ef.js"><link rel="prefetch" href="/assets/js/18.9ca77991.js"><link rel="prefetch" href="/assets/js/19.88cbd20b.js"><link rel="prefetch" href="/assets/js/20.d568cd8c.js"><link rel="prefetch" href="/assets/js/21.c845a577.js"><link rel="prefetch" href="/assets/js/22.c6aaa808.js"><link rel="prefetch" href="/assets/js/23.0b06ca44.js"><link rel="prefetch" href="/assets/js/24.3fa703d4.js"><link rel="prefetch" href="/assets/js/25.c2c7c5f7.js"><link rel="prefetch" href="/assets/js/26.d898b770.js"><link rel="prefetch" href="/assets/js/27.1164298f.js"><link rel="prefetch" href="/assets/js/28.5392eb42.js"><link rel="prefetch" href="/assets/js/29.c8564c28.js"><link rel="prefetch" href="/assets/js/3.4e8083a2.js"><link rel="prefetch" href="/assets/js/30.97afae8c.js"><link rel="prefetch" href="/assets/js/31.7e5afbc3.js"><link rel="prefetch" href="/assets/js/32.fc40c846.js"><link rel="prefetch" href="/assets/js/33.fc3a4c22.js"><link rel="prefetch" href="/assets/js/34.6cf595f5.js"><link rel="prefetch" href="/assets/js/35.865703f1.js"><link rel="prefetch" href="/assets/js/36.dc9c751f.js"><link rel="prefetch" href="/assets/js/37.d2522364.js"><link rel="prefetch" href="/assets/js/38.447ecf75.js"><link rel="prefetch" href="/assets/js/39.43e43461.js"><link rel="prefetch" href="/assets/js/4.69ec95e2.js"><link rel="prefetch" href="/assets/js/40.23f172ea.js"><link rel="prefetch" href="/assets/js/41.b99cd2a0.js"><link rel="prefetch" href="/assets/js/42.cb438396.js"><link rel="prefetch" href="/assets/js/43.9358fbee.js"><link rel="prefetch" href="/assets/js/44.f89397ad.js"><link rel="prefetch" href="/assets/js/45.0db8c523.js"><link rel="prefetch" href="/assets/js/46.59556e6a.js"><link rel="prefetch" href="/assets/js/47.f2c148d8.js"><link rel="prefetch" href="/assets/js/48.c730c014.js"><link rel="prefetch" href="/assets/js/49.1c862932.js"><link rel="prefetch" href="/assets/js/5.366f8330.js"><link rel="prefetch" href="/assets/js/50.cc075230.js"><link rel="prefetch" href="/assets/js/51.e8311796.js"><link rel="prefetch" href="/assets/js/52.01fe225c.js"><link rel="prefetch" href="/assets/js/53.d4912049.js"><link rel="prefetch" href="/assets/js/54.66d2eccd.js"><link rel="prefetch" href="/assets/js/55.fb7f9492.js"><link rel="prefetch" href="/assets/js/56.cf4dd77c.js"><link rel="prefetch" href="/assets/js/57.6205ba77.js"><link rel="prefetch" href="/assets/js/58.90e0c301.js"><link rel="prefetch" href="/assets/js/59.8d08443c.js"><link rel="prefetch" href="/assets/js/6.7dbf84dc.js"><link rel="prefetch" href="/assets/js/60.0285b780.js"><link rel="prefetch" href="/assets/js/61.6b5fb330.js"><link rel="prefetch" href="/assets/js/62.33b40068.js"><link rel="prefetch" href="/assets/js/63.76bcb5ea.js"><link rel="prefetch" href="/assets/js/64.2f4a3acb.js"><link rel="prefetch" href="/assets/js/65.2c1307fe.js"><link rel="prefetch" href="/assets/js/66.57a89628.js"><link rel="prefetch" href="/assets/js/67.e3fcf5f3.js"><link rel="prefetch" href="/assets/js/68.a10d7c71.js"><link rel="prefetch" href="/assets/js/69.c78dd49f.js"><link rel="prefetch" href="/assets/js/7.f662d15a.js"><link rel="prefetch" href="/assets/js/70.99644f4b.js"><link rel="prefetch" href="/assets/js/71.7a97b1af.js"><link rel="prefetch" href="/assets/js/73.9797ad24.js"><link rel="prefetch" href="/assets/js/74.013117c7.js"><link rel="prefetch" href="/assets/js/75.984051cc.js"><link rel="prefetch" href="/assets/js/8.65f0b037.js"><link rel="prefetch" href="/assets/js/9.9025d1c2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3d7a18e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link router-link-active">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link router-link-active">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vueRouter3/" aria-current="page" class="sidebar-link">Vue Router V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vueRouter3/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vueRouter3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>初始化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/init/" class="sidebar-link">前言</a></li><li><a href="/vueRouter3/init/install.html" class="sidebar-link">注册插件</a></li><li><a href="/vueRouter3/init/instantiate.html" class="sidebar-link">实例化</a></li><li><a href="/vueRouter3/init/mount.html" class="sidebar-link">挂载</a></li><li><a href="/vueRouter3/init/addComponent.html" class="sidebar-link">使用组件</a></li><li><a href="/vueRouter3/init/summary.html" class="sidebar-link">总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>路由匹配</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/matcher/" aria-current="page" class="sidebar-link">路由介绍</a></li><li><a href="/vueRouter3/matcher/matcher.html" aria-current="page" class="active sidebar-link">匹配器</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vueRouter3/matcher/matcher.html#数据结构" class="sidebar-link">数据结构</a></li><li class="sidebar-sub-header"><a href="/vueRouter3/matcher/matcher.html#createroutemap" class="sidebar-link">createRouteMap</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="匹配器"><a href="#匹配器" class="header-anchor">#</a> 匹配器</h1> <p>在<code>Vue Route</code>中，路由匹配是通过<code>matcher</code>相关的方法来实现的。我们先来看一下 <code>matcher</code> 的定义：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/create-matcher.js</span>
+
+<span class="token keyword">export</span> type Matcher <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">match</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">raw</span><span class="token operator">:</span> RawLocation<span class="token punctuation">,</span> current<span class="token operator">?</span><span class="token operator">:</span> Route<span class="token punctuation">,</span> redirectedFrom<span class="token operator">?</span><span class="token operator">:</span> Location</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Route<span class="token punctuation">;</span>
+  <span class="token function-variable function">addRoutes</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">routes</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>RouteConfig<span class="token operator">&gt;</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function-variable function">addRoute</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">parentNameOrRoute</span><span class="token operator">:</span> string <span class="token operator">|</span> RouteConfig<span class="token punctuation">,</span> route<span class="token operator">?</span><span class="token operator">:</span> RouteConfig</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function-variable function">getRoutes</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Array<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236689-22900">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/create-matcher.js
+
+export type Matcher = {
+  match: (raw: RawLocation, current?: Route, redirectedFrom?: Location) =&gt; Route;
+  addRoutes: (routes: Array&lt;RouteConfig&gt;) =&gt; void;
+  addRoute: (parentNameOrRoute: string | RouteConfig, route?: RouteConfig) =&gt; void;
+  getRoutes: () =&gt; Array&lt;RouteRecord&gt;;
+};
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236689-22900" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p><code>matcher</code>上有多个方法可供使用：</p> <ul><li><code>match</code>: 匹配 route</li> <li><code>addRoutes</code>: 批量新增 route 路由数据</li> <li><code>addRoutes</code>: 添加一条 route 路由数据，可指定被添加路由的父级路由</li> <li><code>getRoutes</code>: 获取所有的路由</li></ul> <p>在研究这几个方法之前，我们先来了解一下上面几个方法中提到的几个数据结构</p> <h2 id="数据结构"><a href="#数据结构" class="header-anchor">#</a> 数据结构</h2> <h3 id="location"><a href="#location" class="header-anchor">#</a> Location</h3> <p><code>Location</code> 数据结构和浏览器提供的 <code>window.location</code> 部分结构有点类似，它们都是对 <code>url</code> 的结构化描述。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Location</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 当前页面的名称</span>
+  name<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前页面的路径</span>
+  path<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前页面的hash</span>
+  hash<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前页面的查询参数</span>
+  query<span class="token operator">?</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>string <span class="token operator">|</span> <span class="token punctuation">(</span>string <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token operator">&gt;</span>
+  <span class="token comment">// 当前页面的动态匹配参数</span>
+  params<span class="token operator">?</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span>
+  <span class="token comment">// 在当前页面的路径后面追加新的路径，而不是替换当前路径</span>
+  append<span class="token operator">?</span><span class="token operator">:</span> boolean
+  <span class="token comment">// 在页面导航时使用替换而不是添加的方式</span>
+  replace<span class="token operator">?</span><span class="token operator">:</span> boolean
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236689-18755">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export interface Location {
+  // 当前页面的名称
+  name?: string
+  // 当前页面的路径
+  path?: string
+  // 当前页面的hash
+  hash?: string
+  // 当前页面的查询参数
+  query?: Dictionary&lt;string | (string | null)[] | null | undefined&gt;
+  // 当前页面的动态匹配参数
+  params?: Dictionary&lt;string&gt;
+  // 在当前页面的路径后面追加新的路径，而不是替换当前路径
+  append?: boolean
+  // 在页面导航时使用替换而不是添加的方式
+  replace?: boolean
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236689-18755" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>从上述定义中可以知道<code>Location</code> 对象包含了当前页面的路径、查询参数和哈希值等信息，以便 <code>Vue Router</code> 可以根据该对象来管理路由状态。</p> <h3 id="route"><a href="#route" class="header-anchor">#</a> Route</h3> <p><code>Route</code> 对象包含了与当前路由相关的所有信息</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Route</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 当前路由的路径</span>
+  <span class="token literal-property property">path</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前路由的名称</span>
+  name<span class="token operator">?</span><span class="token operator">:</span> string <span class="token operator">|</span> <span class="token keyword">null</span>
+  <span class="token comment">// 当前路由的hash</span>
+  <span class="token literal-property property">hash</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前路由的查询参数</span>
+  <span class="token literal-property property">query</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>string <span class="token operator">|</span> <span class="token punctuation">(</span>string <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;</span>
+  <span class="token comment">// 当前路由的动态匹配参数</span>
+  <span class="token literal-property property">params</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span>
+  <span class="token comment">// 当前路由的完整路径，包括基本URL、路径、查询参数和哈希值</span>
+  <span class="token literal-property property">fullPath</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前路由匹配的 RouteRecord 对象数组</span>
+  <span class="token literal-property property">matched</span><span class="token operator">:</span> RouteRecord<span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token comment">// 如果当前路由是由其他路由重定向而来，存储重定向来源路由的路径</span>
+  redirectedFrom<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 当前路由的元信息，可以包含自定义数据来提供额外的路由信息</span>
+  meta<span class="token operator">?</span><span class="token operator">:</span> RouteMeta
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236689-99841">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export interface Route {
+  // 当前路由的路径
+  path: string
+  // 当前路由的名称
+  name?: string | null
+  // 当前路由的hash
+  hash: string
+  // 当前路由的查询参数
+  query: Dictionary&lt;string | (string | null)[]&gt;
+  // 当前路由的动态匹配参数
+  params: Dictionary&lt;string&gt;
+  // 当前路由的完整路径，包括基本URL、路径、查询参数和哈希值
+  fullPath: string
+  // 当前路由匹配的 RouteRecord 对象数组
+  matched: RouteRecord[]
+  // 如果当前路由是由其他路由重定向而来，存储重定向来源路由的路径
+  redirectedFrom?: string
+  // 当前路由的元信息，可以包含自定义数据来提供额外的路由信息
+  meta?: RouteMeta
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236689-99841" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><h3 id="routerecord"><a href="#routerecord" class="header-anchor">#</a> RouteRecord</h3> <p><code>RouteRecord</code> 是在 <code>Vue Router</code> 中表示路由记录的对象类型。每个路由记录都对应着一个路由配置，用于管理路由和组件的映射关系。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">RouteRecord</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 路由的路径</span>
+  <span class="token literal-property property">path</span><span class="token operator">:</span> string
+  <span class="token comment">// 用于匹配路由的正则表达式</span>
+  <span class="token literal-property property">regex</span><span class="token operator">:</span> RegExp
+  <span class="token comment">// 用于命名视图的多个组件配置</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>Component<span class="token operator">&gt;</span>
+  <span class="token comment">// 组件实例字典，用于存储命名视图对应的组件实例</span>
+  <span class="token literal-property property">instances</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>Vue<span class="token operator">&gt;</span>
+  <span class="token comment">// 路由的名称</span>
+  name<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 父级路由记录</span>
+  parent<span class="token operator">?</span><span class="token operator">:</span> RouteRecord
+  <span class="token comment">// 路由重定向的配置</span>
+  redirect<span class="token operator">?</span><span class="token operator">:</span> RedirectOption
+  <span class="token comment">// 路由别名的路径，用于表示路由的别名</span>
+  matchAs<span class="token operator">?</span><span class="token operator">:</span> string
+  <span class="token comment">// 路由的元信息，用于存储与路由相关的自定义信息</span>
+  <span class="token literal-property property">meta</span><span class="token operator">:</span> RouteMeta
+  <span class="token comment">// 路由独享的守卫函数，用于在进入该路由之前执行特定的导航守卫逻辑</span>
+  beforeEnter<span class="token operator">?</span><span class="token operator">:</span> <span class="token punctuation">(</span>
+    <span class="token literal-property property">route</span><span class="token operator">:</span> Route<span class="token punctuation">,</span>
+    <span class="token function-variable function">redirect</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">location</span><span class="token operator">:</span> RawLocation</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
+  <span class="token punctuation">)</span> <span class="token operator">=&gt;</span> any
+  <span class="token comment">// 路由组件的属性配置，用于传递参数给路由组件</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span>
+    <span class="token operator">|</span> boolean
+    <span class="token operator">|</span> Object
+    <span class="token operator">|</span> RoutePropsFunction
+    <span class="token operator">|</span> Dictionary<span class="token operator">&lt;</span>boolean <span class="token operator">|</span> Object <span class="token operator">|</span> RoutePropsFunction<span class="token operator">&gt;</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236689-70504">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export interface RouteRecord {
+  // 路由的路径
+  path: string
+  // 用于匹配路由的正则表达式
+  regex: RegExp
+  // 用于命名视图的多个组件配置
+  components: Dictionary&lt;Component&gt;
+  // 组件实例字典，用于存储命名视图对应的组件实例
+  instances: Dictionary&lt;Vue&gt;
+  // 路由的名称
+  name?: string
+  // 父级路由记录
+  parent?: RouteRecord
+  // 路由重定向的配置
+  redirect?: RedirectOption
+  // 路由别名的路径，用于表示路由的别名
+  matchAs?: string
+  // 路由的元信息，用于存储与路由相关的自定义信息
+  meta: RouteMeta
+  // 路由独享的守卫函数，用于在进入该路由之前执行特定的导航守卫逻辑
+  beforeEnter?: (
+    route: Route,
+    redirect: (location: RawLocation) =&gt; void,
+    next: () =&gt; void
+  ) =&gt; any
+  // 路由组件的属性配置，用于传递参数给路由组件
+  props:
+    | boolean
+    | Object
+    | RoutePropsFunction
+    | Dictionary&lt;boolean | Object | RoutePropsFunction&gt;
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236689-70504" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><p>搞明白上述类型的含义后，我们就开始分析<code>matcher</code></p> <h2 id="createroutemap"><a href="#createroutemap" class="header-anchor">#</a> createRouteMap</h2> <p>还记得我们介绍初始化过程的时候，有这么一段代码</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">this</span><span class="token punctuation">.</span>matcher <span class="token operator">=</span> <span class="token function">createMatcher</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span>routes <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236690-58169">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="this.matcher = createMatcher(options.routes || [], this)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236690-58169" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>当时我们介绍的时候说<code>createMatcher</code>会将 <code>route config</code> 数据转化为 <code>record</code>，我们从这里开始对<code>matcher</code>的分析，源码在<code>src/create-matcher.js</code>，简化代码如下：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">createMatcher</span> <span class="token punctuation">(</span>
+  <span class="token parameter"><span class="token literal-property property">routes</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>RouteConfig<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">router</span><span class="token operator">:</span> VueRouter</span>
+<span class="token punctuation">)</span><span class="token operator">:</span> Matcher <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> pathList<span class="token punctuation">,</span> pathMap<span class="token punctuation">,</span> nameMap <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">createRouteMap</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span>
+
+  <span class="token keyword">function</span> <span class="token function">addRoute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  
+  <span class="token keyword">function</span> <span class="token function">getRoutes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">addRoutes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    match<span class="token punctuation">,</span>
+    addRoute<span class="token punctuation">,</span>
+    getRoutes<span class="token punctuation">,</span>
+    addRoutes
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236690-50837">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function createMatcher (
+  routes: Array&lt;RouteConfig&gt;,
+  router: VueRouter
+): Matcher {
+  const { pathList, pathMap, nameMap } = createRouteMap(routes)
+
+  function addRoute() {}
+  
+  function getRoutes() {}
+
+  function addRoutes() {}
+
+  return {
+    match,
+    addRoute,
+    getRoutes,
+    addRoutes
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236690-50837" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>从上述代码中，可以看出，调用<code>createMatcher</code>时，主要是调用了<code>createRouteMap</code>方法，其余方法都是在此基础上定义的方法。我们继续找<code>createRouteMap</code>的定义，源码在<code>src/create-matcher.js</code></p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">createRouteMap</span> <span class="token punctuation">(</span>
+  <span class="token parameter"><span class="token literal-property property">routes</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>RouteConfig<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  oldPathList<span class="token operator">?</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  oldPathMap<span class="token operator">?</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  oldNameMap<span class="token operator">?</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  parentRoute<span class="token operator">?</span><span class="token operator">:</span> RouteRecord</span>
+<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">pathList</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">pathMap</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">nameMap</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span>
+<span class="token punctuation">}</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 存放所有路由的 path</span>
+  <span class="token keyword">const</span> <span class="token literal-property property">pathList</span><span class="token operator">:</span> Array<span class="token operator">&lt;</span>string<span class="token operator">&gt;</span> <span class="token operator">=</span> oldPathList <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token comment">// 以 path 作为 key，存放所有的路由描述的Map</span>
+  <span class="token keyword">const</span> <span class="token literal-property property">pathMap</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span> <span class="token operator">=</span> oldPathMap <span class="token operator">||</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+  <span class="token comment">// 以 name 作为 key，存放所有的路由描述的Map</span>
+  <span class="token keyword">const</span> <span class="token literal-property property">nameMap</span><span class="token operator">:</span> Dictionary<span class="token operator">&lt;</span>RouteRecord<span class="token operator">&gt;</span> <span class="token operator">=</span> oldNameMap <span class="token operator">||</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// routes 是一个数组对象。也就是用户手写的 new VueRouter( { routes: [xxx] } ) 的 routes 配置数据</span>
+  <span class="token comment">// 遍历routes数组的数据，将所有元素转化为 router record 对象。且会被记录到 pathMap, nameMap 对象中。</span>
+  routes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">route</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">addRouteRecord</span><span class="token punctuation">(</span>pathList<span class="token punctuation">,</span> pathMap<span class="token punctuation">,</span> nameMap<span class="token punctuation">,</span> route<span class="token punctuation">,</span> parentRoute<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 处理 pathList 中的 path == * 的路径，且移到数组末尾。</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> l <span class="token operator">=</span> pathList<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pathList<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">'*'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// pathList.splice(i, 1) 移除当前元素，返回移除元素的数组</span>
+      <span class="token comment">// pathList.push 将移除的元素放到数组末尾</span>
+      pathList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>pathList<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+      <span class="token comment">// 最后一个是当前元素，无需重新处理</span>
+      l<span class="token operator">--</span>
+      <span class="token comment">// 数组发生变更，重新处理新的第i位元素</span>
+      i<span class="token operator">--</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    pathList<span class="token punctuation">,</span>
+    pathMap<span class="token punctuation">,</span>
+    nameMap
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1690549236690-15511">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export function createRouteMap (
+  routes: Array&lt;RouteConfig&gt;,
+  oldPathList?: Array&lt;string&gt;,
+  oldPathMap?: Dictionary&lt;RouteRecord&gt;,
+  oldNameMap?: Dictionary&lt;RouteRecord&gt;,
+  parentRoute?: RouteRecord
+): {
+  pathList: Array&lt;string&gt;,
+  pathMap: Dictionary&lt;RouteRecord&gt;,
+  nameMap: Dictionary&lt;RouteRecord&gt;
+} {
+  // 存放所有路由的 path
+  const pathList: Array&lt;string&gt; = oldPathList || []
+  // 以 path 作为 key，存放所有的路由描述的Map
+  const pathMap: Dictionary&lt;RouteRecord&gt; = oldPathMap || Object.create(null)
+  // 以 name 作为 key，存放所有的路由描述的Map
+  const nameMap: Dictionary&lt;RouteRecord&gt; = oldNameMap || Object.create(null)
+
+  // routes 是一个数组对象。也就是用户手写的 new VueRouter( { routes: [xxx] } ) 的 routes 配置数据
+  // 遍历routes数组的数据，将所有元素转化为 router record 对象。且会被记录到 pathMap, nameMap 对象中。
+  routes.forEach(route =&gt; {
+    addRouteRecord(pathList, pathMap, nameMap, route, parentRoute)
+  })
+
+  // 处理 pathList 中的 path == * 的路径，且移到数组末尾。
+  for (let i = 0, l = pathList.length; i &lt; l; i++) {
+    if (pathList[i] === '*') {
+      // pathList.splice(i, 1) 移除当前元素，返回移除元素的数组
+      // pathList.push 将移除的元素放到数组末尾
+      pathList.push(pathList.splice(i, 1)[0])
+      // 最后一个是当前元素，无需重新处理
+      l--
+      // 数组发生变更，重新处理新的第i位元素
+      i--
+    }
+  }
+
+  return {
+    pathList,
+    pathMap,
+    nameMap
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1690549236690-15511" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><p><code>createRouteMap</code>先定义了三个变量</p> <ol><li><code>pathList</code>: 存放所有路由的 <code>path</code></li> <li><code>pathMap</code>: 以 <code>path</code> 作为 <code>key</code>，存放所有的路由描述的<code>Map</code></li> <li><code>nameMap</code>: 以 <code>name</code> 作为 <code>key</code>，存放所有的路由描述的<code>Map</code></li></ol> <p>这三个变量，也就是<code>createRouteMap</code>最终返回的数据，可能一些数据结构比较好的同学就知道后续处理的大概思路了。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vueRouter3/matcher/" class="prev router-link-active">
+        路由介绍
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.cdd8e6d7.js" defer></script><script src="/assets/js/2.5874ce7c.js" defer></script><script src="/assets/js/72.dd43b3ed.js" defer></script>
+  </body>
+</html>
