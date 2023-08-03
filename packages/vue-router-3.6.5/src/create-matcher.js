@@ -52,6 +52,7 @@ export function createMatcher (
       )
     }
   }
+  
   // 返回一个数组，包含所有的 router record 对象
   function getRoutes () {
     return pathList.map(path => pathMap[path])

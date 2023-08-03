@@ -47,16 +47,25 @@ export class History {
   +getCurrentLocation: () => string
   +setupListeners: Function
 
+  // base 为基准地址
   constructor (router: Router, base: ?string) {
     this.router = router
+    // 格式化base
     this.base = normalizeBase(base)
     // start with a route object that stands for "nowhere"
+    // 创建当前路由为初始路由
     this.current = START
+    // 即将导航到的目标路由信息
     this.pending = null
+    // 是否已经准备就绪
     this.ready = false
+    // 准备就绪的回调函数
     this.readyCbs = []
+    // 准备失败时的回调函数
     this.readyErrorCbs = []
+    // 出错时的回调函数
     this.errorCbs = []
+    // 监听路由变化的回调函数
     this.listeners = []
   }
 
@@ -87,6 +96,7 @@ export class History {
     let route
     // catch redirect option https://github.com/vuejs/vue-router/issues/3201
     try {
+      // 匹配路由
       route = this.router.match(location, this.current)
     } catch (e) {
       this.errorCbs.forEach(cb => {
@@ -106,7 +116,7 @@ export class History {
           hook && hook(route, prev)
         })
 
-        // fire ready cbs once
+        // 执行ready回调
         if (!this.ready) {
           this.ready = true
           this.readyCbs.forEach(cb => {
@@ -133,16 +143,25 @@ export class History {
       }
     )
   }
-
+  /**
+   * 
+   * @param {*} route 
+   * @param {*} onComplete 完成回调
+   * @param {*} onAbort 中止回调
+   * @returns 
+   */
   confirmTransition (route: Route, onComplete: Function, onAbort?: Function) {
     const current = this.current
+    // 将目标路由设置为正在处理的路由
     this.pending = route
+    // 处理导航过程中的错误
     const abort = err => {
       // changed after adding errors with
       // https://github.com/vuejs/vue-router/pull/3047 before that change,
       // redirect and aborted navigation would produce an err == null
       if (!isNavigationFailure(err) && isError(err)) {
         if (this.errorCbs.length) {
+          // 如果有错误回调函数，则执行错误回调
           this.errorCbs.forEach(cb => {
             cb(err)
           })
@@ -157,48 +176,57 @@ export class History {
     }
     const lastRouteIndex = route.matched.length - 1
     const lastCurrentIndex = current.matched.length - 1
+    // 检查当前路由是否与目标路由相同
     if (
       isSameRoute(route, current) &&
-      // in the case the route map has been dynamically appended to
+      // 处理由于动态添加路由导致的差异
       lastRouteIndex === lastCurrentIndex &&
       route.matched[lastRouteIndex] === current.matched[lastCurrentIndex]
     ) {
+      // 相同路由导航，仅更新 URL 和哈希，然后中止导航并返回导航重复错误
       this.ensureURL()
       if (route.hash) {
+        // 如果有hash，可能是锚点，跳转到对应位置
         handleScroll(this.router, current, route, false)
       }
       return abort(createNavigationDuplicatedError(current, route))
     }
 
+    // 解析路由队列，确定要激活、更新和停用的组件
     const { updated, deactivated, activated } = resolveQueue(
       this.current.matched,
       route.matched
     )
 
+    // 构建导航钩子队列
     const queue: Array<?NavigationGuard> = [].concat(
-      // in-component leave guards
+      // 组件内离开守卫
       extractLeaveGuards(deactivated),
-      // global before hooks
+      // 全局前置守卫
       this.router.beforeHooks,
-      // in-component update hooks
+      // 组件内更新守卫
       extractUpdateHooks(updated),
-      // in-config enter guards
+      // 配置的路由进入守卫
       activated.map(m => m.beforeEnter),
-      // async components
+      // 异步组件的解析钩子函数
       resolveAsyncComponents(activated)
     )
 
+    // 定义迭代执行导航钩子的函数
     const iterator = (hook: NavigationGuard, next) => {
+      // 如果导航已取消，直接返回导航中止错误
       if (this.pending !== route) {
         return abort(createNavigationCancelledError(current, route))
       }
       try {
+        // 执行导航守卫函数，并传入回调函数 next
         hook(route, current, (to: any) => {
           if (to === false) {
-            // next(false) -> abort navigation, ensure current URL
+            // next(false) -> 中止导航并还原当前 URL
             this.ensureURL(true)
             abort(createNavigationAbortedError(current, route))
           } else if (isError(to)) {
+            // next(err) -> 处理错误并还原当前 URL
             this.ensureURL(true)
             abort(to)
           } else if (
@@ -206,34 +234,40 @@ export class History {
             (typeof to === 'object' &&
               (typeof to.path === 'string' || typeof to.name === 'string'))
           ) {
-            // next('/') or next({ path: '/' }) -> redirect
+            // next('/') 或 next({ path: '/' }) -> 重定向
             abort(createNavigationRedirectedError(current, route))
             if (typeof to === 'object' && to.replace) {
+              // 如果重定向的是 replace 类型，则使用 replace 方法
               this.replace(to)
             } else {
+              // 否则，使用 push 方法进行导航
               this.push(to)
             }
           } else {
-            // confirm transition and pass on the value
+            // 确认导航，继续执行下一个导航守卫
             next(to)
           }
         })
       } catch (e) {
+        // 捕获导航守卫执行过程中的错误
         abort(e)
       }
     }
 
+    // 执行导航钩子队列
     runQueue(queue, iterator, () => {
-      // wait until async components are resolved before
-      // extracting in-component enter guards
+      // 等待异步组件解析完成后，提取组件内进入守卫
       const enterGuards = extractEnterGuards(activated)
       const queue = enterGuards.concat(this.router.resolveHooks)
       runQueue(queue, iterator, () => {
+        // 如果导航已取消，返回导航中止错误
         if (this.pending !== route) {
           return abort(createNavigationCancelledError(current, route))
         }
+        // 导航过程结束，清空 pending 标记，并执行导航完成回调
         this.pending = null
         onComplete(route)
+        // 在 Vue 的下一个更新周期执行路由进入后的处理
         if (this.router.app) {
           this.router.app.$nextTick(() => {
             handleRouteEntered(route)
@@ -267,23 +301,25 @@ export class History {
   }
 }
 
+// 格式化base
 function normalizeBase (base: ?string): string {
   if (!base) {
     if (inBrowser) {
-      // respect <base> tag
+      //  <base> 规定页面上所有链接的默认 URL 和默认目标
       const baseEl = document.querySelector('base')
       base = (baseEl && baseEl.getAttribute('href')) || '/'
       // strip full URL origin
+      // 去除URL origin
       base = base.replace(/^https?:\/\/[^\/]+/, '')
     } else {
       base = '/'
     }
   }
-  // make sure there's the starting slash
+  // 确保base 开头是/
   if (base.charAt(0) !== '/') {
     base = '/' + base
   }
-  // remove trailing slash
+  // 删除尾部/
   return base.replace(/\/$/, '')
 }
 

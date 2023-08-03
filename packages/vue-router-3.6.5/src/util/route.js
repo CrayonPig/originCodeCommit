@@ -5,12 +5,14 @@ import { stringifyQuery } from './query'
 
 const trailingSlashRE = /\/?$/
 
+// 创建路由对象
 export function createRoute (
   record: ?RouteRecord,
   location: Location,
   redirectedFrom?: ?Location,
   router?: VueRouter
 ): Route {
+  // 获取router中的序列化成字符串方法
   const stringifyQuery = router && router.options.stringifyQuery
 
   let query: any = location.query || {}
@@ -25,12 +27,16 @@ export function createRoute (
     hash: location.hash || '',
     query,
     params: location.params || {},
+    // 拼接完整路径
     fullPath: getFullPath(location, stringifyQuery),
     matched: record ? formatMatch(record) : []
   }
+  // 如果有重定向来源
   if (redirectedFrom) {
+    // 拼接完整路径
     route.redirectedFrom = getFullPath(redirectedFrom, stringifyQuery)
   }
+  // 将对象变为只读
   return Object.freeze(route)
 }
 

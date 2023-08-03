@@ -28,6 +28,18 @@ module.exports = {
       children: [
         '/vueRouter3/matcher/',
         '/vueRouter3/matcher/matcher',
+        '/vueRouter3/matcher/summary',
+      ]
+    },
+    {
+      title: '路由模式',
+      collapsable: false, // 可选的, 默认值是 true,
+      sidebarDepth: 3,
+      children: [
+        '/vueRouter3/mode/',
+        '/vueRouter3/mode/history',
+        '/vueRouter3/mode/hash',
+        '/vueRouter3/mode/abstract',
       ]
     },
   ]
