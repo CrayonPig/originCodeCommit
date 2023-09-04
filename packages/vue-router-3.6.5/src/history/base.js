@@ -144,11 +144,11 @@ export class History {
     )
   }
   /**
-   * 
-   * @param {*} route 
+   *
+   * @param {*} route
    * @param {*} onComplete 完成回调
    * @param {*} onAbort 中止回调
-   * @returns 
+   * @returns
    */
   confirmTransition (route: Route, onComplete: Function, onAbort?: Function) {
     const current = this.current
@@ -345,31 +345,51 @@ function resolveQueue (
   }
 }
 
+/**
+ * 从路由记录数组中提取指定类型的路由守卫，并将它们绑定到实例上。
+ * @param {Array<RouteRecord>} records - 路由记录数组
+ * @param {string} name - 守卫的类型名称
+ * @param {Function} bind - 绑定函数，用于将守卫绑定到实例上
+ * @param {boolean} [reverse] - 是否逆序处理守卫
+ * @returns {Array<?Function>} - 绑定后的路由守卫数组
+ */
 function extractGuards (
   records: Array<RouteRecord>,
   name: string,
   bind: Function,
   reverse?: boolean
 ): Array<?Function> {
+  // 使用 flatMapComponents 函数提取组件中的守卫，并将它们绑定到实例上
   const guards = flatMapComponents(records, (def, instance, match, key) => {
+    // 从组件定义中提取指定类型的守卫
     const guard = extractGuard(def, name)
     if (guard) {
       return Array.isArray(guard)
+        // 如果守卫是数组，将每个守卫都绑定到实例上
         ? guard.map(guard => bind(guard, instance, match, key))
+        // 如果守卫是单个函数，将它绑定到实例上
         : bind(guard, instance, match, key)
     }
   })
+  // 根据 reverse 参数决定是否逆序处理守卫数组
   return flatten(reverse ? guards.reverse() : guards)
 }
-
+/**
+ * 从组件定义中提取指定键的导航守卫。
+ * @param {Object|Function} def - 组件定义对象或构造函数
+ * @param {string} key - 要提取的守卫的键
+ * @returns {NavigationGuard|Array<NavigationGuard>} - 提取的导航守卫
+ */
 function extractGuard (
   def: Object | Function,
   key: string
 ): NavigationGuard | Array<NavigationGuard> {
+  // 如果 def 不是函数，将其转换为 Vue 组件构造函数
   if (typeof def !== 'function') {
-    // extend now so that global mixins are applied.
+    // 现在进行扩展，以便全局 mixins 能够生效
     def = _Vue.extend(def)
   }
+  // 从组件选项中获取指定键的导航守卫
   return def.options[key]
 }
 
@@ -381,8 +401,15 @@ function extractUpdateHooks (updated: Array<RouteRecord>): Array<?Function> {
   return extractGuards(updated, 'beforeRouteUpdate', bindGuard)
 }
 
+/**
+ * 将导航守卫绑定到特定实例上。
+ * @param {NavigationGuard} guard - 要绑定的导航守卫
+ * @param {_Vue} instance - 要绑定到的实例
+ * @returns {?NavigationGuard} - 绑定后的导航守卫，如果没有传入实例则返回 null
+ */
 function bindGuard (guard: NavigationGuard, instance: ?_Vue): ?NavigationGuard {
   if (instance) {
+    // 返回一个新的函数，该函数在调用时将 guard 应用在实例上
     return function boundRouteGuard () {
       return guard.apply(instance, arguments)
     }
@@ -392,6 +419,7 @@ function bindGuard (guard: NavigationGuard, instance: ?_Vue): ?NavigationGuard {
 function extractEnterGuards (
   activated: Array<RouteRecord>
 ): Array<?Function> {
+  // 从路由记录数组中提取 beforeRouteEnter 路由守卫，并将它们绑定到实例上。
   return extractGuards(
     activated,
     'beforeRouteEnter',

@@ -42,5 +42,13 @@ module.exports = {
         '/vueRouter3/mode/abstract',
       ]
     },
+    {
+      title: '进阶',
+      collapsable: false, // 可选的, 默认值是 true,
+      sidebarDepth: 3,
+      children: [
+        '/vueRouter3/advanced/navigation-guards',
+      ]
+    },
   ]
 }

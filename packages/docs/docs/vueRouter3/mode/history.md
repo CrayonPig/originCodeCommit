@@ -166,6 +166,73 @@ init (app: any /* Vue component instance */) {
 
 ```js
 // src/history/base.js
+
+transitionTo (
+  location: RawLocation,
+  onComplete?: Function,
+  onAbort?: Function
+) {
+  let route
+  // catch redirect option https://github.com/vuejs/vue-router/issues/3201
+  try {
+    // 匹配路由
+    route = this.router.match(location, this.current)
+  } catch (e) {
+    this.errorCbs.forEach(cb => {
+      cb(e)
+    })
+    // Exception should still be thrown
+    throw e
+  }
+  const prev = this.current
+  this.confirmTransition(
+    route,
+    () => {
+      this.updateRoute(route)
+      onComplete && onComplete(route)
+      this.ensureURL()
+      this.router.afterHooks.forEach(hook => {
+        hook && hook(route, prev)
+      })
+
+      // 执行ready回调
+      if (!this.ready) {
+        this.ready = true
+        this.readyCbs.forEach(cb => {
+          cb(route)
+        })
+      }
+    },
+    err => {
+      if (onAbort) {
+        onAbort(err)
+      }
+      if (err && !this.ready) {
+        // Initial redirection should not mark the history as ready yet
+        // because it's triggered by the redirection instead
+        // https://github.com/vuejs/vue-router/issues/3225
+        // https://github.com/vuejs/vue-router/issues/3331
+        if (!isNavigationFailure(err, NavigationFailureType.redirected) || prev !== START) {
+          this.ready = true
+          this.readyErrorCbs.forEach(cb => {
+            cb(err)
+          })
+        }
+      }
+    }
+  )
+}
+```
+
+上述代码较为简单，首先使用 `this.router.match(location, this.current)` 进行路由的匹配操作，匹配目标路由并得到相应的路由对象 `route`，并调用 `this.confirmTransition` 方法进行路由的过渡导航。
+
+### confirmTransition
+
+`confirmTransition`方法同样位于`History`的定义中，用于跳转路由，该方法接收三个参数，第一个参数是路由对象，第二个参数是成功和失败的回调
+
+
+```js
+// src/history/base.js
 /**
  * 
  * @param {*} route 
@@ -311,11 +378,11 @@ confirmTransition (route: Route, onComplete: Function, onAbort?: Function) {
    使用 `resolveQueue` 方法来解析出需要激活的路由组件 (`activated`)、需要更新的路由组件 (`updated`) 以及需要停用的路由组件 (`deactivated`)。
 4. 构建导航钩子队列：
    根据路由解析结果，构建一个由导航守卫函数组成的导航钩子队列 `queue`。这个队列包括以下类型的钩子函数：
-   - 组件内离开守卫 (`deactivated` 组件)
-   - 全局前置守卫 (`beforeHooks`)
-   - 组件内更新守卫 (`updated` 组件)
+   - 组件内离开守卫 (`beforeRouteLeave`)
+   - 全局前置守卫 (`beforeEach`)
+   - 重用的组件里更新守卫 (`beforeRouteUpdate`)
    - 配置的路由进入守卫 (`beforeEnter`)
-   - 异步组件的解析钩子函数 (`resolveAsyncComponents`)
+   - 异步组件的解析钩子函数
 5. 迭代执行导航钩子：
    使用 `runQueue` 方法来依次迭代执行导航钩子队列 `queue` 中的函数。这里的迭代过程会传入 `hook` 和 `next` 两个参数，`hook` 表示当前的导航守卫函数，`next` 是导航守卫函数执行完毕后的回调函数。在迭代过程中，如果发现 `this.pending` 已经变化，表示导航被取消，将会返回导航取消错误 `createNavigationCancelledError`。
 6. 在迭代过程中，导航守卫函数 `hook` 中有多种可能的执行结果：
