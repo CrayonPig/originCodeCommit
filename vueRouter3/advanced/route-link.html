@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>&lt;router-link&gt; | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.96eb8417.css" as="style"><link rel="preload" href="/assets/js/app.70b7b61c.js" as="script"><link rel="preload" href="/assets/js/2.88c18509.js" as="script"><link rel="preload" href="/assets/js/1.d4c099ff.js" as="script"><link rel="preload" href="/assets/js/80.8d44749f.js" as="script"><link rel="prefetch" href="/assets/js/10.b14aa6d6.js"><link rel="prefetch" href="/assets/js/11.9fe1d85e.js"><link rel="prefetch" href="/assets/js/12.86508e15.js"><link rel="prefetch" href="/assets/js/13.6ed9f8ef.js"><link rel="prefetch" href="/assets/js/14.4a65991d.js"><link rel="prefetch" href="/assets/js/15.42e542bb.js"><link rel="prefetch" href="/assets/js/16.42d8df26.js"><link rel="prefetch" href="/assets/js/17.11d996a2.js"><link rel="prefetch" href="/assets/js/18.6f8f0eec.js"><link rel="prefetch" href="/assets/js/19.67e71589.js"><link rel="prefetch" href="/assets/js/20.9f10fe7c.js"><link rel="prefetch" href="/assets/js/21.9a1a05a8.js"><link rel="prefetch" href="/assets/js/22.ba4edf56.js"><link rel="prefetch" href="/assets/js/23.f26baabe.js"><link rel="prefetch" href="/assets/js/24.636e8955.js"><link rel="prefetch" href="/assets/js/25.85a635ce.js"><link rel="prefetch" href="/assets/js/26.7b34cadc.js"><link rel="prefetch" href="/assets/js/27.ce419d8c.js"><link rel="prefetch" href="/assets/js/28.78ed1f8a.js"><link rel="prefetch" href="/assets/js/29.36bb85a2.js"><link rel="prefetch" href="/assets/js/3.47d5fbb2.js"><link rel="prefetch" href="/assets/js/30.e60eeb31.js"><link rel="prefetch" href="/assets/js/31.206cce83.js"><link rel="prefetch" href="/assets/js/32.33591970.js"><link rel="prefetch" href="/assets/js/33.54c9601c.js"><link rel="prefetch" href="/assets/js/34.8a3963cb.js"><link rel="prefetch" href="/assets/js/35.a1c6adf9.js"><link rel="prefetch" href="/assets/js/36.5bfd8e40.js"><link rel="prefetch" href="/assets/js/37.dc9ed5be.js"><link rel="prefetch" href="/assets/js/38.3fee0ddb.js"><link rel="prefetch" href="/assets/js/39.b768530c.js"><link rel="prefetch" href="/assets/js/4.37747ac1.js"><link rel="prefetch" href="/assets/js/40.5f930454.js"><link rel="prefetch" href="/assets/js/41.a629b97c.js"><link rel="prefetch" href="/assets/js/42.c7b7cb96.js"><link rel="prefetch" href="/assets/js/43.4d0dbfae.js"><link rel="prefetch" href="/assets/js/44.3916ac55.js"><link rel="prefetch" href="/assets/js/45.d3e5dc9e.js"><link rel="prefetch" href="/assets/js/46.d17ae9a5.js"><link rel="prefetch" href="/assets/js/47.938152f8.js"><link rel="prefetch" href="/assets/js/48.7b84180c.js"><link rel="prefetch" href="/assets/js/49.0c119982.js"><link rel="prefetch" href="/assets/js/5.094ae013.js"><link rel="prefetch" href="/assets/js/50.5f96724d.js"><link rel="prefetch" href="/assets/js/51.1a4d6328.js"><link rel="prefetch" href="/assets/js/52.b2b3ca33.js"><link rel="prefetch" href="/assets/js/53.80d6372a.js"><link rel="prefetch" href="/assets/js/54.efdd43f8.js"><link rel="prefetch" href="/assets/js/55.0a5d65ea.js"><link rel="prefetch" href="/assets/js/56.375f57cf.js"><link rel="prefetch" href="/assets/js/57.e036846c.js"><link rel="prefetch" href="/assets/js/58.e574ca4d.js"><link rel="prefetch" href="/assets/js/59.12091a6c.js"><link rel="prefetch" href="/assets/js/6.77b934eb.js"><link rel="prefetch" href="/assets/js/60.a6909426.js"><link rel="prefetch" href="/assets/js/61.4c1cfaf1.js"><link rel="prefetch" href="/assets/js/62.38a228d3.js"><link rel="prefetch" href="/assets/js/63.edaec9f8.js"><link rel="prefetch" href="/assets/js/64.4342f1cb.js"><link rel="prefetch" href="/assets/js/65.417823b4.js"><link rel="prefetch" href="/assets/js/66.5fee7ebc.js"><link rel="prefetch" href="/assets/js/67.33488794.js"><link rel="prefetch" href="/assets/js/68.bc3ce387.js"><link rel="prefetch" href="/assets/js/69.cdfdcd0f.js"><link rel="prefetch" href="/assets/js/7.b4d7955c.js"><link rel="prefetch" href="/assets/js/70.d14e7d99.js"><link rel="prefetch" href="/assets/js/71.2e7b848b.js"><link rel="prefetch" href="/assets/js/72.06894c31.js"><link rel="prefetch" href="/assets/js/73.6a7899df.js"><link rel="prefetch" href="/assets/js/74.9d34f770.js"><link rel="prefetch" href="/assets/js/75.7fa4b524.js"><link rel="prefetch" href="/assets/js/76.2fbbd523.js"><link rel="prefetch" href="/assets/js/77.9cc55bbc.js"><link rel="prefetch" href="/assets/js/78.b011ee12.js"><link rel="prefetch" href="/assets/js/79.400109ab.js"><link rel="prefetch" href="/assets/js/81.ef4187ae.js"><link rel="prefetch" href="/assets/js/82.59501886.js"><link rel="prefetch" href="/assets/js/83.1be00cd2.js"><link rel="prefetch" href="/assets/js/84.42574a43.js"><link rel="prefetch" href="/assets/js/85.3c22d13d.js"><link rel="prefetch" href="/assets/js/86.3c017e9f.js"><link rel="prefetch" href="/assets/js/87.79eb1f50.js"><link rel="prefetch" href="/assets/js/88.9dfb8b4b.js"><link rel="prefetch" href="/assets/js/89.f70d6c81.js"><link rel="prefetch" href="/assets/js/90.4abff065.js"><link rel="prefetch" href="/assets/js/91.b89991ae.js"><link rel="prefetch" href="/assets/js/92.2aaaa459.js"><link rel="prefetch" href="/assets/js/93.17ad54e5.js"><link rel="prefetch" href="/assets/js/94.5818bd64.js"><link rel="prefetch" href="/assets/js/95.dddcd8b1.js"><link rel="prefetch" href="/assets/js/96.252197ec.js"><link rel="prefetch" href="/assets/js/97.75e3280b.js"><link rel="prefetch" href="/assets/js/98.2f3c4d69.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.68b347c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.96eb8417.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link router-link-active">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link router-link-active">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vueRouter3/" aria-current="page" class="sidebar-link">Vue Router V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vueRouter3/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vueRouter3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>初始化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/init/" class="sidebar-link">前言</a></li><li><a href="/vueRouter3/init/install.html" class="sidebar-link">注册插件</a></li><li><a href="/vueRouter3/init/instantiate.html" class="sidebar-link">实例化</a></li><li><a href="/vueRouter3/init/mount.html" class="sidebar-link">挂载</a></li><li><a href="/vueRouter3/init/addComponent.html" class="sidebar-link">使用组件</a></li><li><a href="/vueRouter3/init/summary.html" class="sidebar-link">总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>路由匹配</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/matcher/" class="sidebar-link">路由介绍</a></li><li><a href="/vueRouter3/matcher/matcher.html" class="sidebar-link">匹配器</a></li><li><a href="/vueRouter3/matcher/summary.html" class="sidebar-link">总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>路由模式</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/mode/" class="sidebar-link">简介</a></li><li><a href="/vueRouter3/mode/history.html" class="sidebar-link">History模式</a></li><li><a href="/vueRouter3/mode/hash.html" class="sidebar-link">Hash模式</a></li><li><a href="/vueRouter3/mode/abstract.html" class="sidebar-link">Abstract模式</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>进阶</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vueRouter3/advanced/navigation-guards.html" class="sidebar-link">导航守卫</a></li><li><a href="/vueRouter3/advanced/route-view.html" class="sidebar-link">&lt;router-view&gt;</a></li><li><a href="/vueRouter3/advanced/route-link.html" aria-current="page" class="active sidebar-link">&lt;router-link&gt;</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="router-link"><a href="#router-link" class="header-anchor">#</a> &lt;router-link&gt;</h1> <p><code>&lt;router-link&gt;</code> 组件支持用户在具有路由功能的应用中 (点击) 导航。 通过 to 属性指定目标地址，默认渲染成带有正确链接的 <code>&lt;a&gt;</code> 标签，可以通过配置 tag 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/components/link.js</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'RouterLink'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 表示目标路由的链接。当被点击后，内部会立刻把 to 的值传到 router.push()，所以这个值可以是一个字符串或者是描述目标位置的对象。</span>
+    <span class="token literal-property property">to</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> toTypes<span class="token punctuation">,</span>
+      <span class="token literal-property property">required</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// router-link渲染的元素</span>
+    <span class="token literal-property property">tag</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+      <span class="token keyword">default</span><span class="token operator">:</span> <span class="token string">'a'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 是否使用自定义的渲染函数</span>
+    <span class="token literal-property property">custom</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+    <span class="token comment">// 是否激活</span>
+    <span class="token literal-property property">exact</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+    <span class="token comment">// 是否忽略路径</span>
+    <span class="token literal-property property">exactPath</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+    <span class="token comment">// 是否在当前路径前</span>
+    <span class="token literal-property property">append</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+    <span class="token comment">// 是否替换当前路径</span>
+    <span class="token literal-property property">replace</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+    <span class="token comment">// 自定义的激活样式</span>
+    <span class="token literal-property property">activeClass</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+    <span class="token comment">// 自定义的精确匹配激活样式</span>
+    <span class="token literal-property property">exactActiveClass</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+    <span class="token comment">// 精确匹配激活时配置的 aria-current</span>
+    <span class="token literal-property property">ariaCurrentValue</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+      <span class="token keyword">default</span><span class="token operator">:</span> <span class="token string">'page'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 声明可以用来触发导航的事件</span>
+    <span class="token literal-property property">event</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> eventTypes<span class="token punctuation">,</span>
+      <span class="token keyword">default</span><span class="token operator">:</span> <span class="token string">'click'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">render</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">h</span><span class="token operator">:</span> Function</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 获取当前的路由实例和路由器实例</span>
+    <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$router
+    <span class="token keyword">const</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$route
+
+    <span class="token comment">// 通过路由解析，获取目标路由的位置、路由对象、和 URL</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> location<span class="token punctuation">,</span> route<span class="token punctuation">,</span> href <span class="token punctuation">}</span> <span class="token operator">=</span> router<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>to<span class="token punctuation">,</span>
+      current<span class="token punctuation">,</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>append
+    <span class="token punctuation">)</span>
+
+    <span class="token comment">// 创建一个空的对象用于存储 CSS 类</span>
+    <span class="token keyword">const</span> classes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment">// 获取全局配置的活动类和精确活动类</span>
+    <span class="token keyword">const</span> globalActiveClass <span class="token operator">=</span> router<span class="token punctuation">.</span>options<span class="token punctuation">.</span>linkActiveClass
+    <span class="token keyword">const</span> globalExactActiveClass <span class="token operator">=</span> router<span class="token punctuation">.</span>options<span class="token punctuation">.</span>linkExactActiveClass
+
+    <span class="token comment">// 支持全局的空活动类</span>
+    <span class="token keyword">const</span> activeClassFallback <span class="token operator">=</span>
+      globalActiveClass <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">?</span> <span class="token string">'router-link-active'</span> <span class="token operator">:</span> globalActiveClass
+    <span class="token keyword">const</span> exactActiveClassFallback <span class="token operator">=</span>
+      globalExactActiveClass <span class="token operator">==</span> <span class="token keyword">null</span>
+        <span class="token operator">?</span> <span class="token string">'router-link-exact-active'</span>
+        <span class="token operator">:</span> globalExactActiveClass
+
+    <span class="token comment">// 获取当前组件定义的活动类和精确活动类，如果没有定义则使用全局的</span>
+    <span class="token keyword">const</span> activeClass <span class="token operator">=</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>activeClass <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">?</span> activeClassFallback <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>activeClass
+    <span class="token keyword">const</span> exactActiveClass <span class="token operator">=</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>exactActiveClass <span class="token operator">==</span> <span class="token keyword">null</span>
+        <span class="token operator">?</span> exactActiveClassFallback
+        <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>exactActiveClass
+
+    <span class="token comment">// 如果路由重定向过来，比较目标路由和重定向前的路由</span>
+    <span class="token keyword">const</span> compareTarget <span class="token operator">=</span> route<span class="token punctuation">.</span>redirectedFrom
+      <span class="token operator">?</span> <span class="token function">createRoute</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token function">normalizeLocation</span><span class="token punctuation">(</span>route<span class="token punctuation">.</span>redirectedFrom<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> router<span class="token punctuation">)</span>
+      <span class="token operator">:</span> route
+
+    <span class="token comment">// 检查是否应该添加精确活动类和活动类</span>
+    classes<span class="token punctuation">[</span>exactActiveClass<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">isSameRoute</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> compareTarget<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>exactPath<span class="token punctuation">)</span>
+    classes<span class="token punctuation">[</span>activeClass<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>exact <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>exactPath
+      <span class="token operator">?</span> classes<span class="token punctuation">[</span>exactActiveClass<span class="token punctuation">]</span>
+      <span class="token operator">:</span> <span class="token function">isIncludedRoute</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> compareTarget<span class="token punctuation">)</span>
+
+    <span class="token comment">// 根据是否存在精确活动类，决定是否添加 &quot;aria-current&quot; 属性</span>
+    <span class="token keyword">const</span> ariaCurrentValue <span class="token operator">=</span> classes<span class="token punctuation">[</span>exactActiveClass<span class="token punctuation">]</span> <span class="token operator">?</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ariaCurrentValue <span class="token operator">:</span> <span class="token keyword">null</span>
+
+    <span class="token comment">// 定义事件处理程序，当路由链接被点击时触发</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">handler</span> <span class="token operator">=</span> <span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">guardEvent</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>replace<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          router<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span> noop<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span> noop<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建事件监听对象，其中 click 事件由 guardEvent 处理</span>
+    <span class="token keyword">const</span> on <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">click</span><span class="token operator">:</span> guardEvent <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果事件是一个数组，则为每个事件添加事件处理程序</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>event<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>event<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        on<span class="token punctuation">[</span>e<span class="token punctuation">]</span> <span class="token operator">=</span> handler
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果事件是一个字符串，直接将事件处理程序与事件绑定</span>
+      on<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span>event<span class="token punctuation">]</span> <span class="token operator">=</span> handler
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建组件的数据对象，主要包括 CSS 类</span>
+    <span class="token keyword">const</span> <span class="token literal-property property">data</span><span class="token operator">:</span> any <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token keyword">class</span><span class="token operator">:</span> classes <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果有作用域插槽，执行插槽函数</span>
+    <span class="token keyword">const</span> scopedSlot <span class="token operator">=</span>
+      <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>$scopedSlots<span class="token punctuation">.</span>$hasNormal <span class="token operator">&amp;&amp;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$scopedSlots<span class="token punctuation">.</span>default <span class="token operator">&amp;&amp;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$scopedSlots<span class="token punctuation">.</span><span class="token function">default</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        href<span class="token punctuation">,</span>
+        route<span class="token punctuation">,</span>
+        <span class="token literal-property property">navigate</span><span class="token operator">:</span> handler<span class="token punctuation">,</span>
+        <span class="token literal-property property">isActive</span><span class="token operator">:</span> classes<span class="token punctuation">[</span>activeClass<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">isExactActive</span><span class="token operator">:</span> classes<span class="token punctuation">[</span>exactActiveClass<span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 如果有作用域插槽内容</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>scopedSlot<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>custom<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果非生产环境且没有使用自定义设置，发出警告</span>
+        <span class="token operator">!</span>warnedCustomSlot <span class="token operator">&amp;&amp;</span> <span class="token function">warn</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token string">'In Vue Router 4, the v-slot API will by default wrap its content with an &lt;a&gt; element. Use the custom prop to remove this warning:\n&lt;router-link v-slot=&quot;{ navigate, href }&quot; custom&gt;&lt;/router-link&gt;\n'</span><span class="token punctuation">)</span>
+        warnedCustomSlot <span class="token operator">=</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 根据插槽内容的数量返回对应的内容</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>scopedSlot<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> scopedSlot<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>scopedSlot<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">1</span> <span class="token operator">||</span> <span class="token operator">!</span>scopedSlot<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">warn</span><span class="token punctuation">(</span>
+            <span class="token boolean">false</span><span class="token punctuation">,</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;router-link&gt; with to=&quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>
+              <span class="token keyword">this</span><span class="token punctuation">.</span>to
+            <span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot; is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.</span><span class="token template-punctuation string">`</span></span>
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> scopedSlot<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token function">h</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> scopedSlot<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">'tag'</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$options<span class="token punctuation">.</span>propsData <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>warnedTagProp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token boolean">false</span><span class="token punctuation">,</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;router-link&gt;'s tag prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link.</span><span class="token template-punctuation string">`</span></span>
+        <span class="token punctuation">)</span>
+        warnedTagProp <span class="token operator">=</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">'event'</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$options<span class="token punctuation">.</span>propsData <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>warnedEventProp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token boolean">false</span><span class="token punctuation">,</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;router-link&gt;'s event prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link.</span><span class="token template-punctuation string">`</span></span>
+        <span class="token punctuation">)</span>
+        warnedEventProp <span class="token operator">=</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果标签是 'a'，直接设置事件监听和属性</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>tag <span class="token operator">===</span> <span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      data<span class="token punctuation">.</span>on <span class="token operator">=</span> on <span class="token comment">// 设置事件监听</span>
+      data<span class="token punctuation">.</span>attrs <span class="token operator">=</span> <span class="token punctuation">{</span> href<span class="token punctuation">,</span> <span class="token string-property property">'aria-current'</span><span class="token operator">:</span> ariaCurrentValue <span class="token punctuation">}</span> <span class="token comment">// 设置属性</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 查找第一个 &lt;a&gt; 子元素并应用事件监听和 href</span>
+      <span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token function">findAnchor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$slots<span class="token punctuation">.</span>default<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果 &lt;a&gt; 是一个静态节点，将其标记为非静态</span>
+        a<span class="token punctuation">.</span>isStatic <span class="token operator">=</span> <span class="token boolean">false</span>
+        <span class="token keyword">const</span> aData <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> a<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        aData<span class="token punctuation">.</span>on <span class="token operator">=</span> aData<span class="token punctuation">.</span>on <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+        <span class="token comment">// 将已有事件转换为数组，以便后续添加事件处理程序</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> event <span class="token keyword">in</span> aData<span class="token punctuation">.</span>on<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> handler <span class="token operator">=</span> aData<span class="token punctuation">.</span>on<span class="token punctuation">[</span>event<span class="token punctuation">]</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>event <span class="token keyword">in</span> on<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            aData<span class="token punctuation">.</span>on<span class="token punctuation">[</span>event<span class="token punctuation">]</span> <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span> <span class="token operator">?</span> handler <span class="token operator">:</span> <span class="token punctuation">[</span>handler<span class="token punctuation">]</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 为路由链接添加新的事件监听</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> event <span class="token keyword">in</span> on<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>event <span class="token keyword">in</span> aData<span class="token punctuation">.</span>on<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// on[event] 总是一个函数</span>
+            aData<span class="token punctuation">.</span>on<span class="token punctuation">[</span>event<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>on<span class="token punctuation">[</span>event<span class="token punctuation">]</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            aData<span class="token punctuation">.</span>on<span class="token punctuation">[</span>event<span class="token punctuation">]</span> <span class="token operator">=</span> handler
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">const</span> aAttrs <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token punctuation">.</span>data<span class="token punctuation">.</span>attrs <span class="token operator">=</span> <span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> a<span class="token punctuation">.</span>data<span class="token punctuation">.</span>attrs<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        aAttrs<span class="token punctuation">.</span>href <span class="token operator">=</span> href
+        aAttrs<span class="token punctuation">[</span><span class="token string">'aria-current'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ariaCurrentValue
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果没有子元素 &lt;a&gt;，将事件监听应用在自身</span>
+        data<span class="token punctuation">.</span>on <span class="token operator">=</span> on
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 使用渲染函数创建最终的路由链接元素</span>
+    <span class="token keyword">return</span> <span class="token function">h</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>tag<span class="token punctuation">,</span> data<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$slots<span class="token punctuation">.</span>default<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698235106092-15260">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/components/link.js
+export default {
+  name: 'RouterLink',
+  props: {
+    // 表示目标路由的链接。当被点击后，内部会立刻把 to 的值传到 router.push()，所以这个值可以是一个字符串或者是描述目标位置的对象。
+    to: {
+      type: toTypes,
+      required: true
+    },
+    // router-link渲染的元素
+    tag: {
+      type: String,
+      default: 'a'
+    },
+    // 是否使用自定义的渲染函数
+    custom: Boolean,
+    // 是否激活
+    exact: Boolean,
+    // 是否忽略路径
+    exactPath: Boolean,
+    // 是否在当前路径前
+    append: Boolean,
+    // 是否替换当前路径
+    replace: Boolean,
+    // 自定义的激活样式
+    activeClass: String,
+    // 自定义的精确匹配激活样式
+    exactActiveClass: String,
+    // 精确匹配激活时配置的 aria-current
+    ariaCurrentValue: {
+      type: String,
+      default: 'page'
+    },
+    // 声明可以用来触发导航的事件
+    event: {
+      type: eventTypes,
+      default: 'click'
+    }
+  },
+  render (h: Function) {
+    // 获取当前的路由实例和路由器实例
+    const router = this.$router
+    const current = this.$route
+
+    // 通过路由解析，获取目标路由的位置、路由对象、和 URL
+    const { location, route, href } = router.resolve(
+      this.to,
+      current,
+      this.append
+    )
+
+    // 创建一个空的对象用于存储 CSS 类
+    const classes = {}
+    // 获取全局配置的活动类和精确活动类
+    const globalActiveClass = router.options.linkActiveClass
+    const globalExactActiveClass = router.options.linkExactActiveClass
+
+    // 支持全局的空活动类
+    const activeClassFallback =
+      globalActiveClass == null ? 'router-link-active' : globalActiveClass
+    const exactActiveClassFallback =
+      globalExactActiveClass == null
+        ? 'router-link-exact-active'
+        : globalExactActiveClass
+
+    // 获取当前组件定义的活动类和精确活动类，如果没有定义则使用全局的
+    const activeClass =
+      this.activeClass == null ? activeClassFallback : this.activeClass
+    const exactActiveClass =
+      this.exactActiveClass == null
+        ? exactActiveClassFallback
+        : this.exactActiveClass
+
+    // 如果路由重定向过来，比较目标路由和重定向前的路由
+    const compareTarget = route.redirectedFrom
+      ? createRoute(null, normalizeLocation(route.redirectedFrom), null, router)
+      : route
+
+    // 检查是否应该添加精确活动类和活动类
+    classes[exactActiveClass] = isSameRoute(current, compareTarget, this.exactPath)
+    classes[activeClass] = this.exact || this.exactPath
+      ? classes[exactActiveClass]
+      : isIncludedRoute(current, compareTarget)
+
+    // 根据是否存在精确活动类，决定是否添加 &quot;aria-current&quot; 属性
+    const ariaCurrentValue = classes[exactActiveClass] ? this.ariaCurrentValue : null
+
+    // 定义事件处理程序，当路由链接被点击时触发
+    const handler = e =&gt; {
+      if (guardEvent(e)) {
+        if (this.replace) {
+          router.replace(location, noop)
+        } else {
+          router.push(location, noop)
+        }
+      }
+    }
+
+    // 创建事件监听对象，其中 click 事件由 guardEvent 处理
+    const on = { click: guardEvent }
+
+    // 如果事件是一个数组，则为每个事件添加事件处理程序
+    if (Array.isArray(this.event)) {
+      this.event.forEach(e =&gt; {
+        on[e] = handler
+      })
+    } else {
+      // 如果事件是一个字符串，直接将事件处理程序与事件绑定
+      on[this.event] = handler
+    }
+
+    // 创建组件的数据对象，主要包括 CSS 类
+    const data: any = { class: classes }
+
+    // 如果有作用域插槽，执行插槽函数
+    const scopedSlot =
+      !this.$scopedSlots.$hasNormal &amp;&amp;
+      this.$scopedSlots.default &amp;&amp;
+      this.$scopedSlots.default({
+        href,
+        route,
+        navigate: handler,
+        isActive: classes[activeClass],
+        isExactActive: classes[exactActiveClass]
+      })
+
+    // 如果有作用域插槽内容
+    if (scopedSlot) {
+      if (process.env.NODE_ENV !== 'production' &amp;&amp; !this.custom) {
+        // 如果非生产环境且没有使用自定义设置，发出警告
+        !warnedCustomSlot &amp;&amp; warn(false, 'In Vue Router 4, the v-slot API will by default wrap its content with an &lt;a&gt; element. Use the custom prop to remove this warning:\n&lt;router-link v-slot=&quot;{ navigate, href }&quot; custom&gt;&lt;/router-link&gt;\n')
+        warnedCustomSlot = true
+      }
+      // 根据插槽内容的数量返回对应的内容
+      if (scopedSlot.length === 1) {
+        return scopedSlot[0]
+      } else if (scopedSlot.length &gt; 1 || !scopedSlot.length) {
+        if (process.env.NODE_ENV !== 'production') {
+          warn(
+            false,
+            `&lt;router-link&gt; with to=&quot;${
+              this.to
+            }&quot; is trying to use a scoped slot but it didn't provide exactly one child. Wrapping the content with a span element.`
+          )
+        }
+        return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
+      }
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      if ('tag' in this.$options.propsData &amp;&amp; !warnedTagProp) {
+        warn(
+          false,
+          `&lt;router-link&gt;'s tag prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link.`
+        )
+        warnedTagProp = true
+      }
+      if ('event' in this.$options.propsData &amp;&amp; !warnedEventProp) {
+        warn(
+          false,
+          `&lt;router-link&gt;'s event prop is deprecated and has been removed in Vue Router 4. Use the v-slot API to remove this warning: https://next.router.vuejs.org/guide/migration/#removal-of-event-and-tag-props-in-router-link.`
+        )
+        warnedEventProp = true
+      }
+    }
+
+    // 如果标签是 'a'，直接设置事件监听和属性
+    if (this.tag === 'a') {
+      data.on = on // 设置事件监听
+      data.attrs = { href, 'aria-current': ariaCurrentValue } // 设置属性
+    } else {
+      // 查找第一个 &lt;a&gt; 子元素并应用事件监听和 href
+      const a = findAnchor(this.$slots.default)
+      if (a) {
+        // 如果 &lt;a&gt; 是一个静态节点，将其标记为非静态
+        a.isStatic = false
+        const aData = (a.data = extend({}, a.data))
+        aData.on = aData.on || {}
+
+        // 将已有事件转换为数组，以便后续添加事件处理程序
+        for (const event in aData.on) {
+          const handler = aData.on[event]
+          if (event in on) {
+            aData.on[event] = Array.isArray(handler) ? handler : [handler]
+          }
+        }
+
+        // 为路由链接添加新的事件监听
+        for (const event in on) {
+          if (event in aData.on) {
+            // on[event] 总是一个函数
+            aData.on[event].push(on[event])
+          } else {
+            aData.on[event] = handler
+          }
+        }
+
+        const aAttrs = (a.data.attrs = extend({}, a.data.attrs))
+        aAttrs.href = href
+        aAttrs['aria-current'] = ariaCurrentValue
+      } else {
+        // 如果没有子元素 &lt;a&gt;，将事件监听应用在自身
+        data.on = on
+      }
+    }
+
+    // 使用渲染函数创建最终的路由链接元素
+    return h(this.tag, data, this.$slots.default)
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698235106092-15260" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br></div></div><p>代码较为简单，可以看出，最终会监听点击事件或者其它可以通过 <code>prop</code> 传入的事件类型，执行 <code>hanlder</code> 函数，最终执行 <code>router.push</code> 或者 <code>router.replace</code> 函数，实现路由切换的功能</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// 定义事件处理程序，当路由链接被点击时触发</span>
+<span class="token keyword">const</span> <span class="token function-variable function">handler</span> <span class="token operator">=</span> <span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">guardEvent</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>replace<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      router<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span> noop<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span> noop<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698235106095-42599">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 定义事件处理程序，当路由链接被点击时触发
+const handler = e =&gt; {
+  if (guardEvent(e)) {
+    if (this.replace) {
+      router.replace(location, noop)
+    } else {
+      router.push(location, noop)
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698235106095-42599" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>这里值得注意的是调用的<code>router.resolve</code>方法，用于解析给定的路由路径并返回相应的路由对象。这个方法通常用于在组件中动态生成路由链接或导航。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/router.js</span>
+<span class="token function">resolve</span> <span class="token punctuation">(</span>
+  <span class="token literal-property property">to</span><span class="token operator">:</span> RawLocation<span class="token punctuation">,</span>
+  current<span class="token operator">?</span><span class="token operator">:</span> Route<span class="token punctuation">,</span>
+  append<span class="token operator">?</span><span class="token operator">:</span> boolean
+<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">location</span><span class="token operator">:</span> Location<span class="token punctuation">,</span>
+  <span class="token literal-property property">route</span><span class="token operator">:</span> Route<span class="token punctuation">,</span>
+  <span class="token literal-property property">href</span><span class="token operator">:</span> string<span class="token punctuation">,</span>
+  <span class="token comment">// for backwards compat</span>
+  <span class="token literal-property property">normalizedTo</span><span class="token operator">:</span> Location<span class="token punctuation">,</span>
+  <span class="token literal-property property">resolved</span><span class="token operator">:</span> Route
+<span class="token punctuation">}</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 如果 current 这个 route 不存在，则获取当前的路由 route 对象</span>
+  current <span class="token operator">=</span> current <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>history<span class="token punctuation">.</span>current
+  <span class="token comment">// 将 to 对象转成标准的 { path:xxx, name:xxx, query:xxx, params:xxx } 的形式。</span>
+  <span class="token keyword">const</span> location <span class="token operator">=</span> <span class="token function">normalizeLocation</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span> current<span class="token punctuation">,</span> append<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token comment">// 根据路径匹配相关配置，然后创建一个新的 route 对象</span>
+  <span class="token keyword">const</span> route <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span> current<span class="token punctuation">)</span>
+  <span class="token comment">// 获取全路径（这个路径是替换完了动态参数的路径。）</span>
+  <span class="token keyword">const</span> fullPath <span class="token operator">=</span> route<span class="token punctuation">.</span>redirectedFrom <span class="token operator">||</span> route<span class="token punctuation">.</span>fullPath
+  <span class="token comment">// 获取路由的基准路径</span>
+  <span class="token keyword">const</span> base <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>history<span class="token punctuation">.</span>base
+  <span class="token comment">// 完整的 url</span>
+  <span class="token keyword">const</span> href <span class="token operator">=</span> <span class="token function">createHref</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> fullPath<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>mode<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    location<span class="token punctuation">,</span>
+    route<span class="token punctuation">,</span>
+    href<span class="token punctuation">,</span>
+    <span class="token comment">// for backwards compat</span>
+    <span class="token literal-property property">normalizedTo</span><span class="token operator">:</span> location<span class="token punctuation">,</span>
+    <span class="token literal-property property">resolved</span><span class="token operator">:</span> route
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698235106095-36443">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/router.js
+resolve (
+  to: RawLocation,
+  current?: Route,
+  append?: boolean
+): {
+  location: Location,
+  route: Route,
+  href: string,
+  // for backwards compat
+  normalizedTo: Location,
+  resolved: Route
+} {
+  // 如果 current 这个 route 不存在，则获取当前的路由 route 对象
+  current = current || this.history.current
+  // 将 to 对象转成标准的 { path:xxx, name:xxx, query:xxx, params:xxx } 的形式。
+  const location = normalizeLocation(to, current, append, this)
+  // 根据路径匹配相关配置，然后创建一个新的 route 对象
+  const route = this.match(location, current)
+  // 获取全路径（这个路径是替换完了动态参数的路径。）
+  const fullPath = route.redirectedFrom || route.fullPath
+  // 获取路由的基准路径
+  const base = this.history.base
+  // 完整的 url
+  const href = createHref(base, fullPath, this.mode)
+  return {
+    location,
+    route,
+    href,
+    // for backwards compat
+    normalizedTo: location,
+    resolved: route
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698235106095-36443" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vueRouter3/advanced/route-view.html" class="prev">
+        &lt;router-view&gt;
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.70b7b61c.js" defer></script><script src="/assets/js/2.88c18509.js" defer></script><script src="/assets/js/1.d4c099ff.js" defer></script><script src="/assets/js/80.8d44749f.js" defer></script>
+  </body>
+</html>
