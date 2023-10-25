@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>源码构建 | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.96eb8417.css" as="style"><link rel="preload" href="/assets/js/app.f98bc92c.js" as="script"><link rel="preload" href="/assets/js/2.88c18509.js" as="script"><link rel="preload" href="/assets/js/1.d4c099ff.js" as="script"><link rel="preload" href="/assets/js/100.9cd6bf85.js" as="script"><link rel="prefetch" href="/assets/js/10.b14aa6d6.js"><link rel="prefetch" href="/assets/js/101.3556e170.js"><link rel="prefetch" href="/assets/js/102.16b56bb5.js"><link rel="prefetch" href="/assets/js/11.9fe1d85e.js"><link rel="prefetch" href="/assets/js/12.86508e15.js"><link rel="prefetch" href="/assets/js/13.aa1fdab1.js"><link rel="prefetch" href="/assets/js/14.4a65991d.js"><link rel="prefetch" href="/assets/js/15.42e542bb.js"><link rel="prefetch" href="/assets/js/16.42d8df26.js"><link rel="prefetch" href="/assets/js/17.11d996a2.js"><link rel="prefetch" href="/assets/js/18.6f8f0eec.js"><link rel="prefetch" href="/assets/js/19.67e71589.js"><link rel="prefetch" href="/assets/js/20.9f10fe7c.js"><link rel="prefetch" href="/assets/js/21.c5bba302.js"><link rel="prefetch" href="/assets/js/22.ba4edf56.js"><link rel="prefetch" href="/assets/js/23.f26baabe.js"><link rel="prefetch" href="/assets/js/24.374f6794.js"><link rel="prefetch" href="/assets/js/25.5451fcbd.js"><link rel="prefetch" href="/assets/js/26.18612274.js"><link rel="prefetch" href="/assets/js/27.ce419d8c.js"><link rel="prefetch" href="/assets/js/28.7436999c.js"><link rel="prefetch" href="/assets/js/29.59490f9b.js"><link rel="prefetch" href="/assets/js/3.47d5fbb2.js"><link rel="prefetch" href="/assets/js/30.fd5f0f0c.js"><link rel="prefetch" href="/assets/js/31.eeb0a90a.js"><link rel="prefetch" href="/assets/js/32.6ed0ad98.js"><link rel="prefetch" href="/assets/js/33.9d814e07.js"><link rel="prefetch" href="/assets/js/34.d0f95f70.js"><link rel="prefetch" href="/assets/js/35.7ed447ae.js"><link rel="prefetch" href="/assets/js/36.835c2251.js"><link rel="prefetch" href="/assets/js/37.a18ef925.js"><link rel="prefetch" href="/assets/js/38.17d961bd.js"><link rel="prefetch" href="/assets/js/39.ca93401f.js"><link rel="prefetch" href="/assets/js/4.37747ac1.js"><link rel="prefetch" href="/assets/js/40.9dadb302.js"><link rel="prefetch" href="/assets/js/41.a629b97c.js"><link rel="prefetch" href="/assets/js/42.c6ae7a50.js"><link rel="prefetch" href="/assets/js/43.9988bba1.js"><link rel="prefetch" href="/assets/js/44.df470595.js"><link rel="prefetch" href="/assets/js/45.83bde3a2.js"><link rel="prefetch" href="/assets/js/46.10dde70c.js"><link rel="prefetch" href="/assets/js/47.187fcc55.js"><link rel="prefetch" href="/assets/js/48.e88a6ca9.js"><link rel="prefetch" href="/assets/js/49.0d1a13ba.js"><link rel="prefetch" href="/assets/js/5.094ae013.js"><link rel="prefetch" href="/assets/js/50.7955e9d3.js"><link rel="prefetch" href="/assets/js/51.1d9fa74a.js"><link rel="prefetch" href="/assets/js/52.7e9745bb.js"><link rel="prefetch" href="/assets/js/53.0eeb987e.js"><link rel="prefetch" href="/assets/js/54.1c1dd924.js"><link rel="prefetch" href="/assets/js/55.7c1837d4.js"><link rel="prefetch" href="/assets/js/56.4f5ccb00.js"><link rel="prefetch" href="/assets/js/57.1050ed92.js"><link rel="prefetch" href="/assets/js/58.5c9cf0f4.js"><link rel="prefetch" href="/assets/js/59.c6d076e7.js"><link rel="prefetch" href="/assets/js/6.77b934eb.js"><link rel="prefetch" href="/assets/js/60.4a776be6.js"><link rel="prefetch" href="/assets/js/61.02bfc1d1.js"><link rel="prefetch" href="/assets/js/62.c6d989a5.js"><link rel="prefetch" href="/assets/js/63.ba696df8.js"><link rel="prefetch" href="/assets/js/64.71956968.js"><link rel="prefetch" href="/assets/js/65.45521a6a.js"><link rel="prefetch" href="/assets/js/66.a30618cb.js"><link rel="prefetch" href="/assets/js/67.23c7d35e.js"><link rel="prefetch" href="/assets/js/68.e687faef.js"><link rel="prefetch" href="/assets/js/69.18f6023a.js"><link rel="prefetch" href="/assets/js/7.b4d7955c.js"><link rel="prefetch" href="/assets/js/70.d91081ae.js"><link rel="prefetch" href="/assets/js/71.72d81295.js"><link rel="prefetch" href="/assets/js/72.ec4d66b2.js"><link rel="prefetch" href="/assets/js/73.ce3f6cae.js"><link rel="prefetch" href="/assets/js/74.7a2d29c1.js"><link rel="prefetch" href="/assets/js/75.bd881c20.js"><link rel="prefetch" href="/assets/js/76.d2703b1c.js"><link rel="prefetch" href="/assets/js/77.13300037.js"><link rel="prefetch" href="/assets/js/78.8d86e33b.js"><link rel="prefetch" href="/assets/js/79.d8cb3bd4.js"><link rel="prefetch" href="/assets/js/80.610e9ddc.js"><link rel="prefetch" href="/assets/js/81.0b198dac.js"><link rel="prefetch" href="/assets/js/82.4157dd1d.js"><link rel="prefetch" href="/assets/js/83.54170f07.js"><link rel="prefetch" href="/assets/js/84.3753cfcd.js"><link rel="prefetch" href="/assets/js/85.6e7cf388.js"><link rel="prefetch" href="/assets/js/86.7a7b5315.js"><link rel="prefetch" href="/assets/js/87.1a8a2222.js"><link rel="prefetch" href="/assets/js/88.dd0abc69.js"><link rel="prefetch" href="/assets/js/89.12757067.js"><link rel="prefetch" href="/assets/js/90.3ce0e354.js"><link rel="prefetch" href="/assets/js/91.f9c9df5b.js"><link rel="prefetch" href="/assets/js/92.c1363477.js"><link rel="prefetch" href="/assets/js/93.40e464f4.js"><link rel="prefetch" href="/assets/js/94.c47f45a7.js"><link rel="prefetch" href="/assets/js/95.8e871691.js"><link rel="prefetch" href="/assets/js/96.cc02da31.js"><link rel="prefetch" href="/assets/js/97.932fce99.js"><link rel="prefetch" href="/assets/js/98.bcf07dda.js"><link rel="prefetch" href="/assets/js/99.91ef5df7.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.68b347c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.96eb8417.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vuex3/" aria-current="page" class="sidebar-link">VueX V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vuex3/prepare/build.html" aria-current="page" class="active sidebar-link">源码构建</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vuex3/prepare/build.html#build-main" class="sidebar-link">build:main</a></li><li class="sidebar-sub-header"><a href="/vuex3/prepare/build.html#build-logger" class="sidebar-link">build:logger</a></li></ul></li><li><a href="/vuex3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="源码构建"><a href="#源码构建" class="header-anchor">#</a> 源码构建</h1> <p>基于 NPM 托管的项目都有一个 package.json 文件，该文件是对项目的描述，我们一般会配置 <code>script</code> 字段作为NPM的执行脚本，Vue2源码的构建脚本如下：</p> <div class="language-json line-numbers-mode"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;dev&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node examples/server.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npm run build:main &amp;&amp; npm run build:logger&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;build:main&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node scripts/build-main.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;build:logger&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node scripts/build-logger.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;lint&quot;</span><span class="token operator">:</span> <span class="token string">&quot;eslint src test&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npm run lint &amp;&amp; npm run test:types &amp;&amp; npm run test:unit &amp;&amp; npm run test:ssr &amp;&amp; npm run test:e2e &amp;&amp; npm run test:esm&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test:unit&quot;</span><span class="token operator">:</span> <span class="token string">&quot;jest --testPathIgnorePatterns test/e2e&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test:e2e&quot;</span><span class="token operator">:</span> <span class="token string">&quot;start-server-and-test dev http://localhost:8080 \&quot;jest --testPathIgnorePatterns test/unit\&quot;&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test:ssr&quot;</span><span class="token operator">:</span> <span class="token string">&quot;cross-env VUE_ENV=server jest --testPathIgnorePatterns test/e2e&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test:types&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tsc -p types/test&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test:esm&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node test/esm/esm-test.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;coverage&quot;</span><span class="token operator">:</span> <span class="token string">&quot;jest --testPathIgnorePatterns test/e2e --coverage&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;changelog&quot;</span><span class="token operator">:</span> <span class="token string">&quot;conventional-changelog -p angular -i CHANGELOG.md -s&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;release&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node scripts/release.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;docs&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vuepress dev docs&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;docs:build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vuepress build docs&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426892-16589">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="{
+  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;node examples/server.js&quot;,
+    &quot;build&quot;: &quot;npm run build:main &amp;&amp; npm run build:logger&quot;,
+    &quot;build:main&quot;: &quot;node scripts/build-main.js&quot;,
+    &quot;build:logger&quot;: &quot;node scripts/build-logger.js&quot;,
+    &quot;lint&quot;: &quot;eslint src test&quot;,
+    &quot;test&quot;: &quot;npm run lint &amp;&amp; npm run test:types &amp;&amp; npm run test:unit &amp;&amp; npm run test:ssr &amp;&amp; npm run test:e2e &amp;&amp; npm run test:esm&quot;,
+    &quot;test:unit&quot;: &quot;jest --testPathIgnorePatterns test/e2e&quot;,
+    &quot;test:e2e&quot;: &quot;start-server-and-test dev http://localhost:8080 \&quot;jest --testPathIgnorePatterns test/unit\&quot;&quot;,
+    &quot;test:ssr&quot;: &quot;cross-env VUE_ENV=server jest --testPathIgnorePatterns test/e2e&quot;,
+    &quot;test:types&quot;: &quot;tsc -p types/test&quot;,
+    &quot;test:esm&quot;: &quot;node test/esm/esm-test.js&quot;,
+    &quot;coverage&quot;: &quot;jest --testPathIgnorePatterns test/e2e --coverage&quot;,
+    &quot;changelog&quot;: &quot;conventional-changelog -p angular -i CHANGELOG.md -s&quot;,
+    &quot;release&quot;: &quot;node scripts/release.js&quot;,
+    &quot;docs&quot;: &quot;vuepress dev docs&quot;,
+    &quot;docs:build&quot;: &quot;vuepress build docs&quot;
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426892-16589" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>我们可以发现，跟 <code>build</code> 相关的命令共有三条。</p> <p>当我们执行 <code>npm run build</code> 时，实际上就是在执行 <code>node scripts/build-main.js</code>和<code>node scripts/build-logger.js</code></p> <h2 id="build-main"><a href="#build-main" class="header-anchor">#</a> build:main</h2> <p>我们先找到 <code>scripts/build-main.jss</code> 文件，看他是如何构建的。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// scripts/build-main.js</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> run <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./build'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> files <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token string">'dist/vuex.esm.browser.js'</span><span class="token punctuation">,</span>
+  <span class="token string">'dist/vuex.esm.browser.min.js'</span><span class="token punctuation">,</span>
+  <span class="token string">'dist/vuex.esm.js'</span><span class="token punctuation">,</span>
+  <span class="token string">'dist/vuex.js'</span><span class="token punctuation">,</span>
+  <span class="token string">'dist/vuex.min.js'</span><span class="token punctuation">,</span>
+  <span class="token string">'dist/vuex.common.js'</span>
+<span class="token punctuation">]</span>
+
+<span class="token function">run</span><span class="token punctuation">(</span><span class="token string">'rollup.main.config.js'</span><span class="token punctuation">,</span> files<span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426893-71988">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// scripts/build-main.js
+const { run } = require('./build')
+
+const files = [
+  'dist/vuex.esm.browser.js',
+  'dist/vuex.esm.browser.min.js',
+  'dist/vuex.esm.js',
+  'dist/vuex.js',
+  'dist/vuex.min.js',
+  'dist/vuex.common.js'
+]
+
+run('rollup.main.config.js', files)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426893-71988" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>代码较为简单，从<code>./build</code>中导入<code>run</code>函数，然后调用<code>run</code>函数，传入<code>rollup.main.config.js</code>和<code>files</code>数组。</p> <p>我们先看<code>rollup.main.config.js</code>文件</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// rollup.main.config.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createEntries <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./rollup.config'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">createEntries</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.esm.browser.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'es'</span><span class="token punctuation">,</span> <span class="token literal-property property">browser</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">transpile</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'development'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.esm.browser.min.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'es'</span><span class="token punctuation">,</span> <span class="token literal-property property">browser</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">transpile</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token literal-property property">minify</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'production'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.esm.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'es'</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'development'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.cjs.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'umd'</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'development'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.cjs.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.min.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'umd'</span><span class="token punctuation">,</span> <span class="token literal-property property">minify</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'production'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">'src/index.cjs.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">file</span><span class="token operator">:</span> <span class="token string">'dist/vuex.common.js'</span><span class="token punctuation">,</span> <span class="token literal-property property">format</span><span class="token operator">:</span> <span class="token string">'cjs'</span><span class="token punctuation">,</span> <span class="token literal-property property">env</span><span class="token operator">:</span> <span class="token string">'development'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426893-53078">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// rollup.main.config.js
+import { createEntries } from './rollup.config'
+
+export default createEntries([
+  { input: 'src/index.js', file: 'dist/vuex.esm.browser.js', format: 'es', browser: true, transpile: false, env: 'development' },
+  { input: 'src/index.js', file: 'dist/vuex.esm.browser.min.js', format: 'es', browser: true, transpile: false, minify: true, env: 'production' },
+  { input: 'src/index.js', file: 'dist/vuex.esm.js', format: 'es', env: 'development' },
+  { input: 'src/index.cjs.js', file: 'dist/vuex.js', format: 'umd', env: 'development' },
+  { input: 'src/index.cjs.js', file: 'dist/vuex.min.js', format: 'umd', minify: true, env: 'production' },
+  { input: 'src/index.cjs.js', file: 'dist/vuex.common.js', format: 'cjs', env: 'development' }
+])
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426893-53078" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>上述代码可以看出，这是调用<code>./rollup.config</code>文件中的<code>createEntries</code>方法。</p> <p>我们再找到<code>createEntries</code>的定义，看它是如何创建构建配置的。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// rollup.config.js</span>
+
+<span class="token keyword">import</span> buble <span class="token keyword">from</span> <span class="token string">'@rollup/plugin-buble'</span>
+<span class="token keyword">import</span> replace <span class="token keyword">from</span> <span class="token string">'@rollup/plugin-replace'</span>
+<span class="token keyword">import</span> resolve <span class="token keyword">from</span> <span class="token string">'@rollup/plugin-node-resolve'</span>
+<span class="token keyword">import</span> commonjs <span class="token keyword">from</span> <span class="token string">'@rollup/plugin-commonjs'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> terser <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rollup-plugin-terser'</span>
+<span class="token keyword">import</span> pkg <span class="token keyword">from</span> <span class="token string">'./package.json'</span>
+
+<span class="token keyword">const</span> banner <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/*!
+ * vuex v</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>pkg<span class="token punctuation">.</span>version<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+ * (c) </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getFullYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> Evan You
+ * @license MIT
+ */</span><span class="token template-punctuation string">`</span></span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">createEntries</span> <span class="token punctuation">(</span><span class="token parameter">configs</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> configs<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">c</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">createEntry</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">createEntry</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">input</span><span class="token operator">:</span> config<span class="token punctuation">.</span>input<span class="token punctuation">,</span>
+    <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">output</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      banner<span class="token punctuation">,</span>
+      <span class="token literal-property property">file</span><span class="token operator">:</span> config<span class="token punctuation">.</span>file<span class="token punctuation">,</span>
+      <span class="token literal-property property">format</span><span class="token operator">:</span> config<span class="token punctuation">.</span>format
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">onwarn</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">msg<span class="token punctuation">,</span> warn</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">Circular</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">warn</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>config<span class="token punctuation">.</span>format <span class="token operator">===</span> <span class="token string">'umd'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    c<span class="token punctuation">.</span>output<span class="token punctuation">.</span>name <span class="token operator">=</span> c<span class="token punctuation">.</span>output<span class="token punctuation">.</span>name <span class="token operator">||</span> <span class="token string">'Vuex'</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 替换环境变量</span>
+  c<span class="token punctuation">.</span>plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">__VERSION__</span><span class="token operator">:</span> pkg<span class="token punctuation">.</span>version<span class="token punctuation">,</span>
+    <span class="token literal-property property">__DEV__</span><span class="token operator">:</span> config<span class="token punctuation">.</span>format <span class="token operator">!==</span> <span class="token string">'umd'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>config<span class="token punctuation">.</span>browser
+      <span class="token operator">?</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">(process.env.NODE_ENV !== 'production')</span><span class="token template-punctuation string">`</span></span>
+      <span class="token operator">:</span> config<span class="token punctuation">.</span>env <span class="token operator">!==</span> <span class="token string">'production'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>config<span class="token punctuation">.</span>transpile <span class="token operator">!==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 将 ES6+ 的代码转换为 ES5 代码</span>
+    c<span class="token punctuation">.</span>plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">buble</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 解析和处理 Node.js 模块导入语句</span>
+  c<span class="token punctuation">.</span>plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token comment">// 将 CommonJS 模块转换为 ES6 模块</span>
+  c<span class="token punctuation">.</span>plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">commonjs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>config<span class="token punctuation">.</span>minify<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 压缩</span>
+    c<span class="token punctuation">.</span>plugins<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">terser</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">module</span><span class="token operator">:</span> config<span class="token punctuation">.</span>format <span class="token operator">===</span> <span class="token string">'es'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> c
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426894-40390">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// rollup.config.js
+
+import buble from '@rollup/plugin-buble'
+import replace from '@rollup/plugin-replace'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
+import pkg from './package.json'
+
+const banner = `/*!
+ * vuex v${pkg.version}
+ * (c) ${new Date().getFullYear()} Evan You
+ * @license MIT
+ */`
+
+export function createEntries (configs) {
+  return configs.map((c) =&gt; createEntry(c))
+}
+
+function createEntry (config) {
+  const c = {
+    input: config.input,
+    plugins: [],
+    output: {
+      banner,
+      file: config.file,
+      format: config.format
+    },
+    onwarn: (msg, warn) =&gt; {
+      if (!/Circular/.test(msg)) {
+        warn(msg)
+      }
+    }
+  }
+
+  if (config.format === 'umd') {
+    c.output.name = c.output.name || 'Vuex'
+  }
+
+  // 替换环境变量
+  c.plugins.push(replace({
+    __VERSION__: pkg.version,
+    __DEV__: config.format !== 'umd' &amp;&amp; !config.browser
+      ? `(process.env.NODE_ENV !== 'production')`
+      : config.env !== 'production'
+  }))
+
+  if (config.transpile !== false) {
+    // 将 ES6+ 的代码转换为 ES5 代码
+    c.plugins.push(buble())
+  }
+
+  // 解析和处理 Node.js 模块导入语句
+  c.plugins.push(resolve())
+  // 将 CommonJS 模块转换为 ES6 模块
+  c.plugins.push(commonjs())
+
+  if (config.minify) {
+    // 压缩
+    c.plugins.push(terser({ module: config.format === 'es' }))
+  }
+
+  return c
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426894-40390" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br></div></div><p>代码较为简单，可以看出来，就是循环传入的<code>configs</code>，并为每项添加<code>rollup</code>配置并导出，注释较为详细，不展开讲了</p> <p>那么此刻我们知道了，<code>createEntries</code>方法就是传入一个数组，数组中的每一项都是一个对象，表示一个构建配置。</p> <p>回过头，我们再看<code>run</code>函数，它是在<code>build.js</code>文件中定义的，它接收两个参数，一个是配置列表，一个是需要构建的文件列表。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs-extra'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> chalk <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chalk'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> execa <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'execa'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> gzipSync <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'zlib'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> compress <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'brotli'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">run</span> <span class="token punctuation">(</span><span class="token parameter">config<span class="token punctuation">,</span> files</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">await</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token function">build</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">copy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token function">checkAllSizes</span><span class="token punctuation">(</span>files<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">build</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">await</span> <span class="token function">execa</span><span class="token punctuation">(</span><span class="token string">'rollup'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'-c'</span><span class="token punctuation">,</span> config<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">stdio</span><span class="token operator">:</span> <span class="token string">'inherit'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">copy</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">await</span> fs<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span><span class="token string">'src/index.mjs'</span><span class="token punctuation">,</span> <span class="token string">'dist/vuex.mjs'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">checkAllSizes</span> <span class="token punctuation">(</span><span class="token parameter">files</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  files<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">f</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">checkSize</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 检查文件大小</span>
+<span class="token keyword">function</span> <span class="token function">checkSize</span> <span class="token punctuation">(</span><span class="token parameter">file</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> f <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> minSize <span class="token operator">=</span> <span class="token punctuation">(</span>f<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'kb'</span>
+  <span class="token keyword">const</span> gzipped <span class="token operator">=</span> <span class="token function">gzipSync</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> gzippedSize <span class="token operator">=</span> <span class="token punctuation">(</span>gzipped<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'kb'</span>
+  <span class="token keyword">const</span> compressed <span class="token operator">=</span> <span class="token function">compress</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> compressedSize <span class="token operator">=</span> <span class="token punctuation">(</span>compressed<span class="token punctuation">.</span>length <span class="token operator">/</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'kb'</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>
+    <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>chalk<span class="token punctuation">.</span><span class="token function">gray</span><span class="token punctuation">(</span>
+      chalk<span class="token punctuation">.</span><span class="token function">bold</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> size:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>minSize<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> / gzip:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>gzippedSize<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> / brotli:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>compressedSize<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span> run <span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426894-11183">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const fs = require('fs-extra')
+const chalk = require('chalk')
+const execa = require('execa')
+const { gzipSync } = require('zlib')
+const { compress } = require('brotli')
+
+async function run (config, files) {
+  await Promise.all([build(config), copy()])
+  checkAllSizes(files)
+}
+
+async function build (config) {
+  await execa('rollup', ['-c', config], { stdio: 'inherit' })
+}
+
+async function copy () {
+  await fs.copy('src/index.mjs', 'dist/vuex.mjs')
+}
+
+function checkAllSizes (files) {
+  console.log()
+  files.map((f) =&gt; checkSize(f))
+  console.log()
+}
+
+// 检查文件大小
+function checkSize (file) {
+  const f = fs.readFileSync(file)
+  const minSize = (f.length / 1024).toFixed(2) + 'kb'
+  const gzipped = gzipSync(f)
+  const gzippedSize = (gzipped.length / 1024).toFixed(2) + 'kb'
+  const compressed = compress(f)
+  const compressedSize = (compressed.length / 1024).toFixed(2) + 'kb'
+  console.log(
+    `${chalk.gray(
+      chalk.bold(file)
+    )} size:${minSize} / gzip:${gzippedSize} / brotli:${compressedSize}`
+  )
+}
+
+module.exports = { run }
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426894-11183" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><p>可以看出<code>run</code>函数实际上就是使用<code>rollup</code>将生成好的配置项循环执行，并在构建完成后执行<code>checkAllSizes</code>函数，检查所有文件的大小。</p> <h2 id="build-logger"><a href="#build-logger" class="header-anchor">#</a> build:logger</h2> <p>然后我们找到 <code>scripts/build-logger.js</code> 文件，看他是如何构建的。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token punctuation">{</span> run <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./build'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> files <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'dist/logger.js'</span><span class="token punctuation">]</span>
+
+<span class="token function">run</span><span class="token punctuation">(</span><span class="token string">'rollup.logger.config.js'</span><span class="token punctuation">,</span> files<span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1698239426906-21722">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const { run } = require('./build')
+
+const files = ['dist/logger.js']
+
+run('rollup.logger.config.js', files)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1698239426906-21722" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>跟执行<code>main</code>一样，都是调用了<code>run</code>函数，传入了配置项和需要构建的文件列表。此处不赘述</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vuex3/prepare/directory.html" class="prev">
+        目录结构
+      </a></span> <span class="next"><a href="/vuex3/prepare/entry.html">
+        源码入口
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.f98bc92c.js" defer></script><script src="/assets/js/2.88c18509.js" defer></script><script src="/assets/js/1.d4c099ff.js" defer></script><script src="/assets/js/100.9cd6bf85.js" defer></script>
+  </body>
+</html>
