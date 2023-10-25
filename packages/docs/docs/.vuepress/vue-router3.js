@@ -48,6 +48,8 @@ module.exports = {
       sidebarDepth: 3,
       children: [
         '/vueRouter3/advanced/navigation-guards',
+        '/vueRouter3/advanced/route-view',
+        '/vueRouter3/advanced/route-link',
       ]
     },
   ]

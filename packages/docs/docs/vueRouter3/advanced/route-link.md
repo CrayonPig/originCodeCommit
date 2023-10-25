@@ -1,20 +1,9 @@
-/* @flow */
+# \<router-link>
 
-import { createRoute, isSameRoute, isIncludedRoute } from '../util/route'
-import { extend } from '../util/misc'
-import { normalizeLocation } from '../util/location'
-import { warn } from '../util/warn'
+`<router-link>` 组件支持用户在具有路由功能的应用中 (点击) 导航。 通过 to 属性指定目标地址，默认渲染成带有正确链接的 `<a>` 标签，可以通过配置 tag 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。
 
-// work around weird flow bug
-const toTypes: Array<Function> = [String, Object]
-const eventTypes: Array<Function> = [String, Array]
-
-const noop = () => {}
-
-let warnedCustomSlot
-let warnedTagProp
-let warnedEventProp
-
+```js
+// src/components/link.js
 export default {
   name: 'RouterLink',
   props: {
@@ -224,43 +213,58 @@ export default {
     return h(this.tag, data, this.$slots.default)
   }
 }
+```
 
-export function guardEvent (e: any) {
-  // 如果事件对象中包含控制键（metaKey、altKey、ctrlKey、shiftKey），则不进行阻止，直接返回
-  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return
-  // 如果事件对象的defaultPrevented属性为true，表示已经调用了preventDefault方法，因此也不进行阻止，直接返回
-  if (e.defaultPrevented) return
-  // 如果事件对象的button属性不为undefined且button不等于0，表示是右键点击事件，不进行阻止，直接返回
-  if (e.button !== undefined && e.button !== 0) return
-  // 如果事件对象的currentTarget属性存在且具有getAttribute方法，会检查target属性是否包含"_blank"字符串（忽略大小写），如果是则不进行阻止，直接返回
-  if (e.currentTarget && e.currentTarget.getAttribute) {
-    const target = e.currentTarget.getAttribute('target')
-    if (/\b_blank\b/i.test(target)) return
-  }
-  // 如果事件对象具有preventDefault方法，则调用该方法阻止默认行为
-  if (e.preventDefault) {
-    e.preventDefault()
-  }
-  // 返回true表示已经阻止了事件的默认行为
-  return true
-}
+代码较为简单，可以看出，最终会监听点击事件或者其它可以通过 `prop` 传入的事件类型，执行 `hanlder` 函数，最终执行 `router.push` 或者 `router.replace` 函数，实现路由切换的功能
 
-function findAnchor (children) {
-  // 检查传入的 children 参数是否存在。如果存在，则进行后续操作；否则直接返回。
-  if (children) {
-    // 声明一个变量 child，用于存储当前正在处理的子元素。
-    let child
-    // 使用 for 循环遍历 children 数组中的每一个元素。
-    for (let i = 0; i < children.length; i++) {
-      child = children[i]
-      // 检查当前元素是否是一个 <a> 标签。如果是，则返回这个元素。
-      if (child.tag === 'a') {
-        return child
-      }
-      // 如果当前元素有子元素，并且这个函数被调用时传递的是这些子元素（而不是直接传递的 children 元素），则递归调用这个函数。
-      if (child.children && (child = findAnchor(child.children))) {
-        return child
-      }
+```js
+// 定义事件处理程序，当路由链接被点击时触发
+const handler = e => {
+  if (guardEvent(e)) {
+    if (this.replace) {
+      router.replace(location, noop)
+    } else {
+      router.push(location, noop)
     }
   }
 }
+```
+
+这里值得注意的是调用的`router.resolve`方法，用于解析给定的路由路径并返回相应的路由对象。这个方法通常用于在组件中动态生成路由链接或导航。
+
+```js
+// src/router.js
+resolve (
+  to: RawLocation,
+  current?: Route,
+  append?: boolean
+): {
+  location: Location,
+  route: Route,
+  href: string,
+  // for backwards compat
+  normalizedTo: Location,
+  resolved: Route
+} {
+  // 如果 current 这个 route 不存在，则获取当前的路由 route 对象
+  current = current || this.history.current
+  // 将 to 对象转成标准的 { path:xxx, name:xxx, query:xxx, params:xxx } 的形式。
+  const location = normalizeLocation(to, current, append, this)
+  // 根据路径匹配相关配置，然后创建一个新的 route 对象
+  const route = this.match(location, current)
+  // 获取全路径（这个路径是替换完了动态参数的路径。）
+  const fullPath = route.redirectedFrom || route.fullPath
+  // 获取路由的基准路径
+  const base = this.history.base
+  // 完整的 url
+  const href = createHref(base, fullPath, this.mode)
+  return {
+    location,
+    route,
+    href,
+    // for backwards compat
+    normalizedTo: location,
+    resolved: route
+  }
+}
+```
