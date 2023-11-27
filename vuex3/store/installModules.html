@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>安装 Modules | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.96eb8417.css" as="style"><link rel="preload" href="/assets/js/app.ad45bba7.js" as="script"><link rel="preload" href="/assets/js/2.88c18509.js" as="script"><link rel="preload" href="/assets/js/1.d4c099ff.js" as="script"><link rel="preload" href="/assets/js/108.137e241f.js" as="script"><link rel="prefetch" href="/assets/js/10.b14aa6d6.js"><link rel="prefetch" href="/assets/js/100.384bb5a2.js"><link rel="prefetch" href="/assets/js/101.847afdb2.js"><link rel="prefetch" href="/assets/js/102.b3e8a11a.js"><link rel="prefetch" href="/assets/js/103.43b25d15.js"><link rel="prefetch" href="/assets/js/104.b01fed07.js"><link rel="prefetch" href="/assets/js/105.ae01672f.js"><link rel="prefetch" href="/assets/js/106.b8668ee8.js"><link rel="prefetch" href="/assets/js/107.3799ee34.js"><link rel="prefetch" href="/assets/js/109.e53fbf31.js"><link rel="prefetch" href="/assets/js/11.9fe1d85e.js"><link rel="prefetch" href="/assets/js/12.86508e15.js"><link rel="prefetch" href="/assets/js/13.5e8d6dfb.js"><link rel="prefetch" href="/assets/js/14.4a65991d.js"><link rel="prefetch" href="/assets/js/15.42e542bb.js"><link rel="prefetch" href="/assets/js/16.42d8df26.js"><link rel="prefetch" href="/assets/js/17.11d996a2.js"><link rel="prefetch" href="/assets/js/18.6f8f0eec.js"><link rel="prefetch" href="/assets/js/19.67e71589.js"><link rel="prefetch" href="/assets/js/20.9f10fe7c.js"><link rel="prefetch" href="/assets/js/21.cfab977f.js"><link rel="prefetch" href="/assets/js/22.ba4edf56.js"><link rel="prefetch" href="/assets/js/23.f26baabe.js"><link rel="prefetch" href="/assets/js/24.7ae18356.js"><link rel="prefetch" href="/assets/js/25.e01ec063.js"><link rel="prefetch" href="/assets/js/26.7cdd8c9a.js"><link rel="prefetch" href="/assets/js/27.ce419d8c.js"><link rel="prefetch" href="/assets/js/28.484c785d.js"><link rel="prefetch" href="/assets/js/29.3a7d9fe2.js"><link rel="prefetch" href="/assets/js/3.47d5fbb2.js"><link rel="prefetch" href="/assets/js/30.024eee10.js"><link rel="prefetch" href="/assets/js/31.93ff7f25.js"><link rel="prefetch" href="/assets/js/32.ca90a8d0.js"><link rel="prefetch" href="/assets/js/33.ed19e5d5.js"><link rel="prefetch" href="/assets/js/34.20cde001.js"><link rel="prefetch" href="/assets/js/35.a1c6adf9.js"><link rel="prefetch" href="/assets/js/36.df27c6a3.js"><link rel="prefetch" href="/assets/js/37.f8a74b76.js"><link rel="prefetch" href="/assets/js/38.3fee0ddb.js"><link rel="prefetch" href="/assets/js/39.ca93401f.js"><link rel="prefetch" href="/assets/js/4.37747ac1.js"><link rel="prefetch" href="/assets/js/40.fb1427a3.js"><link rel="prefetch" href="/assets/js/41.a629b97c.js"><link rel="prefetch" href="/assets/js/42.031d2e81.js"><link rel="prefetch" href="/assets/js/43.cfe57f9e.js"><link rel="prefetch" href="/assets/js/44.fc25e371.js"><link rel="prefetch" href="/assets/js/45.4c47be0f.js"><link rel="prefetch" href="/assets/js/46.64d5259b.js"><link rel="prefetch" href="/assets/js/47.938152f8.js"><link rel="prefetch" href="/assets/js/48.1abf06e3.js"><link rel="prefetch" href="/assets/js/49.2b84fafb.js"><link rel="prefetch" href="/assets/js/5.094ae013.js"><link rel="prefetch" href="/assets/js/50.d83cd640.js"><link rel="prefetch" href="/assets/js/51.a30556f2.js"><link rel="prefetch" href="/assets/js/52.b42046e8.js"><link rel="prefetch" href="/assets/js/53.98b33a01.js"><link rel="prefetch" href="/assets/js/54.a612244c.js"><link rel="prefetch" href="/assets/js/55.5057305c.js"><link rel="prefetch" href="/assets/js/56.375f57cf.js"><link rel="prefetch" href="/assets/js/57.5a4ad6fb.js"><link rel="prefetch" href="/assets/js/58.cf69df1a.js"><link rel="prefetch" href="/assets/js/59.0851bc24.js"><link rel="prefetch" href="/assets/js/6.77b934eb.js"><link rel="prefetch" href="/assets/js/60.436b72f1.js"><link rel="prefetch" href="/assets/js/61.a3dc0623.js"><link rel="prefetch" href="/assets/js/62.749b4001.js"><link rel="prefetch" href="/assets/js/63.ba696df8.js"><link rel="prefetch" href="/assets/js/64.6a7ca077.js"><link rel="prefetch" href="/assets/js/65.0223fcbe.js"><link rel="prefetch" href="/assets/js/66.caddbe17.js"><link rel="prefetch" href="/assets/js/67.cee72085.js"><link rel="prefetch" href="/assets/js/68.fef9855a.js"><link rel="prefetch" href="/assets/js/69.229e5692.js"><link rel="prefetch" href="/assets/js/7.b4d7955c.js"><link rel="prefetch" href="/assets/js/70.5abd8689.js"><link rel="prefetch" href="/assets/js/71.0dcd8fd1.js"><link rel="prefetch" href="/assets/js/72.957e582f.js"><link rel="prefetch" href="/assets/js/73.53010eaa.js"><link rel="prefetch" href="/assets/js/74.8c1da4c8.js"><link rel="prefetch" href="/assets/js/75.f04230ec.js"><link rel="prefetch" href="/assets/js/76.d2703b1c.js"><link rel="prefetch" href="/assets/js/77.2165d323.js"><link rel="prefetch" href="/assets/js/78.b04e21ef.js"><link rel="prefetch" href="/assets/js/79.4c3bb0cd.js"><link rel="prefetch" href="/assets/js/80.57e23007.js"><link rel="prefetch" href="/assets/js/81.5f99913f.js"><link rel="prefetch" href="/assets/js/82.88cab2d7.js"><link rel="prefetch" href="/assets/js/83.6c5b465d.js"><link rel="prefetch" href="/assets/js/84.6decfc1a.js"><link rel="prefetch" href="/assets/js/85.689eea85.js"><link rel="prefetch" href="/assets/js/86.91c5efea.js"><link rel="prefetch" href="/assets/js/87.d1542d66.js"><link rel="prefetch" href="/assets/js/88.d1cfa4fa.js"><link rel="prefetch" href="/assets/js/89.2a8b815f.js"><link rel="prefetch" href="/assets/js/90.0080728b.js"><link rel="prefetch" href="/assets/js/91.b89991ae.js"><link rel="prefetch" href="/assets/js/92.abb562ca.js"><link rel="prefetch" href="/assets/js/93.3d397546.js"><link rel="prefetch" href="/assets/js/94.999bdd0b.js"><link rel="prefetch" href="/assets/js/95.2b144aab.js"><link rel="prefetch" href="/assets/js/96.cdc932da.js"><link rel="prefetch" href="/assets/js/97.90243ed2.js"><link rel="prefetch" href="/assets/js/98.f2329543.js"><link rel="prefetch" href="/assets/js/99.dc53bab0.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.68b347c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.96eb8417.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vuex3/" aria-current="page" class="sidebar-link">VueX V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vuex3/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vuex3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>初始化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/init/" class="sidebar-link">前言</a></li><li><a href="/vuex3/init/install.html" class="sidebar-link">安装</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Store 实例化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/store/" aria-current="page" class="sidebar-link">前言</a></li><li><a href="/vuex3/store/initModules.html" class="sidebar-link">初始化 Modules</a></li><li><a href="/vuex3/store/installModules.html" aria-current="page" class="active sidebar-link">安装 Modules</a></li><li><a href="/vuex3/store/initVm.html" class="sidebar-link">初始化 store._vm</a></li><li><a href="/vuex3/store/summary.html" class="sidebar-link">总结</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="安装-modules"><a href="#安装-modules" class="header-anchor">#</a> 安装 Modules</h1> <p>初始化模块后，执行安装模块的相关逻辑，它的目标就是对模块中的将 <code>Vuex</code> 模块及其子模块的<code>state</code>、<code>getters</code>、<code>mutations</code>、<code>actions</code>  注册到 <code>Vuex</code> 的 <code>store</code> 中，它的入口代码是：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_modules<span class="token punctuation">.</span>root<span class="token punctuation">.</span>state
+
+<span class="token comment">// 初始化根模块</span>
+<span class="token comment">// 递归地注册所有子模块</span>
+<span class="token comment">// 并收集this._wrappedGetters内的所有模块getter</span>
+<span class="token function">installModule</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_modules<span class="token punctuation">.</span>root<span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379566-9658">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const state = this._modules.root.state
+
+// 初始化根模块
+// 递归地注册所有子模块
+// 并收集this._wrappedGetters内的所有模块getter
+installModule(this, state, [], this._modules.root)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379566-9658" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>我们来看看 <code>installModule</code> 函数的实现:</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">installModule</span> <span class="token punctuation">(</span><span class="token parameter">store<span class="token punctuation">,</span> rootState<span class="token punctuation">,</span> path<span class="token punctuation">,</span> module<span class="token punctuation">,</span> hot</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 检测是否是根模块</span>
+  <span class="token keyword">const</span> isRoot <span class="token operator">=</span> <span class="token operator">!</span>path<span class="token punctuation">.</span>length
+  <span class="token comment">// 获取模块的命名空间</span>
+  <span class="token keyword">const</span> namespace <span class="token operator">=</span> store<span class="token punctuation">.</span>_modules<span class="token punctuation">.</span><span class="token function">getNamespace</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+
+  <span class="token comment">// 如果模块启用了命名空间，将模块注册到命名空间映射表中</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>namespaced<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> __DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] duplicate namespace </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>namespace<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> for the namespaced module </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span> <span class="token operator">=</span> module
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 设置模块的状态（state）</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isRoot <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>hot<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 获取父模块的状态</span>
+    <span class="token keyword">const</span> parentState <span class="token operator">=</span> <span class="token function">getNestedState</span><span class="token punctuation">(</span>rootState<span class="token punctuation">,</span> path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token comment">// 获取当前模块的名称</span>
+    <span class="token keyword">const</span> moduleName <span class="token operator">=</span> path<span class="token punctuation">[</span>path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token comment">// 使用 store._withCommit 包装以确保状态变更在 mutation 中进行</span>
+    store<span class="token punctuation">.</span><span class="token function">_withCommit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 在开发环境下，如果模块的状态字段与同名模块冲突，发出警告</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>moduleName <span class="token keyword">in</span> parentState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>
+            <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] state field &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>moduleName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot; was overridden by a module with the same name at &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot;</span><span class="token template-punctuation string">`</span></span>
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 使用 Vue.set 方法设置状态</span>
+      Vue<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>parentState<span class="token punctuation">,</span> moduleName<span class="token punctuation">,</span> module<span class="token punctuation">.</span>state<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 创建模块的本地上下文</span>
+  <span class="token keyword">const</span> local <span class="token operator">=</span> module<span class="token punctuation">.</span>context <span class="token operator">=</span> <span class="token function">makeLocalContext</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> path<span class="token punctuation">)</span>
+
+  <span class="token comment">// 遍历模块的 mutations，将其注册到 store 中</span>
+  module<span class="token punctuation">.</span><span class="token function">forEachMutation</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">mutation<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> namespacedType <span class="token operator">=</span> namespace <span class="token operator">+</span> key
+    <span class="token function">registerMutation</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespacedType<span class="token punctuation">,</span> mutation<span class="token punctuation">,</span> local<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 遍历模块的 actions，将其注册到 store 中</span>
+  module<span class="token punctuation">.</span><span class="token function">forEachAction</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">action<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> type <span class="token operator">=</span> action<span class="token punctuation">.</span>root <span class="token operator">?</span> key <span class="token operator">:</span> namespace <span class="token operator">+</span> key
+    <span class="token keyword">const</span> handler <span class="token operator">=</span> action<span class="token punctuation">.</span>handler <span class="token operator">||</span> action
+    <span class="token function">registerAction</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> type<span class="token punctuation">,</span> handler<span class="token punctuation">,</span> local<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 遍历模块的 getters，将其注册到 store 中</span>
+  module<span class="token punctuation">.</span><span class="token function">forEachGetter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">getter<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> namespacedType <span class="token operator">=</span> namespace <span class="token operator">+</span> key
+    <span class="token function">registerGetter</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespacedType<span class="token punctuation">,</span> getter<span class="token punctuation">,</span> local<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 遍历模块的子模块，递归安装子模块</span>
+  module<span class="token punctuation">.</span><span class="token function">forEachChild</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">child<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">installModule</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> rootState<span class="token punctuation">,</span> path<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> child<span class="token punctuation">,</span> hot<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379566-41883">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function installModule (store, rootState, path, module, hot) {
+  // 检测是否是根模块
+  const isRoot = !path.length
+  // 获取模块的命名空间
+  const namespace = store._modules.getNamespace(path)
+
+  // 如果模块启用了命名空间，将模块注册到命名空间映射表中
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] &amp;&amp; __DEV__) {
+      console.error(`[vuex] duplicate namespace ${namespace} for the namespaced module ${path.join('/')}`)
+    }
+    store._modulesNamespaceMap[namespace] = module
+  }
+
+  // 设置模块的状态（state）
+  if (!isRoot &amp;&amp; !hot) {
+    // 获取父模块的状态
+    const parentState = getNestedState(rootState, path.slice(0, -1))
+    // 获取当前模块的名称
+    const moduleName = path[path.length - 1]
+    // 使用 store._withCommit 包装以确保状态变更在 mutation 中进行
+    store._withCommit(() =&gt; {
+      if (__DEV__) {
+        // 在开发环境下，如果模块的状态字段与同名模块冲突，发出警告
+        if (moduleName in parentState) {
+          console.warn(
+            `[vuex] state field &quot;${moduleName}&quot; was overridden by a module with the same name at &quot;${path.join('.')}&quot;`
+          )
+        }
+      }
+      // 使用 Vue.set 方法设置状态
+      Vue.set(parentState, moduleName, module.state)
+    })
+  }
+
+  // 创建模块的本地上下文
+  const local = module.context = makeLocalContext(store, namespace, path)
+
+  // 遍历模块的 mutations，将其注册到 store 中
+  module.forEachMutation((mutation, key) =&gt; {
+    const namespacedType = namespace + key
+    registerMutation(store, namespacedType, mutation, local)
+  })
+
+  // 遍历模块的 actions，将其注册到 store 中
+  module.forEachAction((action, key) =&gt; {
+    const type = action.root ? key : namespace + key
+    const handler = action.handler || action
+    registerAction(store, type, handler, local)
+  })
+
+  // 遍历模块的 getters，将其注册到 store 中
+  module.forEachGetter((getter, key) =&gt; {
+    const namespacedType = namespace + key
+    registerGetter(store, namespacedType, getter, local)
+  })
+
+  // 遍历模块的子模块，递归安装子模块
+  module.forEachChild((child, key) =&gt; {
+    installModule(store, rootState, path.concat(key), child, hot)
+  })
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379566-41883" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br></div></div><p><code>installModule</code> 的参数有五个：</p> <ul><li><code>store</code>：Vuex Store 的实例。</li> <li><code>rootState</code>：根状态，即整个应用的状态。</li> <li><code>path</code>：模块在状态树中的路径，是一个数组。</li> <li><code>module</code>：要安装的模块。</li> <li><code>hot</code>：一个布尔值，表示是否是热重载模块。</li></ul> <p>我们来分析具体实现逻辑</p> <ol><li><strong>检测是否是根模块：</strong></li></ol> <p>检查路径 <code>path</code> 的长度，如果长度为 0，说明当前模块是根模块。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> isRoot <span class="token operator">=</span> <span class="token operator">!</span>path<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379567-26203">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const isRoot = !path.length;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379567-26203" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="2"><li><strong>获取模块的命名空间：</strong></li></ol> <p>使用 Vuex Store 实例的 <code>_modules</code> 属性获取模块的命名空间。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> namespace <span class="token operator">=</span> store<span class="token punctuation">.</span>_modules<span class="token punctuation">.</span><span class="token function">getNamespace</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379567-17155">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const namespace = store._modules.getNamespace(path);
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379567-17155" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="3"><li><strong>注册模块的命名空间：</strong></li></ol> <p>如果模块启用了命名空间 (<code>module.namespaced</code>)，则将模块注册到 Vuex Store 实例的命名空间映射表 <code>_modulesNamespaceMap</code> 中。如果已存在相同命名空间的模块，则在开发环境下发出警告。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>namespaced<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> __DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] duplicate namespace </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>namespace<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> for the namespaced module </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span> <span class="token operator">=</span> module<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379567-88860">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="if (module.namespaced) {
+  if (store._modulesNamespaceMap[namespace] &amp;&amp; __DEV__) {
+    console.error(`[vuex] duplicate namespace ${namespace} for the namespaced module ${path.join('/')}`);
+  }
+  store._modulesNamespaceMap[namespace] = module;
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379567-88860" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><ol start="4"><li><strong>设置模块的状态（state）：</strong></li></ol> <p>如果不是根模块且不是热重载模块，则将当前模块的状态设置到父模块的相应字段中。在开发环境下，如果状态字段与同名模块冲突，会发出警告。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isRoot <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>hot<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> parentState <span class="token operator">=</span> <span class="token function">getNestedState</span><span class="token punctuation">(</span>rootState<span class="token punctuation">,</span> path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> moduleName <span class="token operator">=</span> path<span class="token punctuation">[</span>path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  store<span class="token punctuation">.</span><span class="token function">_withCommit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>moduleName <span class="token keyword">in</span> parentState<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] state field &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>moduleName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot; was overridden by a module with the same name at &quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot;</span><span class="token template-punctuation string">`</span></span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    Vue<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>parentState<span class="token punctuation">,</span> moduleName<span class="token punctuation">,</span> module<span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379568-54647">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="if (!isRoot &amp;&amp; !hot) {
+  const parentState = getNestedState(rootState, path.slice(0, -1));
+  const moduleName = path[path.length - 1];
+  store._withCommit(() =&gt; {
+    if (__DEV__) {
+      if (moduleName in parentState) {
+        console.warn(
+          `[vuex] state field &quot;${moduleName}&quot; was overridden by a module with the same name at &quot;${path.join('.')}&quot;`
+        );
+      }
+    }
+    Vue.set(parentState, moduleName, module.state);
+  });
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379568-54647" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><ol start="5"><li><strong>创建模块的本地上下文：</strong></li></ol> <p>使用 <code>makeLocalContext</code> 函数创建模块的本地上下文，并将其赋值给 <code>module.context</code> 属性。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> local <span class="token operator">=</span> module<span class="token punctuation">.</span>context <span class="token operator">=</span> <span class="token function">makeLocalContext</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379568-17701">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const local = module.context = makeLocalContext(store, namespace, path);
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379568-17701" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="6"><li><strong>遍历注册模块的 mutations、actions、getters：</strong></li></ol> <p>遍历模块的 mutations、actions、getters，通过相应的注册函数将它们注册到 Vuex Store 实例中。如果是命名空间模块，会在类型前加上命名空间。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>module<span class="token punctuation">.</span><span class="token function">forEachMutation</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">mutation<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> namespacedType <span class="token operator">=</span> namespace <span class="token operator">+</span> key<span class="token punctuation">;</span>
+  <span class="token function">registerMutation</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespacedType<span class="token punctuation">,</span> mutation<span class="token punctuation">,</span> local<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span><span class="token function">forEachAction</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">action<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> type <span class="token operator">=</span> action<span class="token punctuation">.</span>root <span class="token operator">?</span> key <span class="token operator">:</span> namespace <span class="token operator">+</span> key<span class="token punctuation">;</span>
+  <span class="token keyword">const</span> handler <span class="token operator">=</span> action<span class="token punctuation">.</span>handler <span class="token operator">||</span> action<span class="token punctuation">;</span>
+  <span class="token function">registerAction</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> type<span class="token punctuation">,</span> handler<span class="token punctuation">,</span> local<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span><span class="token function">forEachGetter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">getter<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> namespacedType <span class="token operator">=</span> namespace <span class="token operator">+</span> key<span class="token punctuation">;</span>
+  <span class="token function">registerGetter</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespacedType<span class="token punctuation">,</span> getter<span class="token punctuation">,</span> local<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379568-9817">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="module.forEachMutation((mutation, key) =&gt; {
+  const namespacedType = namespace + key;
+  registerMutation(store, namespacedType, mutation, local);
+});
+
+module.forEachAction((action, key) =&gt; {
+  const type = action.root ? key : namespace + key;
+  const handler = action.handler || action;
+  registerAction(store, type, handler, local);
+});
+
+module.forEachGetter((getter, key) =&gt; {
+  const namespacedType = namespace + key;
+  registerGetter(store, namespacedType, getter, local);
+});
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379568-9817" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><ol start="7"><li><strong>递归安装子模块：</strong></li></ol> <p>递归调用 <code>installModule</code> 函数，安装子模块。</p> <div class="language-javascript line-numbers-mode"><pre class="language-javascript"><code>module<span class="token punctuation">.</span><span class="token function">forEachChild</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">child<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">installModule</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> rootState<span class="token punctuation">,</span> path<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> child<span class="token punctuation">,</span> hot<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379568-73417">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="module.forEachChild((child, key) =&gt; {
+  installModule(store, rootState, path.concat(key), child, hot);
+});
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379568-73417" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>在以上过程中，需要注意下<code>makeLocalContext</code>的实现</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/store.js</span>
+<span class="token comment">// 创建本地上下文</span>
+<span class="token keyword">function</span> <span class="token function">makeLocalContext</span> <span class="token punctuation">(</span><span class="token parameter">store<span class="token punctuation">,</span> namespace<span class="token punctuation">,</span> path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 判断当前模块是否有命名空间</span>
+  <span class="token keyword">const</span> noNamespace <span class="token operator">=</span> namespace <span class="token operator">===</span> <span class="token string">''</span>
+
+  <span class="token comment">// local 对象中包含 dispatch 和 commit 方法</span>
+  <span class="token keyword">const</span> local <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 如果没有命名空间，则直接使用 store 的 dispatch 方法</span>
+    <span class="token comment">// 如果有命名空间，对 dispatch 方法进行二次封装</span>
+    <span class="token literal-property property">dispatch</span><span class="token operator">:</span> noNamespace <span class="token operator">?</span> store<span class="token punctuation">.</span><span class="token function-variable function">dispatch</span> <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">_type<span class="token punctuation">,</span> _payload<span class="token punctuation">,</span> _options</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 将参数统一格式</span>
+      <span class="token keyword">const</span> args <span class="token operator">=</span> <span class="token function">unifyObjectStyle</span><span class="token punctuation">(</span>_type<span class="token punctuation">,</span> _payload<span class="token punctuation">,</span> _options<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> payload<span class="token punctuation">,</span> options <span class="token punctuation">}</span> <span class="token operator">=</span> args
+      <span class="token keyword">let</span> <span class="token punctuation">{</span> type <span class="token punctuation">}</span> <span class="token operator">=</span> args
+
+      <span class="token comment">// 如果 dispatch 的 options 中没有 root 属性，那么就需要添加命名空间</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>options <span class="token operator">||</span> <span class="token operator">!</span>options<span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        type <span class="token operator">=</span> namespace <span class="token operator">+</span> type
+        <span class="token comment">// 在开发环境下，如果没有对应的 action，打印警告信息</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>store<span class="token punctuation">.</span>_actions<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] unknown local action type: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>args<span class="token punctuation">.</span>type<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">, global type: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>type<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 执行 dispatch</span>
+      <span class="token keyword">return</span> store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> payload<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// 对 commit 方法进行类似的处理</span>
+    <span class="token literal-property property">commit</span><span class="token operator">:</span> noNamespace <span class="token operator">?</span> store<span class="token punctuation">.</span><span class="token function-variable function">commit</span> <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">_type<span class="token punctuation">,</span> _payload<span class="token punctuation">,</span> _options</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> args <span class="token operator">=</span> <span class="token function">unifyObjectStyle</span><span class="token punctuation">(</span>_type<span class="token punctuation">,</span> _payload<span class="token punctuation">,</span> _options<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> payload<span class="token punctuation">,</span> options <span class="token punctuation">}</span> <span class="token operator">=</span> args
+      <span class="token keyword">let</span> <span class="token punctuation">{</span> type <span class="token punctuation">}</span> <span class="token operator">=</span> args
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>options <span class="token operator">||</span> <span class="token operator">!</span>options<span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        type <span class="token operator">=</span> namespace <span class="token operator">+</span> type
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>store<span class="token punctuation">.</span>_mutations<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] unknown local mutation type: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>args<span class="token punctuation">.</span>type<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">, global type: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>type<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token comment">// 执行 commit</span>
+      store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> payload<span class="token punctuation">,</span> options<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// getters and state object must be gotten lazily</span>
+  <span class="token comment">// because they will be changed by vm update</span>
+  <span class="token comment">// 因为 getters 和 state 可能会随着 vm 的更新而改变，所以需要用 getter 方法来获取最新的值</span>
+  Object<span class="token punctuation">.</span><span class="token function">defineProperties</span><span class="token punctuation">(</span>local<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">get</span><span class="token operator">:</span> noNamespace
+        <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> store<span class="token punctuation">.</span><span class="token function-variable function">getters</span>
+        <span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">makeLocalGetters</span><span class="token punctuation">(</span>store<span class="token punctuation">,</span> namespace<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token function-variable function">get</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">getNestedState</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>state<span class="token punctuation">,</span> path<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> local
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072379568-3323">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/store.js
+// 创建本地上下文
+function makeLocalContext (store, namespace, path) {
+  // 判断当前模块是否有命名空间
+  const noNamespace = namespace === ''
+
+  // local 对象中包含 dispatch 和 commit 方法
+  const local = {
+    // 如果没有命名空间，则直接使用 store 的 dispatch 方法
+    // 如果有命名空间，对 dispatch 方法进行二次封装
+    dispatch: noNamespace ? store.dispatch : (_type, _payload, _options) =&gt; {
+      // 将参数统一格式
+      const args = unifyObjectStyle(_type, _payload, _options)
+      const { payload, options } = args
+      let { type } = args
+
+      // 如果 dispatch 的 options 中没有 root 属性，那么就需要添加命名空间
+      if (!options || !options.root) {
+        type = namespace + type
+        // 在开发环境下，如果没有对应的 action，打印警告信息
+        if (__DEV__ &amp;&amp; !store._actions[type]) {
+          console.error(`[vuex] unknown local action type: ${args.type}, global type: ${type}`)
+          return
+        }
+      }
+
+      // 执行 dispatch
+      return store.dispatch(type, payload)
+    },
+
+    // 对 commit 方法进行类似的处理
+    commit: noNamespace ? store.commit : (_type, _payload, _options) =&gt; {
+      const args = unifyObjectStyle(_type, _payload, _options)
+      const { payload, options } = args
+      let { type } = args
+
+      if (!options || !options.root) {
+        type = namespace + type
+        if (__DEV__ &amp;&amp; !store._mutations[type]) {
+          console.error(`[vuex] unknown local mutation type: ${args.type}, global type: ${type}`)
+          return
+        }
+      }
+
+      // 执行 commit
+      store.commit(type, payload, options)
+    }
+  }
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  // 因为 getters 和 state 可能会随着 vm 的更新而改变，所以需要用 getter 方法来获取最新的值
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? () =&gt; store.getters
+        : () =&gt; makeLocalGetters(store, namespace)
+    },
+    state: {
+      get: () =&gt; getNestedState(store.state, path)
+    }
+  })
+
+  return local
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072379568-3323" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br></div></div><p><code>makeLocalContext</code>接受三个参数</p> <ul><li><code>store</code> 代表的是 <code>Vuex</code> 的 <code>store</code></li> <li><code>namespace</code> 是当前模块的命名空间</li> <li><code>path</code> 是当前模块的路径</li></ul> <p>我们来分析具体实现逻辑</p> <ul><li>判断是否设置了 <code>namespace</code>，如果没有设置（也就是说 <code>noNamespace</code> 为 true），那么在 <code>local</code> 中的 <code>dispatch</code> 和 <code>commit</code> 方法就直接使用 <code>store</code> 的 <code>dispatch</code> 和 <code>commit</code> 方法。</li> <li>对于设置了 <code>namespace</code> 的情况，<code>dispatch</code> 和 <code>commit</code> 方法会增加一些额外的处理，例如判断 <code>action</code> 或 <code>mutation</code> 类型是否存在，如果不存在则会在开发环境下抛出警告；同时会修改 <code>type</code>，将其转成 &quot;<code>namespace/type</code>&quot; 的格式。</li> <li>对于 <code>getters</code> 和 <code>state</code> 来说，需要通过 <code>Object.defineProperties</code> 来定义，因为 <code>getters</code> 和 <code>state</code> 可能会随着 <code>vm</code> 的更新而改变，所以需要用 <code>getter</code> 方法来获取最新的值。</li> <li><code>getNestedState</code> 方法用来从 <code>store</code> 的 <code>state</code> 中获取指定路径的 <code>state</code>，<code>makeLocalGetters</code> 方法用来处理带命名空间的 <code>getters</code>。</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vuex3/store/initModules.html" class="prev">
+        初始化 Modules
+      </a></span> <span class="next"><a href="/vuex3/store/initVm.html">
+        初始化 store._vm
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ad45bba7.js" defer></script><script src="/assets/js/2.88c18509.js" defer></script><script src="/assets/js/1.d4c099ff.js" defer></script><script src="/assets/js/108.137e241f.js" defer></script>
+  </body>
+</html>

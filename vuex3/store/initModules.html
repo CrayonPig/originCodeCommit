@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>初始化 Modules | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.96eb8417.css" as="style"><link rel="preload" href="/assets/js/app.ad45bba7.js" as="script"><link rel="preload" href="/assets/js/2.88c18509.js" as="script"><link rel="preload" href="/assets/js/1.d4c099ff.js" as="script"><link rel="preload" href="/assets/js/106.b8668ee8.js" as="script"><link rel="prefetch" href="/assets/js/10.b14aa6d6.js"><link rel="prefetch" href="/assets/js/100.384bb5a2.js"><link rel="prefetch" href="/assets/js/101.847afdb2.js"><link rel="prefetch" href="/assets/js/102.b3e8a11a.js"><link rel="prefetch" href="/assets/js/103.43b25d15.js"><link rel="prefetch" href="/assets/js/104.b01fed07.js"><link rel="prefetch" href="/assets/js/105.ae01672f.js"><link rel="prefetch" href="/assets/js/107.3799ee34.js"><link rel="prefetch" href="/assets/js/108.137e241f.js"><link rel="prefetch" href="/assets/js/109.e53fbf31.js"><link rel="prefetch" href="/assets/js/11.9fe1d85e.js"><link rel="prefetch" href="/assets/js/12.86508e15.js"><link rel="prefetch" href="/assets/js/13.5e8d6dfb.js"><link rel="prefetch" href="/assets/js/14.4a65991d.js"><link rel="prefetch" href="/assets/js/15.42e542bb.js"><link rel="prefetch" href="/assets/js/16.42d8df26.js"><link rel="prefetch" href="/assets/js/17.11d996a2.js"><link rel="prefetch" href="/assets/js/18.6f8f0eec.js"><link rel="prefetch" href="/assets/js/19.67e71589.js"><link rel="prefetch" href="/assets/js/20.9f10fe7c.js"><link rel="prefetch" href="/assets/js/21.cfab977f.js"><link rel="prefetch" href="/assets/js/22.ba4edf56.js"><link rel="prefetch" href="/assets/js/23.f26baabe.js"><link rel="prefetch" href="/assets/js/24.7ae18356.js"><link rel="prefetch" href="/assets/js/25.e01ec063.js"><link rel="prefetch" href="/assets/js/26.7cdd8c9a.js"><link rel="prefetch" href="/assets/js/27.ce419d8c.js"><link rel="prefetch" href="/assets/js/28.484c785d.js"><link rel="prefetch" href="/assets/js/29.3a7d9fe2.js"><link rel="prefetch" href="/assets/js/3.47d5fbb2.js"><link rel="prefetch" href="/assets/js/30.024eee10.js"><link rel="prefetch" href="/assets/js/31.93ff7f25.js"><link rel="prefetch" href="/assets/js/32.ca90a8d0.js"><link rel="prefetch" href="/assets/js/33.ed19e5d5.js"><link rel="prefetch" href="/assets/js/34.20cde001.js"><link rel="prefetch" href="/assets/js/35.a1c6adf9.js"><link rel="prefetch" href="/assets/js/36.df27c6a3.js"><link rel="prefetch" href="/assets/js/37.f8a74b76.js"><link rel="prefetch" href="/assets/js/38.3fee0ddb.js"><link rel="prefetch" href="/assets/js/39.ca93401f.js"><link rel="prefetch" href="/assets/js/4.37747ac1.js"><link rel="prefetch" href="/assets/js/40.fb1427a3.js"><link rel="prefetch" href="/assets/js/41.a629b97c.js"><link rel="prefetch" href="/assets/js/42.031d2e81.js"><link rel="prefetch" href="/assets/js/43.cfe57f9e.js"><link rel="prefetch" href="/assets/js/44.fc25e371.js"><link rel="prefetch" href="/assets/js/45.4c47be0f.js"><link rel="prefetch" href="/assets/js/46.64d5259b.js"><link rel="prefetch" href="/assets/js/47.938152f8.js"><link rel="prefetch" href="/assets/js/48.1abf06e3.js"><link rel="prefetch" href="/assets/js/49.2b84fafb.js"><link rel="prefetch" href="/assets/js/5.094ae013.js"><link rel="prefetch" href="/assets/js/50.d83cd640.js"><link rel="prefetch" href="/assets/js/51.a30556f2.js"><link rel="prefetch" href="/assets/js/52.b42046e8.js"><link rel="prefetch" href="/assets/js/53.98b33a01.js"><link rel="prefetch" href="/assets/js/54.a612244c.js"><link rel="prefetch" href="/assets/js/55.5057305c.js"><link rel="prefetch" href="/assets/js/56.375f57cf.js"><link rel="prefetch" href="/assets/js/57.5a4ad6fb.js"><link rel="prefetch" href="/assets/js/58.cf69df1a.js"><link rel="prefetch" href="/assets/js/59.0851bc24.js"><link rel="prefetch" href="/assets/js/6.77b934eb.js"><link rel="prefetch" href="/assets/js/60.436b72f1.js"><link rel="prefetch" href="/assets/js/61.a3dc0623.js"><link rel="prefetch" href="/assets/js/62.749b4001.js"><link rel="prefetch" href="/assets/js/63.ba696df8.js"><link rel="prefetch" href="/assets/js/64.6a7ca077.js"><link rel="prefetch" href="/assets/js/65.0223fcbe.js"><link rel="prefetch" href="/assets/js/66.caddbe17.js"><link rel="prefetch" href="/assets/js/67.cee72085.js"><link rel="prefetch" href="/assets/js/68.fef9855a.js"><link rel="prefetch" href="/assets/js/69.229e5692.js"><link rel="prefetch" href="/assets/js/7.b4d7955c.js"><link rel="prefetch" href="/assets/js/70.5abd8689.js"><link rel="prefetch" href="/assets/js/71.0dcd8fd1.js"><link rel="prefetch" href="/assets/js/72.957e582f.js"><link rel="prefetch" href="/assets/js/73.53010eaa.js"><link rel="prefetch" href="/assets/js/74.8c1da4c8.js"><link rel="prefetch" href="/assets/js/75.f04230ec.js"><link rel="prefetch" href="/assets/js/76.d2703b1c.js"><link rel="prefetch" href="/assets/js/77.2165d323.js"><link rel="prefetch" href="/assets/js/78.b04e21ef.js"><link rel="prefetch" href="/assets/js/79.4c3bb0cd.js"><link rel="prefetch" href="/assets/js/80.57e23007.js"><link rel="prefetch" href="/assets/js/81.5f99913f.js"><link rel="prefetch" href="/assets/js/82.88cab2d7.js"><link rel="prefetch" href="/assets/js/83.6c5b465d.js"><link rel="prefetch" href="/assets/js/84.6decfc1a.js"><link rel="prefetch" href="/assets/js/85.689eea85.js"><link rel="prefetch" href="/assets/js/86.91c5efea.js"><link rel="prefetch" href="/assets/js/87.d1542d66.js"><link rel="prefetch" href="/assets/js/88.d1cfa4fa.js"><link rel="prefetch" href="/assets/js/89.2a8b815f.js"><link rel="prefetch" href="/assets/js/90.0080728b.js"><link rel="prefetch" href="/assets/js/91.b89991ae.js"><link rel="prefetch" href="/assets/js/92.abb562ca.js"><link rel="prefetch" href="/assets/js/93.3d397546.js"><link rel="prefetch" href="/assets/js/94.999bdd0b.js"><link rel="prefetch" href="/assets/js/95.2b144aab.js"><link rel="prefetch" href="/assets/js/96.cdc932da.js"><link rel="prefetch" href="/assets/js/97.90243ed2.js"><link rel="prefetch" href="/assets/js/98.f2329543.js"><link rel="prefetch" href="/assets/js/99.dc53bab0.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.68b347c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.96eb8417.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vuex3/" aria-current="page" class="sidebar-link">VueX V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vuex3/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vuex3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>初始化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/init/" class="sidebar-link">前言</a></li><li><a href="/vuex3/init/install.html" class="sidebar-link">安装</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Store 实例化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/store/" aria-current="page" class="sidebar-link">前言</a></li><li><a href="/vuex3/store/initModules.html" aria-current="page" class="active sidebar-link">初始化 Modules</a></li><li><a href="/vuex3/store/installModules.html" class="sidebar-link">安装 Modules</a></li><li><a href="/vuex3/store/initVm.html" class="sidebar-link">初始化 store._vm</a></li><li><a href="/vuex3/store/summary.html" class="sidebar-link">总结</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="初始化-modules"><a href="#初始化-modules" class="header-anchor">#</a> 初始化 Modules</h1> <p>我们先了解下<code>modules</code>的定义：</p> <p>由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，<code>store</code> 对象就有可能变得相当臃肿。</p> <p>为了解决以上问题，Vuex 允许我们将 <code>store</code> 分割成模块（module）。每个模块拥有自己的 <code>state</code>、<code>mutation</code>、<code>action</code>、<code>getter</code>、甚至是嵌套子模块——从上至下进行同样方式的分割：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> moduleA <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">state</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> moduleB <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">state</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">modules</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">a</span><span class="token operator">:</span> moduleA<span class="token punctuation">,</span>
+    <span class="token literal-property property">b</span><span class="token operator">:</span> moduleB
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>a <span class="token comment">// -&gt; moduleA 的状态</span>
+store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>b <span class="token comment">// -&gt; moduleB 的状态</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072400278-47186">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const moduleA = {
+  state: () =&gt; ({ ... }),
+  mutations: { ... },
+  actions: { ... },
+  getters: { ... }
+}
+
+const moduleB = {
+  state: () =&gt; ({ ... }),
+  mutations: { ... },
+  actions: { ... }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
+  }
+})
+
+store.state.a // -&gt; moduleA 的状态
+store.state.b // -&gt; moduleB 的状态
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072400278-47186" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div><p>从上述描述中，我们可以发现，<code>modules</code>的设计实际上就是一个树形结构，<code>store</code> 本身就是一个根节点，可以视作<code>root module</code>，它下面的 <code>modules</code> 就是子模块，Vuex 需要完成这颗树的构建，构建过程的入口就是：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/store.js</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>_modules <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ModuleCollection</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072400278-42731">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/store.js
+this._modules = new ModuleCollection(options)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072400278-42731" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><code>ModuleCollection</code> 的定义在 <code>src/module/module-collection.js</code> 中：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">ModuleCollection</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span> <span class="token punctuation">(</span><span class="token parameter">rawRootModule</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 注册根模块（对应 Vuex.Store 的选项）</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> rawRootModule<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 根据路径获取模块</span>
+  <span class="token function">get</span> <span class="token punctuation">(</span>path<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> path<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> module<span class="token punctuation">.</span><span class="token function">getChild</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 根据路径获取模块的命名空间</span>
+  <span class="token function">getNamespace</span> <span class="token punctuation">(</span><span class="token parameter">path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> module <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">return</span> path<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      module <span class="token operator">=</span> module<span class="token punctuation">.</span><span class="token function">getChild</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> namespace <span class="token operator">+</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>namespaced <span class="token operator">?</span> key <span class="token operator">+</span> <span class="token string">'/'</span> <span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 更新根模块</span>
+  <span class="token function">update</span> <span class="token punctuation">(</span><span class="token parameter">rawRootModule</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> rawRootModule<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 注册模块</span>
+  <span class="token function">register</span> <span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> rawModule<span class="token punctuation">,</span> runtime <span class="token operator">=</span> <span class="token boolean">true</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">assertRawModule</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> rawModule<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> newModule <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Module</span><span class="token punctuation">(</span>rawModule<span class="token punctuation">,</span> runtime<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>path<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> newModule
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> parent <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      parent<span class="token punctuation">.</span><span class="token function">addChild</span><span class="token punctuation">(</span>path<span class="token punctuation">[</span>path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> newModule<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 注册嵌套模块</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rawModule<span class="token punctuation">.</span>modules<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">forEachValue</span><span class="token punctuation">(</span>rawModule<span class="token punctuation">.</span>modules<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">rawChildModule<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> rawChildModule<span class="token punctuation">,</span> runtime<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 取消注册模块</span>
+  <span class="token function">unregister</span> <span class="token punctuation">(</span><span class="token parameter">path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> parent <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> key <span class="token operator">=</span> path<span class="token punctuation">[</span>path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> child <span class="token operator">=</span> parent<span class="token punctuation">.</span><span class="token function">getChild</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>child<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] trying to unregister module '</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>key<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">', which is </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">not registered</span><span class="token template-punctuation string">`</span></span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>child<span class="token punctuation">.</span>runtime<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    parent<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 检查模块是否已注册</span>
+  <span class="token function">isRegistered</span> <span class="token punctuation">(</span><span class="token parameter">path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> parent <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> key <span class="token operator">=</span> path<span class="token punctuation">[</span>path<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>parent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> parent<span class="token punctuation">.</span><span class="token function">hasChild</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072400278-83804">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export default class ModuleCollection {
+  constructor (rawRootModule) {
+    // 注册根模块（对应 Vuex.Store 的选项）
+    this.register([], rawRootModule, false)
+  }
+
+  // 根据路径获取模块
+  get (path) {
+    return path.reduce((module, key) =&gt; {
+      return module.getChild(key)
+    }, this.root)
+  }
+
+  // 根据路径获取模块的命名空间
+  getNamespace (path) {
+    let module = this.root
+    return path.reduce((namespace, key) =&gt; {
+      module = module.getChild(key)
+      return namespace + (module.namespaced ? key + '/' : '')
+    }, '')
+  }
+
+  // 更新根模块
+  update (rawRootModule) {
+    update([], this.root, rawRootModule)
+  }
+
+  // 注册模块
+  register (path, rawModule, runtime = true) {
+    if (__DEV__) {
+      assertRawModule(path, rawModule)
+    }
+
+    const newModule = new Module(rawModule, runtime)
+    if (path.length === 0) {
+      this.root = newModule
+    } else {
+      const parent = this.get(path.slice(0, -1))
+      parent.addChild(path[path.length - 1], newModule)
+    }
+
+    // 注册嵌套模块
+    if (rawModule.modules) {
+      forEachValue(rawModule.modules, (rawChildModule, key) =&gt; {
+        this.register(path.concat(key), rawChildModule, runtime)
+      })
+    }
+  }
+
+  // 取消注册模块
+  unregister (path) {
+    const parent = this.get(path.slice(0, -1))
+    const key = path[path.length - 1]
+    const child = parent.getChild(key)
+
+    if (!child) {
+      if (__DEV__) {
+        console.warn(
+          `[vuex] trying to unregister module '${key}', which is ` +
+          `not registered`
+        )
+      }
+      return
+    }
+
+    if (!child.runtime) {
+      return
+    }
+
+    parent.removeChild(key)
+  }
+
+  // 检查模块是否已注册
+  isRegistered (path) {
+    const parent = this.get(path.slice(0, -1))
+    const key = path[path.length - 1]
+
+    if (parent) {
+      return parent.hasChild(key)
+    }
+
+    return false
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072400278-83804" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br></div></div><p>从上述代码中可以看出<code>ModuleCollection</code>的实例化的过程就是递归调用<code>register</code>的过程。</p> <p><code>register</code> 方法接受三个参数：<code>path</code>、<code>rawModule</code> 和 <code>runtime</code>。</p> <ul><li><code>path</code> 是一个数组，表示模块在状态树中的路径。</li> <li><code>rawModule</code> 是一个原始的模块对象，包含了模块的状态、<code>mutations</code>、<code>actions</code> 等信息。</li> <li><code>runtime</code> 是一个布尔值，默认为 <code>true</code>，表示是否在运行时注册模块。</li></ul> <p><code>register</code> 通过 <code>new Module(rawModule, runtime)</code> 创建一个新的模块实例 <code>newModule</code></p> <p>我们接下来先去看<code>Module</code>类的定义</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// src/module/module.js</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> forEachValue <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../util'</span>
+
+<span class="token comment">// Base data struct for store's module, package with some attribute and method</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">Module</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span> <span class="token punctuation">(</span><span class="token parameter">rawModule<span class="token punctuation">,</span> runtime</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>runtime <span class="token operator">=</span> runtime
+    <span class="token comment">// 存储子模块的容器</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_children <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+    <span class="token comment">// 存储传入的程序员定义的原始模块对象</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule <span class="token operator">=</span> rawModule
+    <span class="token keyword">const</span> rawState <span class="token operator">=</span> rawModule<span class="token punctuation">.</span>state
+
+    <span class="token comment">// 存储原始模块的状态</span>
+    <span class="token comment">// 如果原始模块的 state 是一个函数，则调用该函数以获取初始状态，否则使用 state 的值或者一个空对象</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> rawState <span class="token operator">===</span> <span class="token string">'function'</span> <span class="token operator">?</span> <span class="token function">rawState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> rawState<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 获取是否启用命名空间</span>
+  <span class="token keyword">get</span> <span class="token function">namespaced</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>namespaced
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 添加子模块</span>
+  <span class="token function">addChild</span> <span class="token punctuation">(</span><span class="token parameter">key<span class="token punctuation">,</span> module</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_children<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> module
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 移除指定子模块</span>
+  <span class="token function">removeChild</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">delete</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_children<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 获取指定子模块</span>
+  <span class="token function">getChild</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_children<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 检查是否存在指定子模块</span>
+  <span class="token function">hasChild</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> key <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_children
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 更新模块的信息</span>
+  <span class="token function">update</span> <span class="token punctuation">(</span><span class="token parameter">rawModule</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>namespaced <span class="token operator">=</span> rawModule<span class="token punctuation">.</span>namespaced
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rawModule<span class="token punctuation">.</span>actions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>actions <span class="token operator">=</span> rawModule<span class="token punctuation">.</span>actions
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rawModule<span class="token punctuation">.</span>mutations<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>mutations <span class="token operator">=</span> rawModule<span class="token punctuation">.</span>mutations
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rawModule<span class="token punctuation">.</span>getters<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>getters <span class="token operator">=</span> rawModule<span class="token punctuation">.</span>getters
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 遍历子模块，对每个子模块执行指定的回调函数</span>
+  <span class="token function">forEachChild</span> <span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">forEachValue</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_children<span class="token punctuation">,</span> fn<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 遍历 getters，对每个 getter 执行指定的回调函数</span>
+  <span class="token function">forEachGetter</span> <span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>getters<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">forEachValue</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>getters<span class="token punctuation">,</span> fn<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 遍历 actions，对每个 action 执行指定的回调函数</span>
+  <span class="token function">forEachAction</span> <span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>actions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">forEachValue</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>actions<span class="token punctuation">,</span> fn<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 遍历 mutations，对每个 mutation 执行指定的回调函数</span>
+  <span class="token function">forEachMutation</span> <span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>mutations<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">forEachValue</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_rawModule<span class="token punctuation">.</span>mutations<span class="token punctuation">,</span> fn<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701072400282-8162">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// src/module/module.js
+import { forEachValue } from '../util'
+
+// Base data struct for store's module, package with some attribute and method
+export default class Module {
+  constructor (rawModule, runtime) {
+    this.runtime = runtime
+    // 存储子模块的容器
+    this._children = Object.create(null)
+    // 存储传入的程序员定义的原始模块对象
+    this._rawModule = rawModule
+    const rawState = rawModule.state
+
+    // 存储原始模块的状态
+    // 如果原始模块的 state 是一个函数，则调用该函数以获取初始状态，否则使用 state 的值或者一个空对象
+    this.state = (typeof rawState === 'function' ? rawState() : rawState) || {}
+  }
+
+  // 获取是否启用命名空间
+  get namespaced () {
+    return !!this._rawModule.namespaced
+  }
+
+  // 添加子模块
+  addChild (key, module) {
+    this._children[key] = module
+  }
+
+  // 移除指定子模块
+  removeChild (key) {
+    delete this._children[key]
+  }
+
+  // 获取指定子模块
+  getChild (key) {
+    return this._children[key]
+  }
+
+  // 检查是否存在指定子模块
+  hasChild (key) {
+    return key in this._children
+  }
+
+  // 更新模块的信息
+  update (rawModule) {
+    this._rawModule.namespaced = rawModule.namespaced
+    if (rawModule.actions) {
+      this._rawModule.actions = rawModule.actions
+    }
+    if (rawModule.mutations) {
+      this._rawModule.mutations = rawModule.mutations
+    }
+    if (rawModule.getters) {
+      this._rawModule.getters = rawModule.getters
+    }
+  }
+
+  // 遍历子模块，对每个子模块执行指定的回调函数
+  forEachChild (fn) {
+    forEachValue(this._children, fn)
+  }
+
+  // 遍历 getters，对每个 getter 执行指定的回调函数
+  forEachGetter (fn) {
+    if (this._rawModule.getters) {
+      forEachValue(this._rawModule.getters, fn)
+    }
+  }
+
+  // 遍历 actions，对每个 action 执行指定的回调函数
+  forEachAction (fn) {
+    if (this._rawModule.actions) {
+      forEachValue(this._rawModule.actions, fn)
+    }
+  }
+
+  // 遍历 mutations，对每个 mutation 执行指定的回调函数
+  forEachMutation (fn) {
+    if (this._rawModule.mutations) {
+      forEachValue(this._rawModule.mutations, fn)
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701072400282-8162" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br></div></div><p><code>Module</code> 类是用于表示 Vuex 模块的基础数据结构，其实例包含了模块的状态、<code>mutations</code>、<code>actions</code>、<code>getters</code>等信息。</p> <p>在 <code>Module</code>的构造函数中， <code>constructor(rawModule, runtime)</code>接受两个参数，<code>rawModule</code> 是程序员定义的原始模块对象，<code>runtime</code> 是一个布尔值，表示是否在运行时创建模块。</p> <p>由此可见创建一个新的模块实例时，会初始化一些属性：</p> <ul><li><code>this.runtime</code>：存储是否是运行时创建的标志。</li> <li><code>this._children</code>：一个对象，用于存储子模块。</li> <li><code>this._rawModule</code>：存储传入的程序员定义的原始模块对象。</li> <li><code>this.state</code>：存储原始模块的状态。如果原始模块的 state 是一个函数，则调用该函数以获取初始状态，否则使用 state 的值或者一个空对象。</li></ul> <p>然后，<code>Module</code> 类还提供了一些方法，如 <code>addChild</code>、<code>getChild</code>、<code>hasChild</code>、<code>update</code>、<code>forEachChild</code>、<code>forEachGetter</code>、<code>forEachAction</code>、<code>forEachMutation</code>，用于操作模块的子模块、获取子模块、检查是否存在子模块、更新模块的信息、遍历子模块、遍历 <code>getters</code>、遍历 <code>actions</code>、遍历 <code>mutations</code>。</p> <p>此时再回到<code>register</code> 方法，我们可以梳理出逻辑如下：</p> <ol><li><p>通过 <code>new Module(rawModule, runtime)</code> 创建一个新的模块实例 <code>newModule</code>，该实例包含了模块的各种信息。</p></li> <li><p>如果 <code>path.length === 0</code>，说明是根模块，将 <code>this.root</code> 设置为新创建的模块实例，否则将新模块添加为父模块的子模块。</p></li> <li><p>接下来，如果 <code>rawModule.modules</code> 存在，表示该模块包含嵌套模块，通过 <code>forEachValue</code> 遍历 <code>rawModule.modules</code>，递归调用 <code>this.register</code> 方法注册嵌套模块。这样可以实现模块的嵌套注册，构建起完整的模块树。</p></li></ol></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vuex3/store/" class="prev router-link-active">
+        前言
+      </a></span> <span class="next"><a href="/vuex3/store/installModules.html">
+        安装 Modules
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ad45bba7.js" defer></script><script src="/assets/js/2.88c18509.js" defer></script><script src="/assets/js/1.d4c099ff.js" defer></script><script src="/assets/js/106.b8668ee8.js" defer></script>
+  </body>
+</html>
