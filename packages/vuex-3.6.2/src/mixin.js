@@ -1,6 +1,6 @@
 export default function (Vue) {
   const version = Number(Vue.version.split('.')[0])
-
+  // 根据Vue版本来决定使用哪种方法来初始化Vuex
   if (version >= 2) {
     Vue.mixin({ beforeCreate: vuexInit })
   } else {

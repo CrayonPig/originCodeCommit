@@ -7,3 +7,5 @@
 3. `index.cjs.js`：这是一个使用CommonJS模块规范（CJS）的JavaScript文件。它使用`require()`和`module.exports`语句来引入和导出模块。`index.cjs.js`文件通常用于支持使用CJS的旧版浏览器或Node.js环境。
 
 `VueX`的源码中包含这三种文件类型是为了支持不同的模块规范和兼容不同的环境。通常情况下，开发者可以根据自己的项目需求选择使用哪种文件类型。在支持ESM的环境中，可以使用`index.mjs`；在支持CJS的环境中，可以使用`index.js`或`index.cjs.js`。
+
+我们分析源码，从`index.js`开始即可
