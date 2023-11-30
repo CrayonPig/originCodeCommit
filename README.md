@@ -4,9 +4,13 @@
 
 ## 进度
 
-- [ ] vue2(v2.5.17-beta.0)
-- [ ] vue3
-- [ ] react
-- [ ] webpack5
-- [ ] rollup
-- [ ] vite
+- [x] Vue 2(v2.5.17-beta.0)
+- [x] Vue Router 3(V3.6.5)
+- [x] VueX 3(V3.6.2)
+- [ ] Vue3
+- [ ] Pinia
+- [ ] Vue Router 4
+- [ ] React
+- [ ] Webpack5
+- [ ] Rollup
+- [ ] Vite
