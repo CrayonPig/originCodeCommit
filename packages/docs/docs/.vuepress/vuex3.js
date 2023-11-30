@@ -29,5 +29,15 @@ module.exports = {
         '/vuex3/store/summary',
       ]
     },
+    {
+      title: 'API',
+      collapsable: false, // 可选的, 默认值是 true,
+      children: [
+        '/vuex3/api/getter',
+        '/vuex3/api/setter',
+        '/vuex3/api/sugar',
+        '/vuex3/api/register',
+      ]
+    },
   ]
 }
