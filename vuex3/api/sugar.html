@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>语法糖 | 前端源码解读</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="前端源码解读文档;使用过程中如碰到问题，请到Github进行提问。 https://github.com/CrayonPig/originCodeCommit">
+    
+    <link rel="preload" href="/assets/css/0.styles.96eb8417.css" as="style"><link rel="preload" href="/assets/js/app.c199dbed.js" as="script"><link rel="preload" href="/assets/js/2.88c18509.js" as="script"><link rel="preload" href="/assets/js/1.d4c099ff.js" as="script"><link rel="preload" href="/assets/js/102.37424022.js" as="script"><link rel="prefetch" href="/assets/js/10.b14aa6d6.js"><link rel="prefetch" href="/assets/js/100.054a4a37.js"><link rel="prefetch" href="/assets/js/101.ff8fc4a5.js"><link rel="prefetch" href="/assets/js/103.aad9f925.js"><link rel="prefetch" href="/assets/js/104.01a8f172.js"><link rel="prefetch" href="/assets/js/105.29677286.js"><link rel="prefetch" href="/assets/js/106.ecaa16a4.js"><link rel="prefetch" href="/assets/js/107.ce33c9b0.js"><link rel="prefetch" href="/assets/js/108.afe9f7c8.js"><link rel="prefetch" href="/assets/js/109.925646b3.js"><link rel="prefetch" href="/assets/js/11.9fe1d85e.js"><link rel="prefetch" href="/assets/js/110.9a51af53.js"><link rel="prefetch" href="/assets/js/111.4aa863a0.js"><link rel="prefetch" href="/assets/js/112.eef41de1.js"><link rel="prefetch" href="/assets/js/113.5859888c.js"><link rel="prefetch" href="/assets/js/12.86508e15.js"><link rel="prefetch" href="/assets/js/13.42d4ce40.js"><link rel="prefetch" href="/assets/js/14.4a65991d.js"><link rel="prefetch" href="/assets/js/15.42e542bb.js"><link rel="prefetch" href="/assets/js/16.42d8df26.js"><link rel="prefetch" href="/assets/js/17.11d996a2.js"><link rel="prefetch" href="/assets/js/18.6f8f0eec.js"><link rel="prefetch" href="/assets/js/19.67e71589.js"><link rel="prefetch" href="/assets/js/20.9f10fe7c.js"><link rel="prefetch" href="/assets/js/21.d213022b.js"><link rel="prefetch" href="/assets/js/22.ba4edf56.js"><link rel="prefetch" href="/assets/js/23.f26baabe.js"><link rel="prefetch" href="/assets/js/24.e2e5cd6f.js"><link rel="prefetch" href="/assets/js/25.c42b7ccf.js"><link rel="prefetch" href="/assets/js/26.d9b17c9a.js"><link rel="prefetch" href="/assets/js/27.ce419d8c.js"><link rel="prefetch" href="/assets/js/28.a954d322.js"><link rel="prefetch" href="/assets/js/29.f9c38081.js"><link rel="prefetch" href="/assets/js/3.47d5fbb2.js"><link rel="prefetch" href="/assets/js/30.a7cd6aaf.js"><link rel="prefetch" href="/assets/js/31.1b0f879a.js"><link rel="prefetch" href="/assets/js/32.e300cfc1.js"><link rel="prefetch" href="/assets/js/33.acf13a75.js"><link rel="prefetch" href="/assets/js/34.d3076d25.js"><link rel="prefetch" href="/assets/js/35.a1c6adf9.js"><link rel="prefetch" href="/assets/js/36.e3371746.js"><link rel="prefetch" href="/assets/js/37.b62b4c5d.js"><link rel="prefetch" href="/assets/js/38.3fee0ddb.js"><link rel="prefetch" href="/assets/js/39.b768530c.js"><link rel="prefetch" href="/assets/js/4.37747ac1.js"><link rel="prefetch" href="/assets/js/40.a247a954.js"><link rel="prefetch" href="/assets/js/41.a629b97c.js"><link rel="prefetch" href="/assets/js/42.ad3e043a.js"><link rel="prefetch" href="/assets/js/43.d93d9a96.js"><link rel="prefetch" href="/assets/js/44.3ee06b3f.js"><link rel="prefetch" href="/assets/js/45.7600cb5e.js"><link rel="prefetch" href="/assets/js/46.80738735.js"><link rel="prefetch" href="/assets/js/47.470b35b3.js"><link rel="prefetch" href="/assets/js/48.51681ade.js"><link rel="prefetch" href="/assets/js/49.9695ff85.js"><link rel="prefetch" href="/assets/js/5.094ae013.js"><link rel="prefetch" href="/assets/js/50.6a2c5487.js"><link rel="prefetch" href="/assets/js/51.de7255a7.js"><link rel="prefetch" href="/assets/js/52.d4915972.js"><link rel="prefetch" href="/assets/js/53.a17f4aae.js"><link rel="prefetch" href="/assets/js/54.cef1f369.js"><link rel="prefetch" href="/assets/js/55.3aa55a6b.js"><link rel="prefetch" href="/assets/js/56.375f57cf.js"><link rel="prefetch" href="/assets/js/57.1e36d84f.js"><link rel="prefetch" href="/assets/js/58.5040173b.js"><link rel="prefetch" href="/assets/js/59.4a1b29b2.js"><link rel="prefetch" href="/assets/js/6.77b934eb.js"><link rel="prefetch" href="/assets/js/60.5b5bfa74.js"><link rel="prefetch" href="/assets/js/61.845f14b3.js"><link rel="prefetch" href="/assets/js/62.8ef6cbff.js"><link rel="prefetch" href="/assets/js/63.ba696df8.js"><link rel="prefetch" href="/assets/js/64.f81e6db4.js"><link rel="prefetch" href="/assets/js/65.47025f5f.js"><link rel="prefetch" href="/assets/js/66.2c929198.js"><link rel="prefetch" href="/assets/js/67.6edb8e3d.js"><link rel="prefetch" href="/assets/js/68.21d955dd.js"><link rel="prefetch" href="/assets/js/69.b2b53103.js"><link rel="prefetch" href="/assets/js/7.b4d7955c.js"><link rel="prefetch" href="/assets/js/70.5a57575c.js"><link rel="prefetch" href="/assets/js/71.f876db72.js"><link rel="prefetch" href="/assets/js/72.e92c735b.js"><link rel="prefetch" href="/assets/js/73.9648156b.js"><link rel="prefetch" href="/assets/js/74.abced320.js"><link rel="prefetch" href="/assets/js/75.899f1b81.js"><link rel="prefetch" href="/assets/js/76.d2703b1c.js"><link rel="prefetch" href="/assets/js/77.b694f4b1.js"><link rel="prefetch" href="/assets/js/78.0453545d.js"><link rel="prefetch" href="/assets/js/79.9edd50c6.js"><link rel="prefetch" href="/assets/js/80.a438c3df.js"><link rel="prefetch" href="/assets/js/81.8687f8fe.js"><link rel="prefetch" href="/assets/js/82.59501886.js"><link rel="prefetch" href="/assets/js/83.626fad90.js"><link rel="prefetch" href="/assets/js/84.36059a11.js"><link rel="prefetch" href="/assets/js/85.d7e7fffd.js"><link rel="prefetch" href="/assets/js/86.09520f2d.js"><link rel="prefetch" href="/assets/js/87.63060ddf.js"><link rel="prefetch" href="/assets/js/88.aa34029d.js"><link rel="prefetch" href="/assets/js/89.503c5b6e.js"><link rel="prefetch" href="/assets/js/90.4d685109.js"><link rel="prefetch" href="/assets/js/91.30933056.js"><link rel="prefetch" href="/assets/js/92.a2032b76.js"><link rel="prefetch" href="/assets/js/93.457ab1f4.js"><link rel="prefetch" href="/assets/js/94.82bef862.js"><link rel="prefetch" href="/assets/js/95.450b6ef5.js"><link rel="prefetch" href="/assets/js/96.c35280a9.js"><link rel="prefetch" href="/assets/js/97.2b795017.js"><link rel="prefetch" href="/assets/js/98.5db22879.js"><link rel="prefetch" href="/assets/js/99.d5c30a85.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.68b347c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.96eb8417.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">前端源码解读</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue2/" class="nav-link">
+  Vue2
+</a></div><div class="nav-item"><a href="/vueRouter3/" class="nav-link">
+  Vue Route V3
+</a></div><div class="nav-item"><a href="/vuex3/" class="nav-link router-link-active">
+  VueX V3
+</a></div><div class="nav-item"><a href="https://github.com/CrayonPig/originCodeCommit" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vuex3/" aria-current="page" class="sidebar-link">VueX V3 源码解析</a></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>准备工作</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/prepare/directory.html" class="sidebar-link">目录结构</a></li><li><a href="/vuex3/prepare/build.html" class="sidebar-link">源码构建</a></li><li><a href="/vuex3/prepare/entry.html" class="sidebar-link">源码入口</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>初始化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/init/" class="sidebar-link">前言</a></li><li><a href="/vuex3/init/install.html" class="sidebar-link">安装</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Store 实例化</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/store/" class="sidebar-link">前言</a></li><li><a href="/vuex3/store/initModules.html" class="sidebar-link">初始化 Modules</a></li><li><a href="/vuex3/store/installModules.html" class="sidebar-link">安装 Modules</a></li><li><a href="/vuex3/store/initVm.html" class="sidebar-link">初始化 store._vm</a></li><li><a href="/vuex3/store/summary.html" class="sidebar-link">总结</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>API</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuex3/api/getter.html" class="sidebar-link">数据获取</a></li><li><a href="/vuex3/api/setter.html" class="sidebar-link">数据存储</a></li><li><a href="/vuex3/api/sugar.html" aria-current="page" class="active sidebar-link">语法糖</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vuex3/api/sugar.html#mapstate" class="sidebar-link">mapState</a></li><li class="sidebar-sub-header"><a href="/vuex3/api/sugar.html#mapgetters" class="sidebar-link">mapGetters</a></li><li class="sidebar-sub-header"><a href="/vuex3/api/sugar.html#mapmutations" class="sidebar-link">mapMutations</a></li><li class="sidebar-sub-header"><a href="/vuex3/api/sugar.html#mapactions" class="sidebar-link">mapActions</a></li></ul></li><li><a href="/vuex3/api/register.html" class="sidebar-link">动态更新模块</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="语法糖"><a href="#语法糖" class="header-anchor">#</a> 语法糖</h1> <p>我们知道 <code>store</code> 是 <code>Store</code> 对象的一个实例，它是一个原生的 Javascript 对象，我们可以在任意地方使用它们。但大部分的使用场景还是在组件中使用，那么我们之前介绍过，在 Vuex 安装阶段，它会往每一个组件实例上混入 <code>beforeCreate</code> 钩子函数，然后往组件实例上添加一个 <code>$store</code> 的实例，它指向的就是我们实例化的 <code>store</code>，因此我们可以在组件中访问到 <code>store</code> 的任何属性和方法。</p> <p>比如我们在组件中访问 <code>state</code>：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">const</span> Counter <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;div&gt;{{ count }}&lt;/div&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">count</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>count
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780921-26690">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const Counter = {
+  template: `&lt;div&gt;{{ count }}&lt;/div&gt;`,
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780921-26690" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>但是当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余。同样这些问题也在存于 <code>getter</code>、<code>mutation</code> 和 <code>action</code>。</p> <p>为了解决这个问题，Vuex 提供了一系列 <code>mapXXX</code> 辅助函数帮助我们实现在组件中可以很方便的注入 <code>store</code> 的属性和方法。</p> <h2 id="mapstate"><a href="#mapstate" class="header-anchor">#</a> <code>mapState</code></h2> <p>我们先来看一下 <code>mapState</code> 的用法：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token comment">// 在单独构建的版本中辅助函数为 Vuex.mapState</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> mapState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token comment">// 箭头函数可使代码更简练</span>
+    <span class="token function-variable function">count</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>count<span class="token punctuation">,</span>
+
+    <span class="token comment">// 传字符串参数 'count' 等同于 `state =&gt; state.count`</span>
+    <span class="token literal-property property">countAlias</span><span class="token operator">:</span> <span class="token string">'count'</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// 为了能够使用 `this` 获取局部状态，必须使用常规函数</span>
+    <span class="token function">countPlusLocalState</span> <span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span>count <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>localCount
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-12160">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 在单独构建的版本中辅助函数为 Vuex.mapState
+import { mapState } from 'vuex'
+
+export default {
+  // ...
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    count: state =&gt; state.count,
+
+    // 传字符串参数 'count' 等同于 `state =&gt; state.count`
+    countAlias: 'count',
+
+    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  })
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-12160" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><p>再来看一下 <code>mapState</code> 方法的定义，在 <code>src/helpers.js</code> 中：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> mapState <span class="token operator">=</span> <span class="token function">normalizeNamespace</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> states</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">normalizeMap</span><span class="token punctuation">(</span>states<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> key<span class="token punctuation">,</span> val <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">mappedState</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> state <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>state
+      <span class="token keyword">let</span> getters <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>getters
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>namespace<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> module <span class="token operator">=</span> <span class="token function">getModuleByNamespace</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token string">'mapState'</span><span class="token punctuation">,</span> namespace<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>module<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+        state <span class="token operator">=</span> module<span class="token punctuation">.</span>context<span class="token punctuation">.</span>state
+        getters <span class="token operator">=</span> module<span class="token punctuation">.</span>context<span class="token punctuation">.</span>getters
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> <span class="token keyword">typeof</span> val <span class="token operator">===</span> <span class="token string">'function'</span>
+        <span class="token operator">?</span> <span class="token function">val</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> getters<span class="token punctuation">)</span>
+        <span class="token operator">:</span> state<span class="token punctuation">[</span>val<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// mark vuex getter for devtools</span>
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>vuex <span class="token operator">=</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> res
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> <span class="token function">normalizeNamespace</span> <span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> map</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> namespace <span class="token operator">!==</span> <span class="token string">'string'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      map <span class="token operator">=</span> namespace
+      namespace <span class="token operator">=</span> <span class="token string">''</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>namespace<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>namespace<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      namespace <span class="token operator">+=</span> <span class="token string">'/'</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">fn</span><span class="token punctuation">(</span>namespace<span class="token punctuation">,</span> map<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">normalizeMap</span> <span class="token punctuation">(</span><span class="token parameter">map</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span>
+    <span class="token operator">?</span> map<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> key<span class="token punctuation">,</span> <span class="token literal-property property">val</span><span class="token operator">:</span> key <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token operator">:</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> key<span class="token punctuation">,</span> <span class="token literal-property property">val</span><span class="token operator">:</span> map<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-53463">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export const mapState = normalizeNamespace((namespace, states) =&gt; {
+  const res = {}
+  normalizeMap(states).forEach(({ key, val }) =&gt; {
+    res[key] = function mappedState () {
+      let state = this.$store.state
+      let getters = this.$store.getters
+      if (namespace) {
+        const module = getModuleByNamespace(this.$store, 'mapState', namespace)
+        if (!module) {
+          return
+        }
+        state = module.context.state
+        getters = module.context.getters
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    }
+    // mark vuex getter for devtools
+    res[key].vuex = true
+  })
+  return res
+})
+
+function normalizeNamespace (fn) {
+  return (namespace, map) =&gt; {
+    if (typeof namespace !== 'string') {
+      map = namespace
+      namespace = ''
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/'
+    }
+    return fn(namespace, map)
+  }
+}
+
+function normalizeMap (map) {
+  return Array.isArray(map)
+    ? map.map(key =&gt; ({ key, val: key }))
+    : Object.keys(map).map(key =&gt; ({ key, val: map[key] }))
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-53463" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><p>首先 <code>mapState</code> 是通过执行 <code>normalizeNamespace</code> 返回的函数，它接收 2 个参数，其中 <code>namespace</code> 表示命名空间，<code>map</code> 表示具体的对象，<code>namespace</code> 可不传，稍后我们来介绍 <code>namespace</code> 的作用。</p> <p>当执行 <code>mapState(map)</code> 函数的时候，实际上就是执行 <code>normalizeNamespace</code> 包裹的函数，然后把 <code>map</code> 作为参数 <code>states</code> 传入。</p> <p><code>mapState</code> 最终是要构造一个对象，每个对象的元素都是一个方法，因为这个对象是要扩展到组件的 <code>computed</code> 计算属性中的。函数首先执行 <code>normalizeMap</code> 方法，把这个 <code>states</code> 变成一个数组，数组的每个元素都是 <code>{key, val}</code> 的形式。接着再遍历这个数组，以 <code>key</code> 作为对象的 <code>key</code>，值为一个 <code>mappedState</code> 的函数，在这个函数的内部，获取到 <code>$store.getters</code> 和 <code>$store.state</code>，然后再判断数组的 <code>val</code> 如果是一个函数，执行该函数，传入 <code>state</code> 和 <code>getters</code>，否则直接访问 <code>state[val]</code>。</p> <p>比起一个个手动声明计算属性，<code>mapState</code> 确实要方便许多，下面我们来看一下 <code>namespace</code> 的作用。</p> <p>当我们想访问一个子模块的 <code>state</code> 的时候，我们可能需要这样访问：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token function-variable function">a</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>some<span class="token punctuation">.</span>nested<span class="token punctuation">.</span>module<span class="token punctuation">.</span>a<span class="token punctuation">,</span>
+    <span class="token function-variable function">b</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>some<span class="token punctuation">.</span>nested<span class="token punctuation">.</span>module<span class="token punctuation">.</span>b
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-69215">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="computed: {
+  mapState({
+    a: state =&gt; state.some.nested.module.a,
+    b: state =&gt; state.some.nested.module.b
+  })
+},
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-69215" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>这样从写法上就很不友好，<code>mapState</code> 支持传入 <code>namespace</code>， 因此我们可以这么写：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token function">mapState</span><span class="token punctuation">(</span><span class="token string">'some/nested/module'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">a</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>a<span class="token punctuation">,</span>
+    <span class="token function-variable function">b</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>b
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-14132">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="computed: {
+  mapState('some/nested/module', {
+    a: state =&gt; state.a,
+    b: state =&gt; state.b
+  })
+},
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-14132" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>这样看起来就清爽许多。在 <code>mapState</code> 的实现中，如果有 <code>namespace</code>，则尝试去通过 <code>getModuleByNamespace(this.$store, 'mapState', namespace)</code> 对应的 <code>module</code>，然后把 <code>state</code> 和 <code>getters</code> 修改为 <code>module</code> 对应的 <code>state</code> 和 <code>getters</code>。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">getModuleByNamespace</span> <span class="token punctuation">(</span><span class="token parameter">store<span class="token punctuation">,</span> helper<span class="token punctuation">,</span> namespace</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> module <span class="token operator">=</span> store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>module<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] module namespace not found in </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>helper<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">(): </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>namespace<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> module
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-85211">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function getModuleByNamespace (store, helper, namespace) {
+  const module = store._modulesNamespaceMap[namespace]
+  if (process.env.NODE_ENV !== 'production' &amp;&amp; !module) {
+    console.error(`[vuex] module namespace not found in ${helper}(): ${namespace}`)
+  }
+  return module
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-85211" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>我们在 Vuex 初始化执行 <code>installModule</code> 的过程中，初始化了这个映射表：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">installModule</span> <span class="token punctuation">(</span><span class="token parameter">store<span class="token punctuation">,</span> rootState<span class="token punctuation">,</span> path<span class="token punctuation">,</span> module<span class="token punctuation">,</span> hot</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+  <span class="token keyword">const</span> namespace <span class="token operator">=</span> store<span class="token punctuation">.</span>_modules<span class="token punctuation">.</span><span class="token function">getNamespace</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+
+  <span class="token comment">// register in namespace map</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>module<span class="token punctuation">.</span>namespaced<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    store<span class="token punctuation">.</span>_modulesNamespaceMap<span class="token punctuation">[</span>namespace<span class="token punctuation">]</span> <span class="token operator">=</span> module
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780922-98980">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function installModule (store, rootState, path, module, hot) {
+  // ...
+  const namespace = store._modules.getNamespace(path)
+
+  // register in namespace map
+  if (module.namespaced) {
+    store._modulesNamespaceMap[namespace] = module
+  }
+
+  // ...
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780922-98980" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h2 id="mapgetters"><a href="#mapgetters" class="header-anchor">#</a> <code>mapGetters</code></h2> <p>我们先来看一下 <code>mapGetters</code> 的用法：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> mapGetters <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 使用对象展开运算符将 getter 混入 computed 对象中</span>
+    <span class="token function">mapGetters</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+      <span class="token string">'doneTodosCount'</span><span class="token punctuation">,</span>
+      <span class="token string">'anotherGetter'</span><span class="token punctuation">,</span>
+      <span class="token comment">// ...</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780923-10488">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="import { mapGetters } from 'vuex'
+
+export default {
+  // ...
+  computed: {
+    // 使用对象展开运算符将 getter 混入 computed 对象中
+    mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // ...
+    ])
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780923-10488" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>和 <code>mapState</code> 类似，<code>mapGetters</code> 是将 <code>store</code> 中的 <code>getter</code> 映射到局部计算属性，来看一下它的定义：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> mapGetters <span class="token operator">=</span> <span class="token function">normalizeNamespace</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> getters</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">normalizeMap</span><span class="token punctuation">(</span>getters<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> key<span class="token punctuation">,</span> val <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// thie namespace has been mutate by normalizeNamespace</span>
+    val <span class="token operator">=</span> namespace <span class="token operator">+</span> val
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">mappedGetter</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>namespace <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">getModuleByNamespace</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token string">'mapGetters'</span><span class="token punctuation">,</span> namespace<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>val <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[vuex] unknown getter: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>val<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">[</span>val<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// mark vuex getter for devtools</span>
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>vuex <span class="token operator">=</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> res
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780923-31942">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export const mapGetters = normalizeNamespace((namespace, getters) =&gt; {
+  const res = {}
+  normalizeMap(getters).forEach(({ key, val }) =&gt; {
+    // thie namespace has been mutate by normalizeNamespace
+    val = namespace + val
+    res[key] = function mappedGetter () {
+      if (namespace &amp;&amp; !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (process.env.NODE_ENV !== 'production' &amp;&amp; !(val in this.$store.getters)) {
+        console.error(`[vuex] unknown getter: ${val}`)
+        return
+      }
+      return this.$store.getters[val]
+    }
+    // mark vuex getter for devtools
+    res[key].vuex = true
+  })
+  return res
+})
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780923-31942" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p><code>mapGetters</code> 也同样支持 <code>namespace</code>，如果不写 <code>namespace</code> ，访问一个子 <code>module</code> 的属性需要写很长的 <code>key</code>，一旦我们使用了 <code>namespace</code>，就可以方便我们的书写，每个 <code>mappedGetter</code> 的实现实际上就是取 <code>this.$store.getters[val]</code>。</p> <h2 id="mapmutations"><a href="#mapmutations" class="header-anchor">#</a> <code>mapMutations</code></h2> <p>我们可以在组件中使用 <code>this.$store.commit('xxx')</code> 提交 <code>mutation</code>，或者使用 <code>mapMutations</code> 辅助函数将组件中的 <code>methods</code> 映射为 <code>store.commit</code> 的调用。</p> <p>我们先来看一下 <code>mapMutations</code> 的用法：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> mapMutations <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+  <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token function">mapMutations</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+      <span class="token string">'increment'</span><span class="token punctuation">,</span> <span class="token comment">// 将 `this.increment()` 映射为 `this.$store.commit('increment')`</span>
+
+      <span class="token comment">// `mapMutations` 也支持载荷：</span>
+      <span class="token string">'incrementBy'</span> <span class="token comment">// 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token operator">...</span><span class="token function">mapMutations</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">add</span><span class="token operator">:</span> <span class="token string">'increment'</span> <span class="token comment">// 将 `this.add()` 映射为 `this.$store.commit('increment')`</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780923-67123">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="import { mapMutations } from 'vuex'
+
+export default {
+  // ...
+  methods: {
+    ...mapMutations([
+      'increment', // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
+
+      // `mapMutations` 也支持载荷：
+      'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
+    ]),
+    ...mapMutations({
+      add: 'increment' // 将 `this.add()` 映射为 `this.$store.commit('increment')`
+    })
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780923-67123" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p><code>mapMutations</code> 支持传入一个数组或者一个对象，目标都是组件中对应的 <code>methods</code> 映射为 <code>store.commit</code> 的调用。来看一下它的定义：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> mapMutations <span class="token operator">=</span> <span class="token function">normalizeNamespace</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> mutations</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">normalizeMap</span><span class="token punctuation">(</span>mutations<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> key<span class="token punctuation">,</span> val <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">mappedMutation</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// Get the commit method from store</span>
+      <span class="token keyword">let</span> commit <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>commit
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>namespace<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> module <span class="token operator">=</span> <span class="token function">getModuleByNamespace</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token string">'mapMutations'</span><span class="token punctuation">,</span> namespace<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>module<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+        commit <span class="token operator">=</span> module<span class="token punctuation">.</span>context<span class="token punctuation">.</span>commit
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> <span class="token keyword">typeof</span> val <span class="token operator">===</span> <span class="token string">'function'</span>
+        <span class="token operator">?</span> <span class="token function">val</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>commit<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">commit</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token punctuation">[</span>val<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> res
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780923-83713">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export const mapMutations = normalizeNamespace((namespace, mutations) =&gt; {
+  const res = {}
+  normalizeMap(mutations).forEach(({ key, val }) =&gt; {
+    res[key] = function mappedMutation (...args) {
+      // Get the commit method from store
+      let commit = this.$store.commit
+      if (namespace) {
+        const module = getModuleByNamespace(this.$store, 'mapMutations', namespace)
+        if (!module) {
+          return
+        }
+        commit = module.context.commit
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+})
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780923-83713" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>可以看到 <code>mappedMutation</code> 同样支持了 <code>namespace</code>，并且支持了传入额外的参数 <code>args</code>，作为提交 <code>mutation</code> 的 <code>payload</code>，最终就是执行了 <code>store.commit</code> 方法，并且这个 <code>commit</code> 会根据传入的 <code>namespace</code> 映射到对应 <code>module</code> 的 <code>commit</code> 上。</p> <h2 id="mapactions"><a href="#mapactions" class="header-anchor">#</a> <code>mapActions</code></h2> <p>我们可以在组件中使用 <code>this.$store.dispatch('xxx')</code> 提交 <code>action</code>，或者使用 <code>mapActions</code> 辅助函数将组件中的 <code>methods</code> 映射为 <code>store.dispatch</code> 的调用。</p> <p><code>mapActions</code> 在用法上和 <code>mapMutations</code> 几乎一样，实现也很类似：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> mapActions <span class="token operator">=</span> <span class="token function">normalizeNamespace</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">namespace<span class="token punctuation">,</span> actions</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function">normalizeMap</span><span class="token punctuation">(</span>actions<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> key<span class="token punctuation">,</span> val <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">mappedAction</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// get dispatch function from store</span>
+      <span class="token keyword">let</span> dispatch <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>dispatch
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>namespace<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> module <span class="token operator">=</span> <span class="token function">getModuleByNamespace</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token string">'mapActions'</span><span class="token punctuation">,</span> namespace<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>module<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+        dispatch <span class="token operator">=</span> module<span class="token punctuation">.</span>context<span class="token punctuation">.</span>dispatch
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> <span class="token keyword">typeof</span> val <span class="token operator">===</span> <span class="token string">'function'</span>
+        <span class="token operator">?</span> <span class="token function">val</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>dispatch<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">dispatch</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">,</span> <span class="token punctuation">[</span>val<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> res
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1701336780923-10059">成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export const mapActions = normalizeNamespace((namespace, actions) =&gt; {
+  const res = {}
+  normalizeMap(actions).forEach(({ key, val }) =&gt; {
+    res[key] = function mappedAction (...args) {
+      // get dispatch function from store
+      let dispatch = this.$store.dispatch
+      if (namespace) {
+        const module = getModuleByNamespace(this.$store, 'mapActions', namespace)
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+})
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1701336780923-10059" data-mdic-notify-delay="2000" data-mdic-copy-fail-text="copy fail" onclick="!function(t){const e={copy:(t='',e='')=&gt;new Promise((c,o)=&gt;{const n=document.createElement('textarea'),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand('copy');document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display='block',setTimeout(()=&gt;{n.style.display='none'},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制代码</button></div></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>和 <code>mapMutations</code> 的实现几乎一样，不同的是把 <code>commit</code> 方法换成了 <code>dispatch</code>。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vuex3/api/setter.html" class="prev">
+        数据存储
+      </a></span> <span class="next"><a href="/vuex3/api/register.html">
+        动态更新模块
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.c199dbed.js" defer></script><script src="/assets/js/2.88c18509.js" defer></script><script src="/assets/js/1.d4c099ff.js" defer></script><script src="/assets/js/102.37424022.js" defer></script>
+  </body>
+</html>
