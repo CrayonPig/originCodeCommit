@@ -31,9 +31,14 @@ module.exports = {
   ],
   themeConfig: {
     nav: [
-      { text: 'Vue2',link: '/vue2/' },
-      { text: 'Vue Route V3',link: '/vueRouter3/' },
-      { text: 'VueX V3',link: '/vuex3/' },
+      {
+        text: "Vue2相关",
+        items: [
+          { text: 'Vue2', link: '/vue2/' },
+          { text: 'Vue Route V3',link: '/vueRouter3/' },
+          { text: 'VueX V3',link: '/vuex3/' },
+        ]
+      },
       { text: "GitHub", link: "https://github.com/CrayonPig/originCodeCommit" },
     ],
     sidebar: {

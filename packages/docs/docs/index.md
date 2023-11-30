@@ -7,9 +7,11 @@ actionText: 开始阅读 →
 actionLink: /vue2/
 features:
 - title: Vue2
-  details: 0.0
+  details: 已完成
 - title: Vue Router V3
-  details: 0.0
+  details: 已完成
+- title: VueX V3
+  details: 已完成
 
 ---
 
