@@ -1,3 +1,20 @@
+# 源码构建
+
+基于 NPM 托管的项目都有一个 package.json 文件，该文件是对项目的描述，我们一般会配置 `script` 字段作为NPM的执行脚本，Vue3源码的构建脚本如下：
+
+```json
+{
+  "script": {
+    "build": "node scripts/build.js",
+  }
+}
+```
+
+当我们执行 `npm run build` 时，实际上就是在执行 `node scripts/build.js`, 我们找到 `scripts/build.js` 文件，看他是如何构建的。
+
+## 构建配置 
+
+```js
 // @ts-check
 
 /*
@@ -7,13 +24,13 @@ To specify the package to build, simply pass its name and the desired build
 formats to output (defaults to `buildOptions.formats` specified in that package,
 or "esm,cjs"):
 
-```
+\`\`\`
 # name supports fuzzy match. will build all packages with name containing "dom":
 nr build dom
 
 # specify the format to output
 nr build core --formats cjs
-```
+\`\`\`
 */
 
 import fs from 'node:fs/promises'
@@ -189,3 +206,17 @@ function checkFileSize(filePath) {
     )} min:${minSize} / gzip:${gzippedSize} / brotli:${compressedSize}`
   )
 }
+```
+
+这段代码较为简单
+
+1. 从命令行参数中解析出需要构建的目标模块（`targets`）、输出格式（`formats`）、是否只构建开发环境下的模块（`devOnly`）、是否只构建生产环境下的模块（`prodOnly`）、是否构建类型定义文件（`buildTypes`）、是否生成源码映射文件（`sourceMap`）、是否全量构建（`isRelease`）、是否匹配所有模块（`buildAllMatching`）等选项。
+2. 执行主函数`run`，该函数首先尝试获取模块列表（`targets`），然后并行构建这些模块，并检查构建后的文件大小。如果需要，它还会生成类型定义文件。
+3. 并行构建函数`runParallel`，该函数会并行执行给定的`iteratorFn`函数，处理每个元素。
+4. 单个模块的构建函数`build`，该函数会使用`rollup`来进行构建，构建的环境（开发环境或生产环境）和格式（如`cjs`、`esm`等）由前面的选项决定。
+5. `checkAllSizes`函数用于检查构建后的所有文件的大小。
+6. `checkSize`函数用于检查单个文件的大小，它会输出原始大小、`gzip`压缩后的大小和`brotli`压缩后的大小
+
+## 总结
+
+至此，`Vue3` 的构建函数已经分析完毕。跟`Vue2`相比，Vue3的构建函数在功能上并没有什么变化，只是由于采用了 `Monorepo`的结构，使得构建代码上发生了一些变化。同时增加了一些自定义的参数，方便开发者进行自定义构建。

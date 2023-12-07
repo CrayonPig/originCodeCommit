@@ -1,5 +1,5 @@
 const path = require("path");
-const vue2Route = require("./vue2-route");
+const vue2Route = require("./vue2");
 const vueRouteV3Route = require("./vue-router3");
 const vueXV3Route = require("./vuex3");
 const vue3Route = require("./vue3");

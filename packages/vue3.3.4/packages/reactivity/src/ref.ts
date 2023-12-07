@@ -125,6 +125,7 @@ export function shallowRef(value?: unknown) {
 }
 
 function createRef(rawValue: unknown, shallow: boolean) {
+  // 如果已经是响应式，直接返回
   if (isRef(rawValue)) {
     return rawValue
   }
