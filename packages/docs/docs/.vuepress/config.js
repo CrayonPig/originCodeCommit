@@ -2,6 +2,7 @@ const path = require("path");
 const vue2Route = require("./vue2-route");
 const vueRouteV3Route = require("./vue-router3");
 const vueXV3Route = require("./vuex3");
+const vue3Route = require("./vue3");
 
 module.exports = {
   title: "前端源码解读",
@@ -39,12 +40,19 @@ module.exports = {
           { text: 'VueX V3',link: '/vuex3/' },
         ]
       },
+      {
+        text: "Vue3相关",
+        items: [
+          { text: 'Vue3', link: '/vue3/' },
+        ]
+      },
       { text: "GitHub", link: "https://github.com/CrayonPig/originCodeCommit" },
     ],
     sidebar: {
       ...vue2Route,
       ...vueRouteV3Route,
-      ...vueXV3Route
+      ...vueXV3Route,
+      ...vue3Route,
     },
   },
 };

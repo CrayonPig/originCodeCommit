@@ -12,6 +12,8 @@ features:
   details: 已完成
 - title: VueX V3
   details: 已完成
+- title: Vue3
+  details: 进行中
 
 ---
 
