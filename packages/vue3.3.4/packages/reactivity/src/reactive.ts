@@ -320,13 +320,18 @@ export function isReactive(value: unknown): boolean {
  * @param value - The value to check.
  * @see {@link https://vuejs.org/api/reactivity-utilities.html#isreadonly}
  */
+// 检查对象是否为只读的函数
 export function isReadonly(value: unknown): boolean {
+  // 判断对象是否为只读，通过 ReactiveFlags.IS_READONLY 标志
   return !!(value && (value as Target)[ReactiveFlags.IS_READONLY])
 }
 
+// 检查对象是否为浅层响应式的函数
 export function isShallow(value: unknown): boolean {
+  // 判断对象是否为浅层响应式，通过 ReactiveFlags.IS_SHALLOW 标志
   return !!(value && (value as Target)[ReactiveFlags.IS_SHALLOW])
 }
+
 
 /**
  * Checks if an object is a proxy created by {@link reactive},
@@ -362,10 +367,15 @@ export function isProxy(value: unknown): boolean {
  * @param observed - The object for which the "raw" value is requested.
  * @see {@link https://vuejs.org/api/reactivity-advanced.html#toraw}
  */
+// 获取原始对象的函数
 export function toRaw<T>(observed: T): T {
+  // 判断对象是否为代理对象，如果是，则通过 ReactiveFlags.RAW 获取原始对象
   const raw = observed && (observed as Target)[ReactiveFlags.RAW]
+  
+  // 如果存在原始对象，则递归调用 toRaw，继续获取更底层的原始对象
   return raw ? toRaw(raw) : observed
 }
+
 
 export type Raw<T> = T & { [RawSymbol]?: true }
 
@@ -403,7 +413,9 @@ export function markRaw<T extends object>(value: T): Raw<T> {
  *
  * @param value - The value for which a reactive proxy shall be created.
  */
+// 将对象转为响应式对象的函数
 export const toReactive = <T extends unknown>(value: T): T =>
+  // 判断是否为对象，如果是，则调用 reactive 函数将其转为响应式对象
   isObject(value) ? reactive(value) : value
 
 /**

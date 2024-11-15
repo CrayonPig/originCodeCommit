@@ -50,6 +50,7 @@ unregister (path) {
   parent.removeChild(key)
 }
 ```
+
 注意，这里只会移除我们运行时动态创建的模块。
 
 接着会删除 `state` 在该路径下的引用，最后执行 `resetStore` 方法：

@@ -1,0 +1,145 @@
+name: Upload REPL artefacts
+
+on:
+  pull_request_target:
+    types:
+      - synchronize
+      - opened
+      - reopened
+      - labeled
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    permissions:
+      pull-requests: write # for peter-evans/find-comment and peter-evans/create-or-update-comment
+    if: ${{ github.event.pull_request.head.repo.full_name == 'rollup/rollup' || contains( toJson(github.event.pull_request.labels), 'x⁸ ⚙️ build repl artefacts' ) }}
+    runs-on: ubuntu-latest
+    name: Upload
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.number }}/merge
+      - name: Install Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: nightly-2023-10-05
+          targets: x86_64-unknown-linux-gnu
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            .cargo-cache
+            rust/target/
+          key: cargo-cache-${{ hashFiles('rust/Cargo.lock') }}
+          restore-keys: cargo-cache
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+      - name: Build artefacts
+        run: npm exec -- concurrently -c green,blue,yellow 'npm:build:napi -- --release' 'npm run build:wasm' 'npm:build:cjs' && npm run build:copy-native && npm run build:bootstrap
+      - name: Upload "${{ github.event.number }}/rollup.browser.js" to bucket
+        uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --cache-control max-age=300,public
+        env:
+          FILE: browser/dist/rollup.browser.js
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          S3_KEY: ${{ github.event.number }}/rollup.browser.js
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload "${{ github.event.number }}/rollup.browser.js.map" to bucket
+        uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --cache-control max-age=300,public
+        env:
+          FILE: browser/dist/rollup.browser.js.map
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          S3_KEY: ${{ github.event.number }}/rollup.browser.js.map
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload "${{ github.event.number }}/bindings_wasm_bg.wasm" to bucket
+        uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --cache-control max-age=300,public
+        env:
+          FILE: browser/dist/bindings_wasm_bg.wasm
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          S3_KEY: ${{ github.event.number }}/bindings_wasm_bg.wasm
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Find Comment
+        uses: peter-evans/find-comment@v3
+        id: findComment
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Thank you for your contribution!'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v4
+        id: createInitialComment
+        with:
+          comment-id: ${{ steps.findComment.outputs.comment-id }}
+          issue-number: ${{ github.event.number }}
+          edit-mode: replace
+          body: |
+            ### Thank you for your contribution! ❤️
+
+            You can try out this pull request locally by installing Rollup via
+
+            ```bash
+            npm install ${{ github.event.pull_request.head.repo.full_name }}#${{ github.event.pull_request.head.ref }}
+            ```
+
+            Notice: Ensure you have installed Rust nightly. If you haven't installed it yet, please first see https://www.rust-lang.org/tools/install to learn how to download Rustup and install Rust, then see https://rust-lang.github.io/rustup/concepts/channels.html to learn how to install Rust nightly.
+
+            or load it into the REPL:
+            https://rollupjs.org/repl/?pr=${{ github.event.number }}
+      - name: Find Vercel preview URL
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercel
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update comment with Vercel preview URL
+        uses: peter-evans/create-or-update-comment@v4
+        if: ${{ steps.waitForVercel.outputs.url }}
+        with:
+          comment-id: ${{ steps.createInitialComment.outputs.comment-id }}
+          issue-number: ${{ github.event.number }}
+          edit-mode: replace
+          body: |
+            ### Thank you for your contribution! ❤️
+
+            You can try out this pull request locally by installing Rollup via
+
+            ```bash
+            npm install ${{ github.event.pull_request.head.repo.full_name }}#${{ github.event.pull_request.head.ref }}
+            ```
+
+            Notice: Ensure you have installed Rust nightly. If you haven't installed it yet, please first see https://www.rust-lang.org/tools/install to learn how to download Rustup and install Rust, then see https://rust-lang.github.io/rustup/concepts/channels.html to learn how to install Rust nightly.
+
+            or load it into the REPL:
+            ${{ steps.waitForVercel.outputs.url }}/repl/?pr=${{ github.event.number }}

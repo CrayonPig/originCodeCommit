@@ -1,0 +1,10 @@
+[package]
+name = "xxhash"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base-encode = "0.3.1"
+xxhash-rust = { version = "0.8.10", features = ["xxh3"] }

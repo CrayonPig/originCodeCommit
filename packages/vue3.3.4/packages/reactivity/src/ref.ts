@@ -37,25 +37,39 @@ type RefBase<T> = {
   value: T
 }
 
+// 追踪 Ref 对象的值，建立依赖关系
 export function trackRefValue(ref: RefBase<any>) {
+  // 判断是否应该追踪和当前是否存在激活的响应式副作用
   if (shouldTrack && activeEffect) {
+    // 获取原始对象，以确保追踪的是底层的原始对象
     ref = toRaw(ref)
+
+    // 在开发环境下，使用 trackEffects 追踪依赖关系
     if (__DEV__) {
+      // 获取 Ref 对象的依赖对象，如果不存在则创建
       trackEffects(ref.dep || (ref.dep = createDep()), {
         target: ref,
         type: TrackOpTypes.GET,
         key: 'value'
       })
     } else {
+      // 在生产环境下，直接追踪依赖
       trackEffects(ref.dep || (ref.dep = createDep()))
     }
   }
 }
 
+// 触发 Ref 对象的值，通知相关的依赖更新
 export function triggerRefValue(ref: RefBase<any>, newVal?: any) {
+  // 获取原始对象
   ref = toRaw(ref)
+  
+  // 获取 Ref 对象的依赖对象
   const dep = ref.dep
+
+  // 如果存在依赖对象，则触发相应的副作用更新
   if (dep) {
+    // 在开发环境下，使用 triggerEffects 触发副作用更新
     if (__DEV__) {
       triggerEffects(dep, {
         target: ref,
@@ -64,6 +78,7 @@ export function triggerRefValue(ref: RefBase<any>, newVal?: any) {
         newValue: newVal
       })
     } else {
+      // 在生产环境下，直接触发副作用更新
       triggerEffects(dep)
     }
   }
@@ -133,29 +148,45 @@ function createRef(rawValue: unknown, shallow: boolean) {
 }
 
 class RefImpl<T> {
+  // 私有属性，存储原始值和响应式值
   private _value: T
   private _rawValue: T
 
+  // 用于存储依赖的对象，用于追踪和触发响应
   public dep?: Dep = undefined
+  // 标志位，表示当前对象是一个 Ref 对象
   public readonly __v_isRef = true
 
   constructor(value: T, public readonly __v_isShallow: boolean) {
+    // 如果是浅层响应式，则直接使用传入的值
+    // 否则，将值转为原始对象或响应式对象
     this._rawValue = __v_isShallow ? value : toRaw(value)
     this._value = __v_isShallow ? value : toReactive(value)
   }
 
+  // 访问器函数，用于获取响应式值
   get value() {
+    // 追踪响应式值的访问，用于建立依赖关系
     trackRefValue(this)
     return this._value
   }
 
+  // 访问器函数，用于设置响应式值
   set value(newVal) {
+    // 判断是否应该直接使用传入的值
     const useDirectValue =
       this.__v_isShallow || isShallow(newVal) || isReadonly(newVal)
+
+    // 如果不是浅层响应式，则将值转为原始对象
     newVal = useDirectValue ? newVal : toRaw(newVal)
+
+    // 判断新值是否发生变化
     if (hasChanged(newVal, this._rawValue)) {
+      // 更新原始值和响应式值
       this._rawValue = newVal
       this._value = useDirectValue ? newVal : toReactive(newVal)
+
+      // 触发响应式值的更新，通知相关依赖
       triggerRefValue(this, newVal)
     }
   }
